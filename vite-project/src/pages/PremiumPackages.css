@@ -1,0 +1,325 @@
+/* =========================================
+   Base Layout & Animations
+   ========================================= */
+.premium-wrapper {
+  flex-grow: 1;
+  background-color: #f9fafb;
+  padding: 4rem 0;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+.premium-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.animate-fade-in-premium {
+  animation: premiumFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes premiumFadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(15px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* =========================================
+   Header Text (Advanced Entrance)
+   ========================================= */
+.premium-header-box {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.premium-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #3b0764; /* Theme Purple */
+  margin-bottom: 1rem;
+  animation: slideDownFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (min-width: 768px) {
+  .premium-title {
+    font-size: 3rem;
+  }
+}
+
+.premium-subtitle {
+  color: #6b7280;
+  font-size: 1.125rem;
+  max-width: 42rem;
+  margin: 0 auto;
+  animation: slideDownFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* =========================================
+   Loader
+   ========================================= */
+.premium-loader-box {
+  text-align: center;
+  padding: 5rem 0;
+}
+
+.premium-loader-icon {
+  font-size: 2.25rem;
+  color: #3b0764; /* Theme Purple */
+  animation: spin 1s linear infinite;
+}
+
+.premium-loader-text {
+  margin-top: 1rem;
+  color: #6b7280;
+}
+
+/* =========================================
+   Grid & Card Layout (EXTREME 3D HOVER)
+   ========================================= */
+.premium-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .premium-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .premium-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.premium-card {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+  will-change: transform;
+}
+
+.premium-card:hover {
+  transform: translateY(-12px) scale(1.02); 
+  box-shadow: 0 30px 60px -15px rgba(59, 7, 100, 0.3); 
+}
+
+.premium-card:hover .card-top-bar {
+  letter-spacing: 2px; 
+  background-color: #3b0764; 
+}
+
+.card-top-bar {
+  background-color: #1f0333; /* Dark Purple top bar */
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.4s ease; 
+}
+
+.card-content {
+  padding: 1.25rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-route {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.route-arrow-icon {
+  font-size: 10px;
+  margin: 0 0.25rem;
+  color: #9ca3af;
+}
+
+/* =========================================
+   Inclusions Section
+   ========================================= */
+.inclusions-heading {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.inclusions-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  min-height: 60px;
+}
+
+.inclusion-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #6b7280;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.inclusion-box:hover {
+  transform: scale(1.25) translateY(-5px);
+}
+
+.inclusion-ico {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  color: #AD2260; 
+}
+
+.inclusion-lbl {
+  font-size: 11px;
+}
+
+/* =========================================
+   Distance Info Box
+   ========================================= */
+.distance-info-box {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f3f4f6;
+  margin-top: auto;
+}
+
+.dist-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.dist-row:last-child {
+  margin-bottom: 0;
+}
+
+.dist-label {
+  color: #6b7280;
+}
+
+.dist-val {
+  font-weight: bold;
+  color: #111827;
+}
+
+/* =========================================
+   Card Footer (Pricing & Button)
+   ========================================= */
+.premium-divider {
+  border-top: 1px solid #e5e7eb;
+  margin: 1rem 0;
+}
+
+.card-bottom-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.price-text-sm {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+/* --- YAHAN SUPER FLOAT EFFECT DALA HAI --- */
+.price-text-lg {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #3b0764; /* Theme Purple */
+  display: inline-block;
+  animation: superFloatPrice 2.5s infinite ease-in-out;
+}
+/* ------------------------------------------ */
+
+.premium-book-btn {
+  background-color: #AD2260; 
+  color: white;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-book-btn:hover {
+  background-color: #851a4a;
+  transform: translateY(-5px) scale(1.05); 
+  box-shadow: 0 15px 25px rgba(173, 34, 96, 0.4);
+}
+
+.premium-book-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 4px 10px rgba(173, 34, 96, 0.2);
+}
+
+/* =========================================
+   Keyframe Animations
+   ========================================= */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- NAYI SUPER FLOAT ANIMATION --- */
+@keyframes superFloatPrice {
+  0% { 
+    transform: scale(1) translateY(0); 
+    text-shadow: 0 0px 0px rgba(59, 7, 100, 0); 
+  }
+  50% { 
+    transform: scale(1.1) translateY(-6px); /* Zada float aur scale */
+    text-shadow: 0 10px 20px rgba(59, 7, 100, 0.4); /* Premium glowing shadow */
+  }
+  100% { 
+    transform: scale(1) translateY(0); 
+    text-shadow: 0 0px 0px rgba(59, 7, 100, 0); 
+  }
+}
+/* ----------------------------------- */

@@ -1,0 +1,278 @@
+/* =========================================
+   Base Layout & Fonts
+   ========================================= */
+.customize-container {
+  padding: 40px 20px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+.customize-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   Headings & Typography
+   ========================================= */
+.calc-title {
+  color: #3b0764; 
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-align: center;
+  animation: slideDownFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.calc-subtitle {
+  color: #6b7280;
+  margin-bottom: 40px;
+  font-size: 16px;
+  text-align: center;
+  animation: slideDownFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* =========================================
+   Grid Layouts
+   ========================================= */
+.layout-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .layout-grid {
+    grid-template-columns: 1fr; 
+  }
+}
+
+.inner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .inner-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   Containers (EXTREME 3D HOVER - Premium Style)
+   ========================================= */
+.section-block, .sticky-summary {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+  will-change: transform;
+}
+
+.section-block:hover, .sticky-summary:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 60px -15px rgba(59, 7, 100, 0.2); 
+}
+
+.section-block {
+  margin-bottom: 30px;
+}
+
+.section-header {
+  background-color: #1f0333; 
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white; 
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.4s ease, letter-spacing 0.4s ease;
+}
+
+.section-block:hover .section-header {
+  background-color: #3b0764;
+  letter-spacing: 1px;
+}
+
+.section-body {
+  padding: 25px;
+}
+
+/* =========================================
+   Forms & Inputs
+   ========================================= */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.calc-select, .calc-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+  background-color: #f9fafb;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.calc-select:focus, .calc-input:focus {
+  border-color: #cca332;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(204, 163, 50, 0.15);
+  transform: scale(1.01);
+}
+
+/* =========================================
+   Checkboxes
+   ========================================= */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 12px; 
+  padding: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #f9fafb;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkbox-group:hover {
+  border-color: #cca332;
+  background-color: #ffffff;
+  transform: translateX(6px);
+}
+
+/* =========================================
+   Summary Specifics
+   ========================================= */
+.sticky-summary {
+  position: sticky;
+  top: 100px; 
+  padding: 30px;
+}
+
+.summary-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #3b0764; 
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f3f4f6;
+  padding-bottom: 10px;
+}
+
+.grand-total {
+  font-size: 18px;
+  color: #374151;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* --- YAHAN FLOAT KO KAM KIYA HAI (3s timing & -3px height) --- */
+.grand-total span:last-child {
+  font-size: 32px;
+  font-weight: 900;
+  color: #3b0764;
+  display: inline-block;
+  animation: superFloatPrice 3s infinite ease-in-out;
+}
+
+.summary-disclaimer {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   Buttons
+   ========================================= */
+.book-btn {
+  width: 100%;
+  padding: 16px;
+  background: #AD2260; 
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.book-btn:hover {
+  background: #851a4a; 
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 15px 25px rgba(173, 34, 96, 0.3);
+}
+
+/* =========================================
+   Bank Details
+   ========================================= */
+.bank-details-section {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: #f9fafb;
+  border: 1px dashed #cca332;
+  border-radius: 8px;
+  animation: revealBankDetails 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.bank-card {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #cca332;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bank-card:hover {
+  transform: translateX(8px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* =========================================
+   Animations
+   ========================================= */
+
+/* FLOAT KO HALKA KAR DIYA (Scale 1.05 and -3px float) */
+@keyframes superFloatPrice {
+  0% { transform: scale(1) translateY(0); text-shadow: 0 0px 0px rgba(59, 7, 100, 0); }
+  50% { transform: scale(1.05) translateY(-3px); text-shadow: 0 5px 15px rgba(59, 7, 100, 0.2); }
+  100% { transform: scale(1) translateY(0); text-shadow: 0 0px 0px rgba(59, 7, 100, 0); }
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealBankDetails {
+  from { opacity: 0; transform: scaleY(0.8); }
+  to { opacity: 1; transform: scaleY(1); }
+}

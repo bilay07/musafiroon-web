@@ -1,0 +1,129 @@
+/* =========================================
+   Main Overlay & Initial State
+   ========================================= */
+.plane-loader-main-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9fafb; 
+  /* Fade smoothly bina kisi white flash ke */
+  animation: finalScreenFade 1s ease forwards 5s; 
+}
+
+.loader-panel {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #1f0333; 
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+  will-change: transform, opacity;
+}
+
+.loader-panel.left-panel { 
+  left: 0; 
+  animation: openLeftPanel 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 3s;
+}
+.loader-panel.right-panel { 
+  right: 0; 
+  animation: openRightPanel 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 3s;
+}
+
+/* =========================================
+   Dashed Zip Line
+   ========================================= */
+.dynamic-zip-dashed-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px; 
+  background-image: linear-gradient(#AD2260 50%, rgba(255,255,255,0) 0%);
+  background-position: center;
+  background-size: 3px 25px; 
+  background-repeat: repeat-y;
+  z-index: 8; 
+  opacity: 0; 
+  animation: growZipWithPlane 4.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s; 
+}
+
+/* =========================================
+   AirBus A380 Plane Animation
+   ========================================= */
+.airplane-flight-wrapper {
+  position: absolute;
+  left: 50%;
+  z-index: 10; 
+  /* YAHAN FIX HAI: Sirf initial state set ki ha taake 0.2s ke delay me flash na kare, aur kuch nahi chhera */
+  bottom: -10vh;
+  transform: translateX(-50%) scale(0.8);
+  animation: planeFlyBy 4.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
+}
+
+.a380-plane-icon {
+  font-size: 80px; 
+  color: #cca332; 
+  display: block;
+  margin-bottom: -15px; 
+}
+
+/* =========================================
+   MUSAFIROON Text Reveal
+   ========================================= */
+.loader-musafiroon-text {
+  color: #3b0764; 
+  font-weight: 900;
+  font-size: 42px; 
+  letter-spacing: 15px;
+  text-transform: uppercase;
+  z-index: 6; 
+  opacity: 0;
+  animation: fadeInMusafiroon 1s ease forwards 1.8s; 
+  position: absolute;
+}
+
+/* =========================================
+   Keyframe Animations (100% PERFECT SYNC)
+   ========================================= */
+
+@keyframes planeFlyBy {
+  0%   { bottom: -10vh; transform: translateX(-50%) scale(0.8); opacity: 1; }
+  40%  { bottom: 40vh;  transform: translateX(-50%) scale(1.1); }
+  80%  { bottom: 95vh;  transform: translateX(-50%) scale(1.5); opacity: 1; } 
+  100% { bottom: 150vh; transform: translateX(-50%) scale(2); opacity: 0; visibility: hidden; }
+}
+
+@keyframes growZipWithPlane {
+  0%   { bottom: 0vh; height: 0vh; opacity: 1; }
+  40%  { bottom: 0vh; height: 40vh; opacity: 1; } 
+  65%  { bottom: 0vh; height: 75vh; opacity: 1; } 
+  100% { bottom: 150vh; height: 0vh; opacity: 0; } 
+}
+
+@keyframes fadeInMusafiroon {
+  from { opacity: 0; letter-spacing: 25px; transform: translateY(10px); }
+  to { opacity: 1; letter-spacing: 15px; transform: translateY(0); }
+}
+
+@keyframes openLeftPanel {
+  from { clip-path: inset(0 0 0 0); opacity: 1; }
+  to { clip-path: inset(0 100% 0 0); opacity: 0; visibility: hidden; } 
+}
+
+@keyframes openRightPanel {
+  from { clip-path: inset(0 0 0 0); opacity: 1; }
+  to { clip-path: inset(0 0 0 100%); opacity: 0; visibility: hidden; } 
+}
+
+@keyframes finalScreenFade {
+  0% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}

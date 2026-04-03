@@ -1,0 +1,95 @@
+/* Footer Main Wrapper */
+.custom-footer {
+  position: relative;
+  /* Left se Royal Purple aur right pe Eggplant Purple */
+  background: linear-gradient(to right, #5a189a 0%, #3b0764 50%, #1f0333 100%);
+  color: white;
+  padding-top: 120px; /* Wave ke liye space */
+  padding-bottom: 20px;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+/* Top Wave Divider */
+.custom-footer .wave-divider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-footer .wave-divider svg {
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 80px;
+}
+
+.custom-footer .wave-divider .shape-fill {
+  fill: #f9fafb; /* App.jsx ke bg-gray-50 se match karne ke liye */
+}
+
+/* Glassmorphism Card (Left Column) */
+.footer-info-card {
+  background: rgba(255, 255, 255, 0.08); /* Halka transparent */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Social Icons */
+.social-icon-btn {
+  background-color: #cca332; /* Golden color (Purple ke sath best lagta hai) */
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-icon-btn:hover {
+  background-color: white;
+  color: #cca332; /* Hover pe text golden hoga */
+  transform: translateY(-2px);
+}
+
+/* Links Styling */
+.footer-links-list li {
+  margin-bottom: 12px;
+}
+
+.footer-links-list a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-links-list a:hover {
+  color: #cca332; /* Hover pe links golden honge */
+}
+
+/* Contact List */
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  color: #e5e7eb;
+}
+
+.contact-list i {
+  color: white;
+  font-size: 16px;
+}

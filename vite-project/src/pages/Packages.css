@@ -1,0 +1,137 @@
+/* =========================================
+   Base Layout & General Animations
+   ========================================= */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Base Font */
+.packages-main-wrapper {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Header Gradient */
+.packages-header-bg {
+  background: linear-gradient(to right, #5a189a 0%, #3b0764 50%, #1f0333 100%);
+}
+
+/* --- TEXT & BACKGROUND COLORS --- */
+
+/* Purple Texts & Labels */
+.text-theme-purple {
+  color: #3b0764;
+}
+
+/* Dark Purple Background (Package Cards ke top bar ke liye) */
+.bg-dark-purple {
+  background-color: #1f0333;
+  transition: all 0.4s ease;
+}
+
+/* Golden Texts & Icons */
+.text-theme-gold {
+  color: #cca332;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-block;
+}
+
+/* =========================================
+   Advanced Card 3D Hover Effects
+   (Ye khud grid ke cards ko animate karega)
+   ========================================= */
+.packages-main-wrapper .grid > div {
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+  will-change: transform;
+}
+
+/* Card Float & Shadow */
+.packages-main-wrapper .grid > div:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 60px -15px rgba(59, 7, 100, 0.3) !important;
+}
+
+/* Card Header Text Spacing Hover */
+.packages-main-wrapper .grid > div:hover .bg-dark-purple {
+  letter-spacing: 2px;
+  background-color: #3b0764; 
+}
+
+/* Card Icons Jump Hover */
+.packages-main-wrapper .grid > div:hover .text-theme-gold.fa-solid {
+  transform: scale(1.3) translateY(-5px);
+}
+
+/* =========================================
+   Super Float Effect for Price
+   ========================================= */
+.text-2xl.text-theme-purple {
+  display: inline-block;
+  animation: superFloatPrice 2.5s infinite ease-in-out;
+}
+
+/* =========================================
+   Button Styling (3D Pop Hover)
+   ========================================= */
+.btn-gold {
+  background-color: #AD2260;
+  color: white;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold:hover {
+  background-color: #851a4a;
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 25px rgba(173, 34, 96, 0.4);
+}
+
+.btn-gold:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 4px 10px rgba(173, 34, 96, 0.2);
+}
+
+/* =========================================
+   Input / Select Form Fields Custom Styling
+   ========================================= */
+.custom-input {
+  border: 1px solid #d1d5db; /* gray-300 */
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.custom-input:focus {
+  border-color: #cca332 !important; /* Golden border on focus */
+  box-shadow: 0 0 0 4px rgba(204, 163, 50, 0.15);
+  transform: scale(1.01);
+}
+
+/* =========================================
+   Keyframe Animations
+   ========================================= */
+@keyframes superFloatPrice {
+  0% { 
+    transform: scale(1) translateY(0); 
+    text-shadow: 0 0px 0px rgba(59, 7, 100, 0); 
+  }
+  50% { 
+    transform: scale(1.1) translateY(-6px); 
+    text-shadow: 0 10px 20px rgba(59, 7, 100, 0.4); 
+  }
+  100% { 
+    transform: scale(1) translateY(0); 
+    text-shadow: 0 0px 0px rgba(59, 7, 100, 0); 
+  }
+}
