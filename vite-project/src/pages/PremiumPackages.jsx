@@ -9,7 +9,7 @@ function PremiumPackages({ currency }) {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    fetch('http://localhost:5000/api/premium')
+    fetch('https://musafiroon-web.onrender.com/api/premium')
       .then(response => response.json())
       .then(data => {
         setPremiumData(data);

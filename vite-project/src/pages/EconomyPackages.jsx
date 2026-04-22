@@ -17,7 +17,7 @@ function EconomyPackages({ currency, exchangeRates }) {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    fetch('http://localhost:5000/api/economy')
+    fetch('https://musafiroon-web.onrender.com/api/economy')
       .then(response => response.json())
       .then(data => {
         if (data && data.length > 0) {

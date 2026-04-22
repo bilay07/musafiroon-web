@@ -22,7 +22,7 @@ function Packages({ currency, exchangeRates }) {
   useEffect(() => {
     window.scrollTo(0, 0);
     
-    fetch('http://localhost:5000/api/packages')
+    fetch('https://musafiroon-web.onrender.com/api/packages')
       .then(response => response.json())
       .then(data => {
         setPackageData(data);
