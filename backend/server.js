@@ -3,13 +3,19 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs'; // Password check karne ke liye
+import bcrypt from 'bcryptjs';
 import Package from './models/Package.js';
-import Admin from './models/Admin.js'; // Naya Admin Model import
+import Admin from './models/Admin.js'; 
 
 dotenv.config();
 const app = express();
-app.use(cors());
+
+// --- 1. CORS FIX: VIP List for Frontend Domains ---
+app.use(cors({
+  origin: ['https://mosafiroon.com', 'https://www.mosafiroon.com', 'http://localhost:5173', 'http://localhost:5174'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
@@ -26,12 +32,30 @@ app.get('/api/packages', async (req, res) => {
   }
 });
 
+// --- 2. NEW ROUTES: Premium aur Economy Packages ke liye ---
+app.get('/api/premium', async (req, res) => {
+  try {
+    const packages = await Package.find({ category: 'premium' });
+    res.json(packages);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get('/api/economy', async (req, res) => {
+  try {
+    const packages = await Package.find({ category: 'economy' });
+    res.json(packages);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // --- HEAVY ADMIN LOGIN (Email YA Username dono se) ---
 app.post('/api/admin/login', async (req, res) => {
-  const { identifier, password } = req.body; // identifier = email ya username
+  const { identifier, password } = req.body; 
 
   try {
-    // 1. Database mein dhoondo (Email ho ya Username)
     const admin = await Admin.findOne({
       $or: [{ email: identifier }, { username: identifier }]
     });
@@ -40,13 +64,11 @@ app.post('/api/admin/login', async (req, res) => {
       return res.status(401).json({ success: false, message: "Admin nahi mila! 🛑" });
     }
 
-    // 2. Encrypted Password match karo
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
       return res.status(401).json({ success: false, message: "Ghalat Password! ❌" });
     }
 
-    // 3. Login Successful! Token (Pass) banao
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '12h' });
     
     res.json({ 
