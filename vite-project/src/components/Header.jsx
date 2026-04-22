@@ -9,7 +9,7 @@ function Header({ currency, setCurrency }) {
 
   return (
     <>
-      {/* Top Bar (Mobiles par text center kar diya) */}
+      {/* Top Bar */}
       <div className="bg-[#1f0333] text-white py-2 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-2">
@@ -17,9 +17,10 @@ function Header({ currency, setCurrency }) {
             <span className="font-semibold tracking-wider">03112462949</span>
           </div>
           <div className="flex items-center space-x-5">
-            <a href="#" className="hover:text-[#cca332] transition"><i className="fa-brands fa-whatsapp text-lg"></i></a>
-            <a href="#" className="hover:text-[#cca332] transition"><i className="fa-brands fa-instagram text-lg"></i></a>
-            {/* Baqi icons space bachane ke liye mobile pe chahay toh kam kar dena */}
+            {/* Updated Social Links */}
+            <a href="https://wa.me/923112462949" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-whatsapp text-lg"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100088573880681" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-facebook text-lg"></i></a>
+            <a href="https://www.instagram.com/mosafiroon1/" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-instagram text-lg"></i></a>
           </div>
         </div>
       </div>
@@ -27,7 +28,7 @@ function Header({ currency, setCurrency }) {
       <header className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] text-white py-4 shadow-lg sticky top-0 z-50 border-b border-[#cca332]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           
-          {/* LEFT: Hamburger Menu Button (Sirf Mobiles ke liye) */}
+          {/* LEFT: Hamburger Button (Mobile Only) */}
           <button 
             onClick={toggleMenu} 
             className="md:hidden text-2xl focus:outline-none hover:text-[#cca332] transition"
@@ -35,12 +36,12 @@ function Header({ currency, setCurrency }) {
             <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
           </button>
 
-          {/* CENTER: Logo (Mobiles pe thora chota aur center) */}
+          {/* CENTER: Logo (Updated Name to Mosafiroon) */}
           <Link to="/" className="flex items-center">
-             <span className="text-xl md:text-2xl font-black tracking-[0.2em]">MUSAFIROON</span>
+             <span className="text-xl md:text-2xl font-black tracking-[0.2em]">MOSAFIROON</span>
           </Link>
 
-          {/* RIGHT: Desktop Nav & Currency (Mobiles pe sirf currency dikhegi) */}
+          {/* RIGHT: Desktop Nav */}
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
             <Link to="/premium-packages" className="hover:text-[#cca332] transition">Star Packages</Link>
             <Link to="/economy-packages" className="hover:text-[#cca332] transition">Economy Packages</Link>
@@ -65,7 +66,7 @@ function Header({ currency, setCurrency }) {
         <div className={`fixed inset-0 bg-black/50 transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={toggleMenu}></div>
         
         {/* MOBILE SIDEBAR CONTENT */}
-        <div className={`fixed top-0 left-0 h-full w-64 bg-[#1f0333] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] ${isMenuOpen ? 'translate-x-0' : '-translate-x-0'} ${!isMenuOpen && '-translate-x-full'}`}>
+        <div className={`fixed top-0 left-0 h-full w-64 bg-[#1f0333] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="p-6">
             <div className="flex justify-between items-center mb-10">
               <span className="font-black text-lg tracking-widest text-[#cca332]">MENU</span>
@@ -88,10 +89,18 @@ function Header({ currency, setCurrency }) {
             </nav>
 
             <div className="mt-12 pt-8 border-t border-white/10">
-              <p className="text-xs text-gray-400 mb-4 uppercase tracking-widest">Contact Us</p>
-              <div className="flex items-center gap-3 text-[#cca332]">
-                <i className="fa-solid fa-phone"></i>
-                <span className="text-white font-bold">03112462949</span>
+              <p className="text-xs text-gray-400 mb-4 uppercase tracking-widest">Contact Info</p>
+              <div className="flex flex-col gap-4 text-[#cca332]">
+                <div className="flex items-center gap-3">
+                  <i className="fa-solid fa-phone"></i>
+                  <span className="text-white font-bold">03112462949</span>
+                </div>
+                {/* Social Icons inside menu for convenience */}
+                <div className="flex gap-4 mt-2">
+                  <a href="https://wa.me/923112462949" target="_blank" rel="noreferrer"><i className="fa-brands fa-whatsapp text-xl"></i></a>
+                  <a href="https://www.facebook.com/profile.php?id=100088573880681" target="_blank" rel="noreferrer"><i className="fa-brands fa-facebook text-xl"></i></a>
+                  <a href="https://www.instagram.com/mosafiroon1/" target="_blank" rel="noreferrer"><i className="fa-brands fa-instagram text-xl"></i></a>
+                </div>
               </div>
             </div>
           </div>
