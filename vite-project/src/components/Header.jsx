@@ -33,6 +33,7 @@ function Header({ currency, setCurrency }) {
 
   return (
     <>
+      {/* Top Bar */}
       <div className="bg-[#1f0333] text-white py-2 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-2">
@@ -58,7 +59,9 @@ function Header({ currency, setCurrency }) {
              <span className="text-xl md:text-2xl font-black tracking-[0.2em]">MOSAFIROON</span>
           </Link>
 
+          {/* DESKTOP NAV: Added Home at the start */}
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
+            <Link to="/" className={getNavLinkClass("/")}>Home</Link>
             <Link to="/premium-packages" className={getNavLinkClass("/premium-packages")}>Star Packages</Link>
             <Link to="/economy-packages" className={getNavLinkClass("/economy-packages")}>Economy Packages</Link>
             <Link to="/customize" className={getNavLinkClass("/customize")}>Customize Packages</Link>
@@ -88,6 +91,10 @@ function Header({ currency, setCurrency }) {
               </div>
               
               <nav className="flex flex-col space-y-6 text-lg font-semibold">
+                {/* Mobile Menu Home Link */}
+                <Link to="/" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
+                  <i className="fa-solid fa-house text-sm text-[#cca332]"></i> Home
+                </Link>
                 <Link to="/premium-packages" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
                   <i className="fa-solid fa-star text-sm text-[#cca332]"></i> Star Packages
                 </Link>
