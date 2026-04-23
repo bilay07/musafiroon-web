@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Header({ currency, setCurrency }) {
@@ -6,6 +6,19 @@ function Header({ currency, setCurrency }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // --- NAYA CODE: Scroll Lock jab menu open ho ---
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    // Cleanup taake agar component hate toh scroll wapis theek ho jaye
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
@@ -67,28 +80,34 @@ function Header({ currency, setCurrency }) {
         
         {/* MOBILE SIDEBAR CONTENT */}
         <div className={`fixed top-0 left-0 h-full w-64 bg-[#1f0333] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-          <div className="p-6">
-            <div className="flex justify-between items-center mb-10">
-              <span className="font-black text-lg tracking-widest text-[#cca332]">MENU</span>
-              <button onClick={toggleMenu} className="text-2xl"><i className="fa-solid fa-xmark"></i></button>
-            </div>
+          {/* NAYA CODE: h-full, flex aur flex-col lagaya taake contact neechay ja sake */}
+          <div className="p-6 h-full flex flex-col">
             
-            <nav className="flex flex-col space-y-6 text-lg font-semibold">
-              <Link to="/premium-packages" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
-                <i className="fa-solid fa-star text-sm text-[#cca332]"></i> Star Packages
-              </Link>
-              <Link to="/economy-packages" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
-                <i className="fa-solid fa-wallet text-sm text-[#cca332]"></i> Economy Packages
-              </Link>
-              <Link to="/special-deals" onClick={toggleMenu} className="text-[#cca332] flex items-center gap-3">
-                <i className="fa-solid fa-fire text-sm"></i> Special Offer
-              </Link>
-              <Link to="/customize" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
-                <i className="fa-solid fa-sliders text-sm text-[#cca332]"></i> Customize
-              </Link>
-            </nav>
+            {/* Upar wala hissa (Menu links aur Title) */}
+            <div>
+              <div className="flex justify-between items-center mb-10">
+                <span className="font-black text-lg tracking-widest text-[#cca332]">MENU</span>
+                <button onClick={toggleMenu} className="text-2xl"><i className="fa-solid fa-xmark"></i></button>
+              </div>
+              
+              <nav className="flex flex-col space-y-6 text-lg font-semibold">
+                <Link to="/premium-packages" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
+                  <i className="fa-solid fa-star text-sm text-[#cca332]"></i> Star Packages
+                </Link>
+                <Link to="/economy-packages" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
+                  <i className="fa-solid fa-wallet text-sm text-[#cca332]"></i> Economy Packages
+                </Link>
+                <Link to="/special-deals" onClick={toggleMenu} className="text-[#cca332] flex items-center gap-3">
+                  <i className="fa-solid fa-fire text-sm"></i> Special Offer
+                </Link>
+                <Link to="/customize" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
+                  <i className="fa-solid fa-sliders text-sm text-[#cca332]"></i> Customize
+                </Link>
+              </nav>
+            </div>
 
-            <div className="mt-12 pt-8 border-t border-white/10">
+            {/* NAYA CODE: mt-auto lagaya taake ye automatically bottom pe chala jaye */}
+            <div className="mt-auto pt-8 border-t border-white/10 pb-4">
               <p className="text-xs text-gray-400 mb-4 uppercase tracking-widest">Contact Info</p>
               <div className="flex flex-col gap-4 text-[#cca332]">
                 <div className="flex items-center gap-3">
@@ -103,6 +122,7 @@ function Header({ currency, setCurrency }) {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </header>
