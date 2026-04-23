@@ -107,7 +107,6 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
         
         <div className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] py-8 px-10 text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-[#cca332]"></div>
-          <h2 className="text-sm font-black text-[#cca332] tracking-[0.3em] uppercase mb-2">Mosafiroon</h2>
           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">UMRAH INQUIRY FORM</h1>
           <p className="text-gray-300 mt-2 text-sm font-medium">Select your preferences and send us your inquiry instantly.</p>
         </div>
