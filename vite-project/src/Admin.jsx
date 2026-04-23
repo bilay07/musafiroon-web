@@ -22,9 +22,15 @@ function Admin() {
   
   const [adminForm, setAdminForm] = useState({ username: '', email: '', password: '' });
 
+  // --- UPDATED: Pura Package Data Form ---
   const [formData, setFormData] = useState({
-    title: '', price: '', category: 'popular',
-    route: 'MAKKAH, MADINAH', inclusions: 'Visa, Hotel, Transport', makkah: '', madinah: ''
+    title: '', 
+    price: '', 
+    category: 'popular',
+    route: 'JEDDAH, MAKKAH, MADINAH', // Default route
+    inclusions: 'Visa, Hotel, Transport', // Default inclusions
+    makkah: '', 
+    madinah: ''
   });
 
   useEffect(() => {
@@ -65,7 +71,6 @@ function Admin() {
           return;
         }
 
-        // --- REMEMBER ME LOGIC ---
         if (rememberMe) {
           localStorage.setItem('savedIdentifier', identifier);
         } else {
@@ -116,7 +121,6 @@ function Admin() {
   };
 
   const handleLogout = () => {
-    // Sirf token hatao, saved username (Remember Me) ko mat mitao
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminRole');
     setIsAuthenticated(false);
@@ -163,12 +167,22 @@ function Admin() {
 
   const handleAddPackage = async (e) => {
     e.preventDefault();
-    const newPkg = { title: formData.title, price: Number(formData.price), category: formData.category, route: formData.route.split(',').map(s=>s.trim()), inclusions: formData.inclusions.split(',').map(s=>s.trim()), distances: { makkah: formData.makkah, madinah: formData.madinah } };
+    const newPkg = { 
+      title: formData.title, 
+      price: Number(formData.price), 
+      category: formData.category, 
+      route: formData.route.split(',').map(s=>s.trim()), 
+      inclusions: formData.inclusions.split(',').map(s=>s.trim()), 
+      distances: { makkah: formData.makkah, madinah: formData.madinah } 
+    };
     try {
       const response = await fetch('https://musafiroon-web.onrender.com/api/packages', {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(newPkg)
       });
-      if(response.ok) { fetchPackages(); setFormData({title:'', price:'', category:'popular', route:'MAKKAH, MADINAH', inclusions:'Visa, Hotel, Transport', makkah:'', madinah:''}); }
+      if(response.ok) { 
+        fetchPackages(); 
+        setFormData({title:'', price:'', category:'popular', route:'JEDDAH, MAKKAH, MADINAH', inclusions:'Visa, Hotel, Transport', makkah:'', madinah:''}); 
+      }
     } catch (error) {}
   };
 
@@ -210,7 +224,6 @@ function Admin() {
           
           {forgotStep === 0 && (
             <form onSubmit={handleLogin} className="space-y-4 animate-fade-in">
-              {/* AutoComplete tags updated to stop aggressive autofill */}
               <input 
                 type="text" 
                 placeholder={loginTab === 'admin' ? "Admin Email / Username" : "User Email / Username"} 
@@ -230,7 +243,6 @@ function Admin() {
                 required 
               />
               
-              {/* REMEMBER ME & FORGOT PASSWORD */}
               <div className="flex items-center justify-between text-xs text-gray-500 pt-2 pb-2">
                 <label className="flex items-center gap-2 cursor-pointer hover:text-black">
                   <input 
@@ -287,12 +299,50 @@ function Admin() {
           <div className="lg:col-span-4 space-y-8">
             <div className="bg-white p-8 rounded shadow-sm">
               <h3 className="font-bold mb-6 border-b pb-2 uppercase text-xs">New Package Listing</h3>
+              
+              {/* --- ADVANCED PACKAGE FORM --- */}
               <form onSubmit={handleAddPackage} className="space-y-4">
-                <input type="text" placeholder="Package Title" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} required />
-                <input type="number" placeholder="Price" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} required />
-                <select className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
-                  <option value="popular">Popular</option><option value="premium">Premium</option><option value="economy">Economy</option><option value="group">Group</option>
-                </select>
+                
+                {/* Title & Price */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="col-span-2">
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Package Title</label>
+                    <input type="text" placeholder="e.g. 14 Nights | Economy..." className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} required />
+                  </div>
+                  <div>
+                     <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Price ($)</label>
+                     <input type="number" placeholder="420" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} required />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Category</label>
+                    <select className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
+                      <option value="popular">Popular</option><option value="premium">Premium</option><option value="economy">Economy</option><option value="group">Group</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Distances */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Makkah Distance</label>
+                    <input type="text" placeholder="e.g. 800 m" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.makkah} onChange={e => setFormData({...formData, makkah: e.target.value})} required />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Madinah Distance</label>
+                    <input type="text" placeholder="e.g. 500 m" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.madinah} onChange={e => setFormData({...formData, madinah: e.target.value})} required />
+                  </div>
+                </div>
+
+                {/* Route & Inclusions */}
+                <div>
+                   <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Route (Comma Separated)</label>
+                   <input type="text" placeholder="JEDDAH, MAKKAH, MADINAH" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.route} onChange={e => setFormData({...formData, route: e.target.value})} required />
+                </div>
+                <div>
+                   <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Inclusions (Comma Separated)</label>
+                   <input type="text" placeholder="Visa, Hotel, Transport" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.inclusions} onChange={e => setFormData({...formData, inclusions: e.target.value})} required />
+                </div>
+
                 <button type="submit" className="w-full bg-[#cca332] text-white py-4 font-bold rounded">ADD PACKAGE</button>
               </form>
             </div>
@@ -356,7 +406,6 @@ function Admin() {
                          <td className="py-4 font-bold text-gray-800">{user.username}</td>
                          <td className="py-4 text-gray-500 text-xs">{user.email}</td>
                          <td className="py-4">
-                           {/* STATUS BADGE */}
                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 text-green-700 text-[10px] font-black rounded-full border border-green-200 uppercase tracking-widest">
                              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                              Active
