@@ -2,9 +2,19 @@ import React, { useEffect, useState } from 'react';
 import './PlaneLoader.css';
 
 const PlaneLoader = ({ onFinished }) => {
-  const [isAnimating, setIsAnimating] = useState(true);
+  // Check karte hain ke kya hum admin page par hain?
+  const isAdminRoute = window.location.pathname.toLowerCase().includes('admin');
+  
+  // Agar admin page hai toh animation ko shuru se hi 'false' rakho
+  const [isAnimating, setIsAnimating] = useState(!isAdminRoute);
 
   useEffect(() => {
+    // Agar admin page hai, toh fauran onFinished call kar do taake login screen dikh jaye
+    if (isAdminRoute) {
+      if (onFinished) onFinished();
+      return; // Aage ka timer code mat chalao
+    }
+
     // 6.5 seconds delay taake end pe white screen (flash) na aaye
     const timer = setTimeout(() => {
       setIsAnimating(false);
@@ -12,8 +22,9 @@ const PlaneLoader = ({ onFinished }) => {
     }, 6500);
 
     return () => clearTimeout(timer);
-  }, [onFinished]);
+  }, [onFinished, isAdminRoute]);
 
+  // Agar animation nahi chalni (jaise admin page par), toh kuch mat dikhao (null)
   if (!isAnimating) return null;
 
   return (

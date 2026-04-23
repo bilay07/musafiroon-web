@@ -57,10 +57,11 @@ const seedDB = async () => {
     const newAdmin = new Admin({
       username: 'mosafiroon7',
       email: 'mosafiroon.info@gmail.com',
-      password: hashedPassword
+      password: hashedPassword,
+      role: 'superadmin' // <--- YE ADD KIYA HAI
     });
     await newAdmin.save();
-    console.log("✅ Admin Seeded Successfully! (mosafiroon7)");
+    console.log("✅ Admin Seeded Successfully! (mosafiroon7 as Superadmin)");
 
     console.log("🎉 All Data Seeded! Aapka system bilkul ready hai!");
     process.exit();
