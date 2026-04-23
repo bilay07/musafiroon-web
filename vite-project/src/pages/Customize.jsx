@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function Customize() {
-  // --- UPDATED HOTEL LISTS (No numbering, No prices) ---
   const makkahHotels = [
     "ARAFAT GOLDEN (old Fakhir Kudai)", "FAKHIR AL AZIZIA", "QILA AJYAD", 
     "AL KISWAH TOWERS", "TAJ FIDDI HOTEL", "MIAAD AL MAJD", "MELLA 1", 
@@ -22,7 +21,6 @@ function Customize() {
     "FLY ADEAL", "FLY JINNAH", "AIR ARABIA", "EMIRATES", "EITHAD", "QATAR", "BRITISH AIRWAYS", "CUSTOM"
   ];
 
-  // --- STATE MANAGEMENT ---
   const [form, setForm] = useState({
     makkahHotel: '', makkahRoom: 'Quad', makkahNights: 0,
     madinaHotel: '', madinaRoom: 'Quad', madinaNights: 0,
@@ -31,10 +29,8 @@ function Customize() {
     adults: 1, children: 0, infants: 0, notes: ''
   });
   
-  // Custom Modal State
   const [modalConfig, setModalConfig] = useState({ isOpen: false, message: '', type: 'error' });
 
-  // Modal Functions
   const showAlert = (message, type = 'error') => {
     setModalConfig({ isOpen: true, message, type });
   };
@@ -47,7 +43,6 @@ function Customize() {
     setForm({ ...form, [name]: value });
   };
 
-  // --- CLEAN WHATSAPP INQUIRY GENERATOR ---
   const sendToWhatsApp = () => {
     if (!form.clientName || form.adults < 1) {
       showAlert("Please enter Client Name and at least 1 Adult to proceed!", "error");
@@ -86,7 +81,6 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans relative">
       
-      {/* Custom Beautiful Popup Modal */}
       {modalConfig.isOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-[10000] p-4 animate-fade-in">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all scale-100">
@@ -111,7 +105,6 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 animate-fade-in">
         
-        {/* Header Section */}
         <div className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] py-8 px-10 text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-[#cca332]"></div>
           <h2 className="text-sm font-black text-[#cca332] tracking-[0.3em] uppercase mb-2">Mosafiroon</h2>
@@ -121,7 +114,6 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
         <div className="p-8 md:p-10 space-y-8">
           
-          {/* --- SECTION 1: HOTELS --- */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Makkah Stay</h3>
@@ -176,7 +168,6 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
           <hr className="border-gray-200" />
 
-          {/* --- SECTION 2: FLIGHTS --- */}
           <div className="space-y-4">
             <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Flight Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -207,7 +198,6 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
           <hr className="border-gray-200" />
 
-          {/* --- SECTION 3: PAX & PASSPORT STATUS --- */}
           <div className="space-y-4">
             <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Passenger Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -255,13 +245,14 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
         </div>
 
-        {/* --- BOTTOM SUMMARY & WHATSAPP BUTTON --- */}
-        <div className="bg-[#1f0333] p-8 flex justify-center items-center">
+        {/* --- BOTTOM SUMMARY & WHATSAPP BUTTON (Mobile Responsive Classes added) --- */}
+        <div className="bg-[#1f0333] p-6 md:p-8 flex justify-center items-center">
           <button 
             onClick={sendToWhatsApp}
-            className="w-full md:w-2/3 bg-[#25D366] hover:bg-[#1ebd5a] text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 text-xl tracking-wider"
+            // Mobile: py-3, text-base | Desktop: py-4, text-xl
+            className="w-full md:w-2/3 bg-[#25D366] hover:bg-[#1ebd5a] text-white font-bold py-3 md:py-4 px-4 md:px-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 text-base md:text-xl tracking-wider"
           >
-            <i className="fa-brands fa-whatsapp text-2xl"></i>
+            <i className="fa-brands fa-whatsapp text-xl md:text-2xl"></i>
             SEND INQUIRY VIA WHATSAPP
           </button>
         </div>
