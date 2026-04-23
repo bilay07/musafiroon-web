@@ -84,7 +84,7 @@ function Footer() {
               </li>
               <li>
                 <i className="fa-solid fa-envelope text-[#cca332]"></i>
-                <span>info@mosafiroon.com</span>
+                <span>mosafiroon.info@gmail.com</span>
               </li>
             </ul>
           </div>
