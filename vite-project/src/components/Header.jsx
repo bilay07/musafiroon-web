@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Header({ currency, setCurrency }) {
   // Mobile menu ki state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // NAYA CODE: Current page pata karne ke liye
+  const location = useLocation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -19,6 +22,23 @@ function Header({ currency, setCurrency }) {
     };
   }, [isMenuOpen]);
 
+  // NAYA CODE: Desktop links ke liye animation aur active state ki class banani ka function
+  const getNavLinkClass = (path, isSpecial = false) => {
+    const isActive = location.pathname === path;
+    // Base classes jis mein left-to-right underline animation hai
+    const baseClass = "relative py-1 transition-colors duration-300 hover:text-[#cca332] " +
+                      "after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-[#cca332] " +
+                      "after:origin-left after:transition-transform after:duration-300 ";
+    
+    if (isActive) {
+      // Agar page active hai toh line poori dikhao (scale-x-100)
+      return baseClass + "text-[#cca332] after:scale-x-100";
+    } else {
+      // Agar active nahi hai toh line chupa do (scale-x-0) aur hover pe dikhao
+      return baseClass + (isSpecial ? "text-[#cca332] " : "") + "after:scale-x-0 hover:after:scale-x-100";
+    }
+  };
+
   return (
     <>
       {/* Top Bar */}
@@ -29,7 +49,6 @@ function Header({ currency, setCurrency }) {
             <span className="font-semibold tracking-wider">+92 3112462949</span>
           </div>
           <div className="flex items-center space-x-5">
-            {/* Updated Social Links */}
             <a href="https://wa.me/923112462949" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-whatsapp text-lg"></i></a>
             <a href="https://www.facebook.com/profile.php?id=100088573880681" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-facebook text-lg"></i></a>
             <a href="https://www.instagram.com/mosafiroon1/" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-instagram text-lg"></i></a>
@@ -48,17 +67,17 @@ function Header({ currency, setCurrency }) {
             <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
           </button>
 
-          {/* CENTER: Logo (Updated Name to Mosafiroon) */}
+          {/* CENTER: Logo */}
           <Link to="/" className="flex items-center">
              <span className="text-xl md:text-2xl font-black tracking-[0.2em]">MOSAFIROON</span>
           </Link>
 
-          {/* RIGHT: Desktop Nav */}
+          {/* RIGHT: Desktop Nav (Nayi Animation ke sath) */}
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
-            <Link to="/premium-packages" className="hover:text-[#cca332] transition">Star Packages</Link>
-            <Link to="/economy-packages" className="hover:text-[#cca332] transition">Economy Packages</Link>
-            <Link to="/special-deals" className="hover:text-[#cca332] transition text-[#cca332]">Special Offer</Link>
-            <Link to="/customize" className="hover:text-[#cca332] transition">Customize Packages</Link>
+            <Link to="/premium-packages" className={getNavLinkClass("/premium-packages")}>Star Packages</Link>
+            <Link to="/economy-packages" className={getNavLinkClass("/economy-packages")}>Economy Packages</Link>
+            <Link to="/special-deals" className={getNavLinkClass("/special-deals", true)}>Special Offer</Link>
+            <Link to="/customize" className={getNavLinkClass("/customize")}>Customize Packages</Link>
           </nav>
 
           <div className="flex items-center space-x-4">
@@ -78,13 +97,8 @@ function Header({ currency, setCurrency }) {
         <div className={`fixed inset-0 bg-black/50 transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={toggleMenu}></div>
         
         {/* MOBILE SIDEBAR CONTENT */}
-        {/* NAYA CODE: h-[100dvh] for dynamic mobile height */}
         <div className={`fixed top-0 left-0 h-[100dvh] w-64 bg-[#1f0333] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] flex flex-col ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-          
-          {/* NAYA CODE: overflow-y-auto taake choti screen pe contact form kate na */}
           <div className="p-6 flex-1 flex flex-col overflow-y-auto">
-            
-            {/* Upar wala hissa (Menu links aur Title) */}
             <div>
               <div className="flex justify-between items-center mb-10">
                 <span className="font-black text-lg tracking-widest text-[#cca332]">MENU</span>
@@ -115,7 +129,6 @@ function Header({ currency, setCurrency }) {
                   <i className="fa-solid fa-phone"></i>
                   <span className="text-white font-bold">+92 3112462949</span>
                 </div>
-                {/* Social Icons inside menu for convenience */}
                 <div className="flex gap-4 mt-2">
                   <a href="https://wa.me/923112462949" target="_blank" rel="noreferrer"><i className="fa-brands fa-whatsapp text-xl"></i></a>
                   <a href="https://www.facebook.com/profile.php?id=100088573880681" target="_blank" rel="noreferrer"><i className="fa-brands fa-facebook text-xl"></i></a>
@@ -123,7 +136,6 @@ function Header({ currency, setCurrency }) {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </header>
