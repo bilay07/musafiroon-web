@@ -56,9 +56,9 @@ function Footer() {
               Know where to find us? Let's take a look and get in touch!
             </p>
             
-            {/* Clickable Map Location Box */}
+            {/* Clickable Map Location Box - UPDATED LINK */}
             <a 
-              href="https://maps.google.com/?q=Abbas+Trade+Center,+Main+PIA+Main+Blvd,+near+Javaid+Nehari,+Lahore" 
+              href="https://www.google.com/maps/search/?api=1&query=Bin+Aziz+Tourism+and+Consultants+(Pvt.)+Ltd." 
               target="_blank" 
               rel="noopener noreferrer"
               className="block bg-white/5 hover:bg-white/10 transition duration-300 p-4 rounded-xl mb-6 border border-white/10 group cursor-pointer shadow-sm"
@@ -91,9 +91,12 @@ function Footer() {
 
         </div>
 
-        {/* Copyright Bar */}
-        <div className="border-t border-white/20 pt-6 pb-2 text-sm text-gray-300 text-center md:text-left">
+        {/* Copyright & Credits Bar - UPDATED DESIGN */}
+        <div className="border-t border-white/20 pt-6 pb-6 text-sm text-gray-300 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           <p>Copyright © 2026 Mosafiroon Tourism. All rights reserved.</p>
+          <p className="text-xs text-gray-400">
+            Powered by <span className="text-[#cca332] font-bold tracking-wide">Bin Aziz Group</span> | Designed & Created By <a href="https://leadspktechnologies.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#cca332] transition-colors duration-300 font-medium">leadspktechnologies.com</a>
+          </p>
         </div>
 
       </div>

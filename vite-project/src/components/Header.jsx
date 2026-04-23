@@ -5,7 +5,7 @@ function Header({ currency, setCurrency }) {
   // Mobile menu ki state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // NAYA CODE: Current page pata karne ke liye
+  // Current page pata karne ke liye
   const location = useLocation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -22,8 +22,8 @@ function Header({ currency, setCurrency }) {
     };
   }, [isMenuOpen]);
 
-  // NAYA CODE: Desktop links ke liye animation aur active state ki class banani ka function
-  const getNavLinkClass = (path, isSpecial = false) => {
+  // Desktop links ke liye animation aur active state ki class banani ka function
+  const getNavLinkClass = (path) => {
     const isActive = location.pathname === path;
     // Base classes jis mein left-to-right underline animation hai
     const baseClass = "relative py-1 transition-colors duration-300 hover:text-[#cca332] " +
@@ -35,7 +35,7 @@ function Header({ currency, setCurrency }) {
       return baseClass + "text-[#cca332] after:scale-x-100";
     } else {
       // Agar active nahi hai toh line chupa do (scale-x-0) aur hover pe dikhao
-      return baseClass + (isSpecial ? "text-[#cca332] " : "") + "after:scale-x-0 hover:after:scale-x-100";
+      return baseClass + "after:scale-x-0 hover:after:scale-x-100";
     }
   };
 
@@ -72,11 +72,10 @@ function Header({ currency, setCurrency }) {
              <span className="text-xl md:text-2xl font-black tracking-[0.2em]">MOSAFIROON</span>
           </Link>
 
-          {/* RIGHT: Desktop Nav (Nayi Animation ke sath) */}
+          {/* RIGHT: Desktop Nav */}
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
             <Link to="/premium-packages" className={getNavLinkClass("/premium-packages")}>Star Packages</Link>
             <Link to="/economy-packages" className={getNavLinkClass("/economy-packages")}>Economy Packages</Link>
-            <Link to="/special-deals" className={getNavLinkClass("/special-deals", true)}>Special Offer</Link>
             <Link to="/customize" className={getNavLinkClass("/customize")}>Customize Packages</Link>
           </nav>
 
@@ -111,9 +110,6 @@ function Header({ currency, setCurrency }) {
                 </Link>
                 <Link to="/economy-packages" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
                   <i className="fa-solid fa-wallet text-sm text-[#cca332]"></i> Economy Packages
-                </Link>
-                <Link to="/special-deals" onClick={toggleMenu} className="text-[#cca332] flex items-center gap-3">
-                  <i className="fa-solid fa-fire text-sm"></i> Special Offer
                 </Link>
                 <Link to="/customize" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
                   <i className="fa-solid fa-sliders text-sm text-[#cca332]"></i> Customize
