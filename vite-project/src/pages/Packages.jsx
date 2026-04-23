@@ -6,7 +6,7 @@ import './Packages.css';
 function Packages({ currency, exchangeRates }) {
   const [activeTab, setActiveTab] = useState('packages'); 
   const [pilgrims, setPilgrims] = useState(4);
-  const [selectedMonth, setSelectedMonth] = useState('All Months*'); // Naya Month Filter
+  const [selectedMonth, setSelectedMonth] = useState('All Months*'); 
   const [hotelLocation, setHotelLocation] = useState('Makkah');
   const [searchParams, setSearchParams] = useSearchParams();
   
@@ -16,7 +16,6 @@ function Packages({ currency, exchangeRates }) {
   const [packageData, setPackageData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Smooth scroll ke liye ref
   const packagesListRef = useRef(null);
 
   useEffect(() => {
@@ -37,12 +36,9 @@ function Packages({ currency, exchangeRates }) {
   const currencySymbols = { USD: "$", PKR: "Rs", SAR: "SR" };
 
   const selectedPkgId = searchParams.get('pkg');
-  
   const selectedPackage = packageData.find(p => p?._id?.toString() === selectedPkgId);
-
   const popularPackagesList = packageData.filter(p => p.category === 'popular').slice(0, 3);
 
-  // Smooth scroll function
   const handleSearchScroll = () => {
     if (packagesListRef.current) {
       packagesListRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -50,10 +46,11 @@ function Packages({ currency, exchangeRates }) {
   };
 
   const handleWhatsAppBooking = (pkgName, totalAmount) => {
-    const waNumber = "923184376511"; 
-    // WhatsApp message mein Month bhej rahe hain
+    // FIX: Naya number update kar diya gaya hai
+    const waNumber = "923112462949"; 
+    
     const monthText = selectedMonth !== 'All Months*' ? `\n*Desired Month:* ${selectedMonth}` : '';
-    const message = `Salam! Main Umrah package book karna chahta hoon.\n\n*Company:* Musafiroon\n*Package:* ${pkgName}\n*Persons:* ${pilgrims}${monthText}\n*Total Price:* ${currency} ${totalAmount.toLocaleString()}`;
+    const message = `Salam! Main Umrah package book karna chahta hoon.\n\n*Company:* Mosafiroon\n*Package:* ${pkgName}\n*Persons:* ${pilgrims}${monthText}\n*Total Price:* ${currency} ${totalAmount.toLocaleString()}`;
     const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank'); 
   };
@@ -88,7 +85,6 @@ function Packages({ currency, exchangeRates }) {
                         <div className="flex flex-col md:flex-row gap-4 items-end animate-fade-in">
                             <div className="flex-1 w-full">
                                 <label className="block text-theme-purple font-bold text-[13px] mb-1.5">Month</label>
-                                {/* Month wala dropdown */}
                                 <select 
                                     value={selectedMonth} 
                                     onChange={(e) => setSelectedMonth(e.target.value)}
@@ -111,7 +107,6 @@ function Packages({ currency, exchangeRates }) {
                                 </select>
                             </div>
                             <div className="w-full md:w-auto">
-                                {/* Search Button Scroll */}
                                 <button onClick={handleSearchScroll} className="btn-gold w-full md:w-36 font-bold py-3 px-6 rounded-lg shadow-md h-[48px]">Search</button>
                             </div>
                         </div>
@@ -172,7 +167,6 @@ function Packages({ currency, exchangeRates }) {
             </div>
         </div>
 
-        {/* Ref yahan lagaya hai taake screen scroll ho kar yahan rukay */}
         <div ref={packagesListRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full pt-16">
             {isLoading ? (
                 <div className="text-center py-20">
