@@ -59,7 +59,6 @@ function Header({ currency, setCurrency }) {
              <span className="text-xl md:text-2xl font-black tracking-[0.2em]">MOSAFIROON</span>
           </Link>
 
-          {/* DESKTOP NAV: Added Home at the start */}
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
             <Link to="/" className={getNavLinkClass("/")}>Home</Link>
             <Link to="/premium-packages" className={getNavLinkClass("/premium-packages")}>Star Packages</Link>
@@ -91,7 +90,6 @@ function Header({ currency, setCurrency }) {
               </div>
               
               <nav className="flex flex-col space-y-6 text-lg font-semibold">
-                {/* Mobile Menu Home Link */}
                 <Link to="/" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
                   <i className="fa-solid fa-house text-sm text-[#cca332]"></i> Home
                 </Link>
@@ -107,7 +105,8 @@ function Header({ currency, setCurrency }) {
               </nav>
             </div>
 
-            <div className="mt-auto pt-8 border-t border-white/10 pb-4">
+            {/* UPDATED: Increased bottom padding (pb-20) to avoid overlap with floating buttons */}
+            <div className="mt-auto pt-8 border-t border-white/10 pb-20">
               <p className="text-xs text-gray-400 mb-4 uppercase tracking-widest">Contact Info</p>
               <div className="flex flex-col gap-4 text-[#cca332]">
                 <div className="flex items-center gap-3">
