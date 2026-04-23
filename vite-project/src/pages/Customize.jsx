@@ -209,11 +209,11 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
           {/* --- SECTION 3: PAX & PASSPORT STATUS --- */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Client & Passengers</h3>
+            <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Passenger Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-bold text-gray-600 mb-1">Client Name</label>
+                    <label className="block text-xs font-bold text-gray-600 mb-1">Family Head Name</label>
                     <input type="text" name="clientName" placeholder="Head Name" value={form.clientName} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
                   </div>
                   <div>
