@@ -14,6 +14,9 @@ import PlaneLoader from './components/PlaneLoader.jsx';
 function LayoutWrapper({ children, currency, setCurrency }) {
   const location = useLocation();
   const isAdminPage = location.pathname.toLowerCase().includes('/admin');
+  
+  // Chatbot Popup State
+  const [showChatPopup, setShowChatPopup] = useState(false);
 
   return (
     <>
@@ -28,7 +31,7 @@ function LayoutWrapper({ children, currency, setCurrency }) {
         {!isAdminPage && <Footer />}
       </div>
 
-      {/* 2. GLOBAL FLOATING BUTTONS (Frontend Only) */}
+      {/* 2. GLOBAL FLOATING BUTTONS & POPUP */}
       {!isAdminPage && (
         <>
           {/* WhatsApp Button */}
@@ -41,9 +44,9 @@ function LayoutWrapper({ children, currency, setCurrency }) {
             <i className="fa-brands fa-whatsapp animate-pulse"></i>
           </a>
 
-          {/* Chatbot Button - NO BORDER & LARGER SIZE (.png fix) */}
+          {/* Chatbot Button */}
           <button 
-            onClick={() => alert("Chatbot is coming soon!")} 
+            onClick={() => setShowChatPopup(true)} 
             className="fixed bottom-6 right-4 md:bottom-8 md:right-8 z-[99999] w-16 h-16 md:w-24 md:h-24 transition-all duration-300 bg-transparent flex justify-center items-center group outline-none border-none shadow-none"
           >
             <img 
@@ -52,6 +55,42 @@ function LayoutWrapper({ children, currency, setCurrency }) {
               className="w-full h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.2)] group-hover:scale-110 transition-transform duration-300" 
             />
           </button>
+
+          {/* --- PIYARA SA CHATBOT POPUP --- */}
+          {showChatPopup && (
+            <div className="fixed inset-0 z-[100000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+              <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all animate-scale-up border border-gray-100">
+                
+                {/* Popup Header */}
+                <div className="bg-[#1f0333] p-6 text-center relative">
+                  <button 
+                    onClick={() => setShowChatPopup(false)}
+                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
+                  >
+                    <i className="fa-solid fa-xmark text-xl"></i>
+                  </button>
+                  <div className="w-20 h-20 mx-auto mb-3 bg-white rounded-full p-1 shadow-lg border-2 border-[#cca332]">
+                    <img src="/chatbot.png" alt="Bot" className="w-full h-full object-contain" />
+                  </div>
+                  <h3 className="text-[#cca332] font-black tracking-widest uppercase text-sm">AI Assistant</h3>
+                </div>
+
+                {/* Popup Body */}
+                <div className="p-8 text-center bg-gray-50">
+                  <h2 className="text-2xl font-black text-[#3b0764] mb-3">COMING SOON!</h2>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                    MashaAllah! Humara advanced AI Chatbot tayyar ho raha hai jo aapke Umrah se mutaliq har sawal ka jawab dega.
+                  </p>
+                  <button 
+                    onClick={() => setShowChatPopup(false)}
+                    className="w-full bg-[#cca332] hover:bg-[#1f0333] text-white font-bold py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-wider text-sm"
+                  >
+                    Theek Hai!
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
     </>
