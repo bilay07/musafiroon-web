@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 function Header({ currency, setCurrency }) {
-  // Mobile menu ki state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  // Current page pata karne ke liye
   const location = useLocation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Scroll Lock jab menu open ho
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -22,26 +18,21 @@ function Header({ currency, setCurrency }) {
     };
   }, [isMenuOpen]);
 
-  // Desktop links ke liye animation aur active state ki class banani ka function
   const getNavLinkClass = (path) => {
     const isActive = location.pathname === path;
-    // Base classes jis mein left-to-right underline animation hai
     const baseClass = "relative py-1 transition-colors duration-300 hover:text-[#cca332] " +
                       "after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-[#cca332] " +
                       "after:origin-left after:transition-transform after:duration-300 ";
     
     if (isActive) {
-      // Agar page active hai toh line poori dikhao (scale-x-100)
       return baseClass + "text-[#cca332] after:scale-x-100";
     } else {
-      // Agar active nahi hai toh line chupa do (scale-x-0) aur hover pe dikhao
       return baseClass + "after:scale-x-0 hover:after:scale-x-100";
     }
   };
 
   return (
     <>
-      {/* Top Bar */}
       <div className="bg-[#1f0333] text-white py-2 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-2">
@@ -59,20 +50,14 @@ function Header({ currency, setCurrency }) {
       <header className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] text-white py-4 shadow-lg sticky top-0 z-50 border-b border-[#cca332]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           
-          {/* LEFT: Hamburger Button (Mobile Only) */}
-          <button 
-            onClick={toggleMenu} 
-            className="md:hidden text-2xl focus:outline-none hover:text-[#cca332] transition"
-          >
+          <button onClick={toggleMenu} className="md:hidden text-2xl focus:outline-none hover:text-[#cca332] transition">
             <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
           </button>
 
-          {/* CENTER: Logo */}
           <Link to="/" className="flex items-center">
              <span className="text-xl md:text-2xl font-black tracking-[0.2em]">MOSAFIROON</span>
           </Link>
 
-          {/* RIGHT: Desktop Nav */}
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
             <Link to="/premium-packages" className={getNavLinkClass("/premium-packages")}>Star Packages</Link>
             <Link to="/economy-packages" className={getNavLinkClass("/economy-packages")}>Economy Packages</Link>
@@ -92,10 +77,8 @@ function Header({ currency, setCurrency }) {
           </div>
         </div>
 
-        {/* MOBILE SIDEBAR MENU (Overlay) */}
         <div className={`fixed inset-0 bg-black/50 transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={toggleMenu}></div>
         
-        {/* MOBILE SIDEBAR CONTENT */}
         <div className={`fixed top-0 left-0 h-[100dvh] w-64 bg-[#1f0333] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] flex flex-col ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="p-6 flex-1 flex flex-col overflow-y-auto">
             <div>
@@ -117,7 +100,6 @@ function Header({ currency, setCurrency }) {
               </nav>
             </div>
 
-            {/* Bottom Contact Section */}
             <div className="mt-auto pt-8 border-t border-white/10 pb-4">
               <p className="text-xs text-gray-400 mb-4 uppercase tracking-widest">Contact Info</p>
               <div className="flex flex-col gap-4 text-[#cca332]">
