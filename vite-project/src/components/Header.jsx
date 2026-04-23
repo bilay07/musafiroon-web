@@ -14,7 +14,7 @@ function Header({ currency, setCurrency }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <i className="fa-solid fa-phone"></i>
-            <span className="font-semibold tracking-wider">03112462949</span>
+            <span className="font-semibold tracking-wider">+92 3112462949</span>
           </div>
           <div className="flex items-center space-x-5">
             {/* Updated Social Links */}
@@ -93,7 +93,7 @@ function Header({ currency, setCurrency }) {
               <div className="flex flex-col gap-4 text-[#cca332]">
                 <div className="flex items-center gap-3">
                   <i className="fa-solid fa-phone"></i>
-                  <span className="text-white font-bold">03112462949</span>
+                  <span className="text-white font-bold">+92 3112462949</span>
                 </div>
                 {/* Social Icons inside menu for convenience */}
                 <div className="flex gap-4 mt-2">

@@ -62,7 +62,6 @@
   position: absolute;
   left: 50%;
   z-index: 10; 
-  /* YAHAN FIX HAI: Sirf initial state set ki ha taake 0.2s ke delay me flash na kare, aur kuch nahi chhera */
   bottom: -10vh;
   transform: translateX(-50%) scale(0.8);
   animation: planeFlyBy 4.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
@@ -83,11 +82,23 @@
   font-weight: 900;
   font-size: 42px; 
   letter-spacing: 15px;
-  text-transform: uppercase;
+  padding-left: 15px; /* YAHAN FIX HAI: Aakhri letter ki space balance karne ke liye */
+  text-align: center;
+  width: 100%;
   z-index: 6; 
   opacity: 0;
   animation: fadeInMusafiroon 1s ease forwards 1.8s; 
   position: absolute;
+}
+
+/* Mobile Responsive Fixes */
+@media (max-width: 768px) {
+  .loader-musafiroon-text {
+    font-size: 26px; /* Font size chota kiya */
+    letter-spacing: 8px; /* Spacing kam ki */
+    padding-left: 8px; /* Balance offset update kiya */
+    animation: fadeInMusafiroonMobile 1s ease forwards 1.8s; /* Nayi mobile animation */
+  }
 }
 
 /* =========================================
@@ -111,6 +122,11 @@
 @keyframes fadeInMusafiroon {
   from { opacity: 0; letter-spacing: 25px; transform: translateY(10px); }
   to { opacity: 1; letter-spacing: 15px; transform: translateY(0); }
+}
+
+@keyframes fadeInMusafiroonMobile {
+  from { opacity: 0; letter-spacing: 15px; transform: translateY(10px); }
+  to { opacity: 1; letter-spacing: 8px; transform: translateY(0); }
 }
 
 @keyframes openLeftPanel {

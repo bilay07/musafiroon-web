@@ -43,7 +43,7 @@ const PlaneLoader = ({ onFinished }) => {
       </div>
       
       {/* MUSAFIROON Text */}
-      <h2 className="loader-musafiroon-text">MUSAFIROON</h2>
+      <h2 className="loader-musafiroon-text">MOSAFIROON</h2>
     </div>
   );
 };
