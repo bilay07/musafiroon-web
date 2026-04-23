@@ -245,7 +245,7 @@ Infants: ${form.infants} x ${(form.infantPrice || 0).toLocaleString()} PKR
           {/* --- SECTION 3: PAX & PRICING --- */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Client & Passengers</h3>
+              <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Passengers Details</h3>
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                    <div>
