@@ -18,6 +18,17 @@ function Chatbot() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
+  // --- Sequence Wise Back Function ---
+  const handleBackSequence = () => {
+    if (selectedTopic) {
+      // Agar topic details ya AI chat par hai, toh wapas Main Menu par jaye
+      setSelectedTopic(null);
+    } else if (language) {
+      // Agar Main Menu par hai, toh wapas Language selection par jaye
+      setLanguage(null);
+    }
+  };
+
   const handleLanguageSelect = (lang) => {
     setLanguage(lang);
   };
@@ -28,11 +39,6 @@ function Chatbot() {
     } else {
       setSelectedTopic(topic);
     }
-  };
-
-  // --- Naya function wapas main menu par jane ke liye ---
-  const goBackToMenu = () => {
-    setSelectedTopic(null);
   };
 
   const handleSendMessage = async (e) => {
@@ -48,7 +54,6 @@ function Chatbot() {
 
     try {
      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      
       const systemPrompt = `You are a helpful and polite travel assistant for a company named 'Mosafiroon' based in Pakistan. You help customers with Umrah packages, Ziarat, Visa, and tickets. Keep your answers short, professional, and friendly. The user prefers to speak in ${language === 'ur' ? 'Roman Urdu (Pakistani style)' : 'English'}. User asked: ${userMsg}`;
 
       const result = await model.generateContent(systemPrompt);
@@ -73,22 +78,22 @@ function Chatbot() {
 
   const topicResponses = {
     en: {
-      "Umrah Packages": "We offer premium 14-day and 21-day Umrah packages including 5-star hotel stays and transport. Please leave a message to get a customized quote.",
+      "Umrah Packages": "We offer premium 14-day and 21-day Umrah packages including 5-star hotel stays and transport.",
       "Ziarat": "Our Ziarat tours cover all major holy sites in Makkah and Madinah with experienced guides.",
-      "Transport": "We provide luxury buses, GMCs, and private cars for Jeddah to Makkah, and Makkah to Madinah transfers.",
-      "Tickets": "We offer competitive airline ticket rates for all major airlines flying to Saudi Arabia.",
-      "Accommodation": "Partnered with top-tier hotels in Makkah (Clock Tower) and Madinah (Markazia) for the best stay.",
+      "Transport": "Luxury buses, GMCs, and private cars for Jeddah-Makkah and Madinah transfers.",
+      "Tickets": "Competitive airline ticket rates for all major airlines to Saudi Arabia.",
+      "Accommodation": "Partnered with top-tier hotels in Makkah and Madinah for the best stay.",
       "Visa": "Fast and reliable Umrah Visa processing within 24 to 48 hours.",
-      "Insurance": "Comprehensive travel insurance covering medical emergencies during your Umrah trip."
+      "Insurance": "Comprehensive travel insurance covering medical emergencies."
     },
     ur: {
-      "Umrah Packages": "Hum 14 aur 21 din ke premium Umrah packages faraham karte hain jismein 5-star hotels aur transport shamil hain.",
-      "Ziarat": "Humari Ziarat service mein Makkah aur Madinah ke tamam ahem muqamat tajurbakar guide ke sath shamil hain.",
-      "Transport": "Jeddah se Makkah aur Madinah ke liye luxury buses aur private gariyon ki sahulat dastiyab hai.",
-      "Tickets": "Saudi Arabia jane wali tamam bari airlines ke saste aur mayari tickets dastiyab hain.",
-      "Accommodation": "Makkah (Clock Tower) aur Madinah (Markazia) ke behtareen hotels mein rihaish.",
+      "Umrah Packages": "Hum 14 aur 21 din ke premium Umrah packages faraham karte hain jismein 5-star hotels shamil hain.",
+      "Ziarat": "Humari Ziarat service mein Makkah aur Madinah ke tamam ahem muqamat shamil hain.",
+      "Transport": "Jeddah se Makkah aur Madinah ke liye luxury buses aur private gariyon ki sahulat.",
+      "Tickets": "Saudi Arabia jane wali tamam bari airlines ke saste tickets dastiyab hain.",
+      "Accommodation": "Makkah aur Madinah ke behtareen hotels mein rihaish.",
       "Visa": "24 se 48 ghante ke andar Umrah Visa ki fauri processing.",
-      "Insurance": "Dauran-e-safar kisi bhi medical emergency ke liye mukammal travel insurance."
+      "Insurance": "Dauran-e-safar kisi bhi medical emergency ke liye travel insurance."
     }
   };
 
@@ -112,6 +117,17 @@ function Chatbot() {
           
           {/* Header */}
           <div className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] p-4 relative flex items-center shadow-md z-10">
+            
+            {/* 👇 Sequence Back Arrow (Sirf tab jab language select ho) */}
+            {language && (
+              <button 
+                onClick={handleBackSequence}
+                className="mr-2 text-white hover:text-[#cca332] transition-colors w-8 h-8 flex justify-center items-center"
+              >
+                <i className="fa-solid fa-chevron-left text-lg"></i>
+              </button>
+            )}
+
             <div className="w-10 h-10 bg-white rounded-full p-1 border-2 border-[#cca332]">
               <img src="/chatbot.png" alt="Bot" className="w-full h-full object-contain" />
             </div>
@@ -122,12 +138,11 @@ function Chatbot() {
                </p>
             </div>
             
-            {/* 👇 PERMANENT BACK/HOME BUTTON (Sirf tab dikhega jab language select ho chuki ho) */}
             {language && (
               <button 
-                onClick={goBackToMenu}
-                className="bg-white/10 hover:bg-white/20 text-white w-8 h-8 rounded-lg flex justify-center items-center transition-all mr-1"
-                title="Back to Menu"
+                onClick={() => {setLanguage(null); setSelectedTopic(null);}}
+                className="bg-white/10 hover:bg-white/20 text-white w-8 h-8 rounded-lg flex justify-center items-center transition-all"
+                title="Reset to Language"
               >
                 <i className="fa-solid fa-house text-sm"></i>
               </button>
@@ -135,22 +150,21 @@ function Chatbot() {
           </div>
 
           <div className="flex-grow bg-[#f8f9fa] p-4 overflow-y-auto flex flex-col gap-4 pb-20 scroll-smooth">
-            
             {!language ? (
-              <>
+              <div className="animate-fade-in">
                 <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 max-w-[90%] text-sm text-gray-700">
-                  <p className="mb-2 font-bold text-[#3b0764]">Assalam-o-Alaikum! Welcome to Mosafiroon.</p>
+                  <p className="mb-2 font-bold text-[#3b0764]">Assalam-o-Alaikum!</p>
                   <p className="text-xs text-gray-600 mb-1">Please select your preferred language.</p>
                 </div>
-                <div className="flex flex-col gap-2 mt-1">
-                  <button onClick={() => handleLanguageSelect('en')} className="bg-[#3b0764] text-white py-2.5 px-4 rounded-xl hover:bg-[#1f0333] text-xs font-bold shadow-md text-left flex justify-between items-center group">
+                <div className="flex flex-col gap-2 mt-3">
+                  <button onClick={() => handleLanguageSelect('en')} className="bg-[#3b0764] text-white py-3 px-4 rounded-xl hover:bg-[#1f0333] text-xs font-bold shadow-md flex justify-between items-center transition-all">
                     English <i className="fa-solid fa-arrow-right text-[#cca332]"></i>
                   </button>
-                  <button onClick={() => handleLanguageSelect('ur')} className="bg-[#cca332] text-white py-2.5 px-4 rounded-xl hover:bg-[#b08d2a] text-xs font-bold shadow-md text-left flex justify-between items-center group">
+                  <button onClick={() => handleLanguageSelect('ur')} className="bg-[#cca332] text-white py-3 px-4 rounded-xl hover:bg-[#b08d2a] text-xs font-bold shadow-md flex justify-between items-center transition-all">
                     اردو (Roman Urdu) <i className="fa-solid fa-arrow-right text-[#3b0764]"></i>
                   </button>
                 </div>
-              </>
+              </div>
             ) : (
               <>
                 {!selectedTopic ? (
@@ -178,25 +192,19 @@ function Chatbot() {
                     <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 text-sm text-gray-700">
                       <p className="leading-relaxed">{topicResponses[language][selectedTopic]}</p>
                     </div>
-                    {/* 👇 Optional: Niche wala back button bhi rehne dete hain for easy access */}
-                    <button onClick={goBackToMenu} className="self-start text-[#3b0764] hover:text-[#cca332] text-xs font-bold flex items-center gap-1 mt-2">
-                      <i className="fa-solid fa-arrow-left"></i> {language === 'en' ? 'Back' : 'Wapas'}
-                    </button>
                   </div>
                 ) : (
                   <div className="flex flex-col gap-3 animate-fade-in">
                     {messages.length === 0 && (
                       <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 max-w-[90%] text-sm text-gray-700">
-                        {language === 'en' ? 'Ask me anything about Umrah, Packages, or Visas!' : 'Umrah, Packages ya Visa ke baaray mein poochiye!'}
+                        {language === 'en' ? 'Ask me anything about our services!' : 'Humari services ke baray mein kuch bhi poochiye!'}
                       </div>
                     )}
-                    
                     {messages.map((msg, index) => (
                       <div key={index} className={`max-w-[85%] p-3 text-xs font-medium ${msg.role === 'user' ? 'bg-[#cca332] text-white rounded-2xl rounded-tr-none self-end shadow-sm' : 'bg-white border border-gray-100 text-gray-700 rounded-2xl rounded-tl-none self-start shadow-sm'}`}>
                         {msg.text}
                       </div>
                     ))}
-
                     {isTyping && (
                       <div className="bg-white border border-gray-100 text-gray-500 rounded-2xl rounded-tl-none self-start shadow-sm p-3 text-xs font-medium flex gap-1 items-center">
                         <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
@@ -228,7 +236,6 @@ function Chatbot() {
               </form>
             </div>
           )}
-
         </div>
       )}
     </>
