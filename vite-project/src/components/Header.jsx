@@ -7,14 +7,13 @@ function Header({ currency, setCurrency }) {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // --- NAYA CODE: Scroll Lock jab menu open ho ---
+  // Scroll Lock jab menu open ho
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    // Cleanup taake agar component hate toh scroll wapis theek ho jaye
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -79,9 +78,11 @@ function Header({ currency, setCurrency }) {
         <div className={`fixed inset-0 bg-black/50 transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={toggleMenu}></div>
         
         {/* MOBILE SIDEBAR CONTENT */}
-        <div className={`fixed top-0 left-0 h-full w-64 bg-[#1f0333] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-          {/* NAYA CODE: h-full, flex aur flex-col lagaya taake contact neechay ja sake */}
-          <div className="p-6 h-full flex flex-col">
+        {/* NAYA CODE: h-[100dvh] for dynamic mobile height */}
+        <div className={`fixed top-0 left-0 h-[100dvh] w-64 bg-[#1f0333] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] flex flex-col ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+          
+          {/* NAYA CODE: overflow-y-auto taake choti screen pe contact form kate na */}
+          <div className="p-6 flex-1 flex flex-col overflow-y-auto">
             
             {/* Upar wala hissa (Menu links aur Title) */}
             <div>
@@ -106,7 +107,7 @@ function Header({ currency, setCurrency }) {
               </nav>
             </div>
 
-            {/* NAYA CODE: mt-auto lagaya taake ye automatically bottom pe chala jaye */}
+            {/* Bottom Contact Section */}
             <div className="mt-auto pt-8 border-t border-white/10 pb-4">
               <p className="text-xs text-gray-400 mb-4 uppercase tracking-widest">Contact Info</p>
               <div className="flex flex-col gap-4 text-[#cca332]">
