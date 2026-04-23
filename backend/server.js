@@ -108,5 +108,43 @@ app.delete('/api/packages/:id', verifyToken, async (req, res) => {
   res.json({ message: "Deleted!" });
 });
 
+// --- SECURE: ADD NEW ADMIN USER ---
+app.post('/api/admin/register', verifyToken, async (req, res) => {
+  const { username, email, password } = req.body;
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = new Admin({ username, email, password: hashedPassword });
+    await newAdmin.save();
+    res.json({ success: true, message: "User Created!" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Username/Email already exists!" });
+  }
+});
+
+// --- SECURE: RESET PASSWORD (Sirf mosafiroon.info@gmail.com ke liye) ---
+app.post('/api/admin/reset-password', async (req, res) => {
+  const { email, newPassword } = req.body;
+  
+  // Security Check: Sirf is exact email walay ka password badlega
+  if (email !== 'mosafiroon.info@gmail.com') {
+    return res.status(403).json({ success: false, message: "Unauthorized Request!" });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // Find exact admin user and update password
+    const updatedAdmin = await Admin.findOneAndUpdate(
+      { email: 'mosafiroon.info@gmail.com' }, 
+      { password: hashedPassword }
+    );
+    
+    if (!updatedAdmin) return res.status(404).json({ success: false, message: "Main Admin account not found!" });
+    
+    res.json({ success: true, message: "Password updated successfully!" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
