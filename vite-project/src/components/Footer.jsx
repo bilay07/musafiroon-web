@@ -14,9 +14,9 @@ function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Musafiroon Text Moved Outside and Made Smaller */}
+        {/* Mosafiroon Text Moved Outside and Made Smaller */}
         <div className="mb-8">
-            <h2 className="text-2xl font-extrabold text-white tracking-widest uppercase">Musafiroon</h2>
+            <h2 className="text-2xl font-extrabold text-white tracking-widest uppercase">Mosafiroon</h2>
         </div>
         
         {/* Grid layout updated to 3 columns */}
@@ -28,13 +28,11 @@ function Footer() {
               We're travel experts with a passion for bringing spiritual journeys to life. By leveraging a unique, consultative process and an agile service approach, we translate your travel needs into seamless Umrah experiences.
             </p>
             
-            {/* Social Icons */}
+            {/* Social Icons Updated from Header */}
             <div className="flex space-x-3">
-              <a href="#" className="social-icon-btn"><i className="fa-brands fa-facebook-f"></i></a>
-              <a href="#" className="social-icon-btn"><i className="fa-brands fa-instagram"></i></a>
-              <a href="#" className="social-icon-btn"><i className="fa-brands fa-linkedin-in"></i></a>
-              <a href="#" className="social-icon-btn"><i className="fa-brands fa-x-twitter"></i></a>
-              <a href="#" className="social-icon-btn"><i className="fa-brands fa-youtube"></i></a>
+              <a href="https://wa.me/923112462949" target="_blank" rel="noreferrer" className="social-icon-btn"><i className="fa-brands fa-whatsapp"></i></a>
+              <a href="https://www.facebook.com/profile.php?id=100088573880681" target="_blank" rel="noreferrer" className="social-icon-btn"><i className="fa-brands fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/mosafiroon1/" target="_blank" rel="noreferrer" className="social-icon-btn"><i className="fa-brands fa-instagram"></i></a>
             </div>
           </div>
 
@@ -44,7 +42,7 @@ function Footer() {
             <ul className="footer-links-list space-y-3">
               <li><Link to="/premium-packages">Star Packages</Link></li>
               <li><Link to="/economy-packages">Economy Packages</Link></li>
-              <li><Link to="/">Customized Umrah</Link></li>
+              <li><Link to="/customize">Customized Umrah</Link></li>
               <li><Link to="/">Ziyarat Tours</Link></li>
               <li><Link to="/">Hotel Booking</Link></li>
               <li><Link to="/">Transport Services</Link></li>
@@ -60,7 +58,7 @@ function Footer() {
             
             {/* Clickable Map Location Box */}
             <a 
-              href="https://www.google.com/maps/search/?api=1&query=Bin+Aziz+Tourism+and+Consultants,+Abbas+Trade+Center,+PIA+Housing+Scheme,+Lahore" 
+              href="https://maps.google.com/?q=Abbas+Trade+Center,+Main+PIA+Main+Blvd,+near+Javaid+Nehari,+Lahore" 
               target="_blank" 
               rel="noopener noreferrer"
               className="block bg-white/5 hover:bg-white/10 transition duration-300 p-4 rounded-xl mb-6 border border-white/10 group cursor-pointer shadow-sm"
@@ -68,7 +66,7 @@ function Footer() {
               <div className="flex items-start gap-3">
                 <i className="fa-solid fa-map-location-dot text-[#cca332] text-2xl mt-1 group-hover:scale-110 transition-transform"></i>
                 <div>
-                  <p className="text-sm text-white font-bold mb-1">Musafiroon</p>
+                  <p className="text-sm text-white font-bold mb-1">Mosafiroon</p>
                   <p className="text-xs text-gray-300 leading-relaxed">
                     Office No. M1 - M3, 1st Floor, Abbas Trade Center, Main PIA Main Blvd, near Javaid Nehari, Lahore
                   </p>
@@ -86,7 +84,7 @@ function Footer() {
               </li>
               <li>
                 <i className="fa-solid fa-envelope text-[#cca332]"></i>
-                <span>info@musafiroon.com</span>
+                <span>info@mosafiroon.com</span>
               </li>
             </ul>
           </div>
@@ -95,7 +93,7 @@ function Footer() {
 
         {/* Copyright Bar */}
         <div className="border-t border-white/20 pt-6 pb-2 text-sm text-gray-300 text-center md:text-left">
-          <p>Copyright © 2026 Musafiroon Tourism. All rights reserved.</p>
+          <p>Copyright © 2026 Mosafiroon Tourism. All rights reserved.</p>
         </div>
 
       </div>

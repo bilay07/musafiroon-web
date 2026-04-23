@@ -26,6 +26,15 @@
   height: 80px;
 }
 
+/* --- NAYA CODE: Mobile pe Wave ko Smooth (Laptop Jaisa) karne ke liye --- */
+@media (max-width: 768px) {
+  .custom-footer .wave-divider svg {
+    width: calc(150% + 1.3px); /* Wave ko thora lamba (stretch) kiya */
+    height: 40px; /* Gehrai kam ki taake pointy/sharp na lagay */
+    transform: translateX(-25%); /* Center adjust kiya */
+  }
+}
+
 .custom-footer .wave-divider .shape-fill {
   fill: #f9fafb; /* App.jsx ke bg-gray-50 se match karne ke liye */
 }
