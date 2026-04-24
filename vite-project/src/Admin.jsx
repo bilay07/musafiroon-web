@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState(''); // 'superadmin' ya 'user'
+  const [userRole, setUserRole] = useState(''); 
   
   // Nayi State: Remember Me ke liye LocalStorage check karega
   const [identifier, setIdentifier] = useState(localStorage.getItem('savedIdentifier') || '');
@@ -12,6 +12,9 @@ function Admin() {
   
   const [packages, setPackages] = useState([]);
   const [subUsers, setSubUsers] = useState([]);
+  
+  // ERROR FIX YAHAN HUA HAI: selectedPackage is not defined ka masla ab nahi ayega
+  const [selectedPackage, setSelectedPackage] = useState(null);
 
   // Tabs aur OTP
   const [loginTab, setLoginTab] = useState('admin'); 
@@ -30,7 +33,10 @@ function Admin() {
     route: 'JEDDAH, MAKKAH, MADINAH', // Default route
     inclusions: 'Visa, Hotel, Transport', // Default inclusions
     makkah: '', 
-    madinah: ''
+    madinah: '',
+    makkahHotel: '', 
+    madinahHotel: '',
+    description: '' 
   });
 
   useEffect(() => {
@@ -99,7 +105,7 @@ function Admin() {
       });
       const data = await res.json();
       if (data.success) {
-        alert("OTP sent to your email! (Check server console if no email received)");
+        alert("OTP sent to your email!");
         setForgotStep(2);
       } else { alert(data.message); }
     } catch (err) { alert("Server Error!"); }
@@ -129,7 +135,20 @@ function Admin() {
 
   const fetchPackages = () => {
     fetch('https://musafiroon-web.onrender.com/api/packages')
-      .then(res => res.json()).then(data => setPackages(data));
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setPackages(data);
+        } else if (data && data.data && Array.isArray(data.data)) {
+          setPackages(data.data);
+        } else {
+          setPackages([]);
+        }
+      })
+      .catch(err => {
+        console.error("Packages fetch error:", err);
+        setPackages([]);
+      });
   };
 
   const fetchUsers = async (currentToken) => {
@@ -138,8 +157,17 @@ function Admin() {
         headers: { 'Authorization': `Bearer ${currentToken}` }
       });
       const data = await res.json();
-      setSubUsers(data);
-    } catch(err) {}
+      if (Array.isArray(data)) {
+        setSubUsers(data);
+      } else if (data && data.data && Array.isArray(data.data)) {
+        setSubUsers(data.data);
+      } else {
+        setSubUsers([]);
+      }
+    } catch(err) {
+      console.error("Users fetch error:", err);
+      setSubUsers([]);
+    }
   };
 
   const handleAddAdmin = async (e) => {
@@ -173,17 +201,25 @@ function Admin() {
       category: formData.category, 
       route: formData.route.split(',').map(s=>s.trim()), 
       inclusions: formData.inclusions.split(',').map(s=>s.trim()), 
-      distances: { makkah: formData.makkah, madinah: formData.madinah } 
+      distances: { makkah: formData.makkah, madinah: formData.madinah },
+      hotels: { makkah: formData.makkahHotel, madinah: formData.madinahHotel },
+      description: formData.description 
     };
     try {
       const response = await fetch('https://musafiroon-web.onrender.com/api/packages', {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(newPkg)
       });
       if(response.ok) { 
+        alert("Package Added Successfully!");
         fetchPackages(); 
-        setFormData({title:'', price:'', category:'popular', route:'JEDDAH, MAKKAH, MADINAH', inclusions:'Visa, Hotel, Transport', makkah:'', madinah:''}); 
+        setFormData({title:'', price:'', category:'popular', route:'JEDDAH, MAKKAH, MADINAH', inclusions:'Visa, Hotel, Transport', makkah:'', madinah:'', makkahHotel:'', madinahHotel:'', description:''}); 
+      } else {
+        const errorData = await response.json();
+        alert("Error adding package: " + (errorData.message || "Please check backend schema."));
       }
-    } catch (error) {}
+    } catch (error) {
+      alert("Network error: Could not reach the server.");
+    }
   };
 
   const handleDeletePackage = async (id) => {
@@ -193,7 +229,7 @@ function Admin() {
     }
   };
 
-  // --- LOGIN & OTP UI ---
+  // --- LOGIN UI ---
   if (!isAuthenticated) {
     return (
       <div className="fixed inset-0 z-[9999] bg-[#1a1a1a] flex items-center justify-center p-4">
@@ -295,15 +331,11 @@ function Admin() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* LEFT SIDE */}
           <div className="lg:col-span-4 space-y-8">
             <div className="bg-white p-8 rounded shadow-sm">
               <h3 className="font-bold mb-6 border-b pb-2 uppercase text-xs">New Package Listing</h3>
               
-              {/* --- ADVANCED PACKAGE FORM --- */}
               <form onSubmit={handleAddPackage} className="space-y-4">
-                
-                {/* Title & Price */}
                 <div className="grid grid-cols-2 gap-2">
                   <div className="col-span-2">
                     <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Package Title</label>
@@ -321,7 +353,6 @@ function Admin() {
                   </div>
                 </div>
 
-                {/* Distances */}
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Makkah Distance</label>
@@ -333,7 +364,17 @@ function Admin() {
                   </div>
                 </div>
 
-                {/* Route & Inclusions */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Makkah Hotel Name</label>
+                    <input type="text" placeholder="e.g. Swissotel" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.makkahHotel} onChange={e => setFormData({...formData, makkahHotel: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Madinah Hotel Name</label>
+                    <input type="text" placeholder="e.g. Pullman" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.madinahHotel} onChange={e => setFormData({...formData, madinahHotel: e.target.value})} />
+                  </div>
+                </div>
+
                 <div>
                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Route (Comma Separated)</label>
                    <input type="text" placeholder="JEDDAH, MAKKAH, MADINAH" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.route} onChange={e => setFormData({...formData, route: e.target.value})} required />
@@ -343,11 +384,15 @@ function Admin() {
                    <input type="text" placeholder="Visa, Hotel, Transport" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.inclusions} onChange={e => setFormData({...formData, inclusions: e.target.value})} required />
                 </div>
 
+                <div>
+                   <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Booking Page Details</label>
+                   <textarea placeholder="Experience a spiritually enriching journey..." className="w-full border p-3 rounded text-sm bg-gray-50 h-20" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+                </div>
+
                 <button type="submit" className="w-full bg-[#cca332] text-white py-4 font-bold rounded">ADD PACKAGE</button>
               </form>
             </div>
 
-            {/* ONLY SUPERADMIN CAN ADD USERS */}
             {userRole === 'superadmin' && (
               <div className="bg-white p-8 rounded shadow-sm border-t-4 border-black">
                 <h3 className="font-bold mb-6 border-b pb-2 uppercase text-xs">Add System User</h3>
@@ -361,7 +406,6 @@ function Admin() {
             )}
           </div>
 
-          {/* RIGHT SIDE */}
           <div className="lg:col-span-8 space-y-8">
             <div className="bg-white p-8 rounded shadow-sm overflow-x-auto h-fit">
                <h3 className="font-bold mb-6 border-b pb-2 uppercase text-xs">Active Packages</h3>
@@ -380,14 +424,16 @@ function Admin() {
                        <td className="py-4 font-medium">{pkg.title}</td>
                        <td className="py-4 uppercase text-[10px] text-gray-400 font-bold">{pkg.category}</td>
                        <td className="py-4 font-bold">${pkg.price}</td>
-                       <td className="py-4 text-right"><button onClick={() => handleDeletePackage(pkg._id)} className="text-red-500 font-bold text-[10px] hover:underline">DELETE</button></td>
+                       <td className="py-4 text-right">
+                         <button onClick={() => setSelectedPackage(pkg)} className="text-blue-500 font-bold text-[10px] hover:underline mr-3">DETAILS</button>
+                         <button onClick={() => handleDeletePackage(pkg._id)} className="text-red-500 font-bold text-[10px] hover:underline">DELETE</button>
+                       </td>
                      </tr>
                    ))}
                  </tbody>
                </table>
             </div>
 
-            {/* ONLY SUPERADMIN CAN SEE & DELETE USERS */}
             {userRole === 'superadmin' && (
               <div className="bg-white p-8 rounded shadow-sm overflow-x-auto h-fit border-t-4 border-red-500">
                  <h3 className="font-bold mb-6 border-b pb-2 uppercase text-xs">Active Users (Sub-Admins)</h3>
@@ -423,6 +469,63 @@ function Admin() {
           </div>
         </div>
       </div>
+
+      {selectedPackage && (
+        <div className="fixed inset-0 z-[10000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-white w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
+                <div className="bg-[#cca332] p-6 text-white flex justify-between items-center">
+                    <div>
+                        <h2 className="text-xl font-black uppercase leading-tight">{selectedPackage.title}</h2>
+                        <span className="text-[10px] bg-white/20 px-2 py-1 rounded font-bold">Category: {selectedPackage.category}</span>
+                    </div>
+                    <button onClick={() => setSelectedPackage(null)} className="w-10 h-10 bg-black/10 rounded-full hover:bg-black/20 text-2xl">&times;</button>
+                </div>
+                <div className="p-8 space-y-6">
+                    {selectedPackage.description && (
+                      <p className="text-xs text-gray-600 bg-gray-50 p-3 rounded border italic">"{selectedPackage.description}"</p>
+                    )}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <p className="text-[10px] font-black text-gray-400 uppercase mb-1">Makkah Stay</p>
+                            <p className="text-xs font-bold">{selectedPackage.hotels?.makkah || 'N/A'}</p>
+                            <p className="text-[10px] text-[#cca332] font-bold">Dist: {selectedPackage.distances?.makkah || "N/A"}</p>
+                        </div>
+                        <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <p className="text-[10px] font-black text-gray-400 uppercase mb-1">Madinah Stay</p>
+                            <p className="text-xs font-bold">{selectedPackage.hotels?.madinah || 'N/A'}</p>
+                            <p className="text-[10px] text-[#cca332] font-bold">Dist: {selectedPackage.distances?.madinah || "N/A"}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="text-[10px] font-black text-gray-400 uppercase mb-2">Service Route</p>
+                        <div className="flex flex-wrap gap-2">
+                            {selectedPackage.route?.map((r, i) => (
+                                <span key={i} className="px-3 py-1 bg-gray-100 text-[10px] font-bold rounded-full">{r}</span>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="text-[10px] font-black text-gray-400 uppercase mb-2">Inclusions</p>
+                        <div className="flex flex-wrap gap-2">
+                            {selectedPackage.inclusions?.map((inc, i) => (
+                                <span key={i} className="px-3 py-1 bg-green-50 text-green-700 border border-green-200 text-[10px] font-bold rounded-full">{inc}</span>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="pt-4 border-t flex justify-between items-center">
+                        <div className="text-right ml-auto">
+                            <p className="text-[10px] font-black text-gray-400 uppercase">Final Price</p>
+                            <p className="text-3xl font-black text-[#cca332]">${selectedPackage.price}</p>
+                        </div>
+                    </div>
+                </div>
+                <button onClick={() => setSelectedPackage(null)} className="w-full bg-gray-100 py-4 text-xs font-bold text-gray-500 hover:bg-gray-200 transition-all uppercase tracking-widest">Close</button>
+            </div>
+        </div>
+      )}
     </div>
   );
 }
