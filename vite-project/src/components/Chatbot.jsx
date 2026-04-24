@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 Aapki Groq API Key
-const apiKey = "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"; 
+// 👇 Yahan ab direct key nahi likhi, balke .env file se aa rahi hai (100% SECURE)
+const apiKey = import.meta.env.VITE_GROQ_API_KEY;
 
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
