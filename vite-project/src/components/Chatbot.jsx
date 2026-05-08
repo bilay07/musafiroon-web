@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 Verified API Key
-const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZoOwLoe"; 
+// 👇 Yahan maine 'O' ki jagah wapas '0' (Zero) set kar diya hai!
+const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZo0wLoe"; 
 const userID = "user_" + Math.floor(Math.random() * 100000);
 
 function Chatbot() {
@@ -63,12 +63,13 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      // 👇 Version ID updated to V1.04 as per your latest deployment
+      // 👇 Sirf '0' theek nahi kiya, balkay projectID bhi alag se de diya hai taake server crash na ho!
       const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
         method: "POST",
         headers: {
           "Authorization": voiceflowApiKey,
-          "versionID": "production", 
+          "projectID": "69fdd3f6c5c2cf9b6e5816db", 
+          "versionID": "production",
           "Content-Type": "application/json",
           "accept": "application/json"
         },
