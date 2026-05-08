@@ -68,7 +68,7 @@ function Chatbot() {
         method: "POST",
         headers: {
           "Authorization": voiceflowApiKey,
-          "versionID": "V1.04", 
+          "versionID": "production", 
           "Content-Type": "application/json",
           "accept": "application/json"
         },
