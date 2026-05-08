@@ -42,8 +42,13 @@ const PlaneLoader = ({ onFinished }) => {
         <i className="fa-solid fa-plane-up a380-plane-icon"></i>
       </div>
       
-      {/* MUSAFIROON Text */}
-      <h2 className="loader-musafiroon-text">MOSAFIROON</h2>
+      {/* 👇 Updated: MOSAFIROON Text with 'Presented by Bin Aziz' */}
+      <h2 className="loader-musafiroon-text flex flex-col items-center justify-center">
+        <span>MOSAFIROON</span>
+        <span className="text-[12px] md:text-[14px] italic text-[#bf0b5a] font-bold tracking-widest mt-[-2px] md:mt-[-4px]" style={{ fontFamily: 'sans-serif' }}>
+          Presented by Bin Aziz
+        </span>
+      </h2>
     </div>
   );
 };
