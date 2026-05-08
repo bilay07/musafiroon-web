@@ -55,8 +55,10 @@ function Header({ currency, setCurrency }) {
             <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
           </button>
 
-          <Link to="/" className="flex items-center">
-             <span className="text-xl md:text-2xl font-black tracking-[0.2em]">MOSAFIROON</span>
+          {/* 👇 Updated Logo Section: Text color image wale pink/magenta (#bf0b5a) mein change kar diya */}
+          <Link to="/" className="flex flex-col justify-center items-center md:items-start">
+             <span className="text-xl md:text-2xl font-black tracking-[0.2em] leading-tight">MOSAFIROON</span>
+             <span className="text-xs md:text-[13px] italic text-[#bf0b5a] font-bold tracking-widest mt-[-2px] md:mt-[-4px]">Presented by Bin Aziz</span>
           </Link>
 
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
@@ -105,7 +107,6 @@ function Header({ currency, setCurrency }) {
               </nav>
             </div>
 
-            {/* UPDATED: Increased bottom padding (pb-20) to avoid overlap with floating buttons */}
             <div className="mt-auto pt-8 border-t border-white/10 pb-20">
               <p className="text-xs text-gray-400 mb-4 uppercase tracking-widest">Contact Info</p>
               <div className="flex flex-col gap-4 text-[#cca332]">
