@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 Yahan maine 'O' ki jagah wapas '0' (Zero) set kar diya hai!
-const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZo0wLoe"; 
+// 👇 Original, 100% correct key without any tampering
+const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZoOwLoe"; 
 const userID = "user_" + Math.floor(Math.random() * 100000);
 
 function Chatbot() {
@@ -63,15 +63,12 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      // 👇 Sirf '0' theek nahi kiya, balkay projectID bhi alag se de diya hai taake server crash na ho!
+      // 👇 Absolute minimum code required by Voiceflow. No extra headers to cause 500 error.
       const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
         method: "POST",
         headers: {
           "Authorization": voiceflowApiKey,
-          "projectID": "69fdd3f6c5c2cf9b6e5816db", 
-          "versionID": "production",
-          "Content-Type": "application/json",
-          "accept": "application/json"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           action: { type: "text", payload: userMsg }
