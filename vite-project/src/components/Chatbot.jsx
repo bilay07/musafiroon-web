@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 100% Guarantee ke liye key wapas direct laga di hai!
+// 👇 Voiceflow API Key (Direct & Verified)
 const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZoOwLoe"; 
 const userID = "user_" + Math.floor(Math.random() * 100000);
 
@@ -50,9 +50,7 @@ function Chatbot() {
 
   const handleTopicSelect = (topic) => {
     setSelectedTopic(topic);
-    setMessages([
-      { role: 'bot', text: topicResponses[language][topic] }
-    ]);
+    setMessages([{ role: 'bot', text: topicResponses[language][topic] }]);
   };
 
   const handleSendMessage = async (e) => {
@@ -65,42 +63,33 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
+      // 👇 Sirf essential headers ke saath clean request
       const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
         method: "POST",
         headers: {
           "Authorization": voiceflowApiKey,
-          // 👇 Isko 'development' kar diya taake publish ka masla na aaye
-          "versionID": "latest",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "accept": "application/json"
         },
         body: JSON.stringify({
-          action: {
-            type: "text",
-            payload: userMsg
-          }
+          action: { type: "text", payload: userMsg }
         })
       });
 
       const data = await response.json();
       
-      // Agar API se array na aaye tou foran error throw karega
-      if (!Array.isArray(data)) {
-        throw new Error("API ya Publish Issue");
-      }
+      if (!Array.isArray(data)) throw new Error("Invalid response");
 
       const textTraces = data.filter(trace => trace.type === 'text' || trace.type === 'speak');
       let aiText = textTraces.map(t => t.payload.message).join("\n\n");
       
-      if (!aiText) {
-        aiText = "Maaf kijiye, main abhi theek se samajh nahi paya.";
-      }
+      if (!aiText) aiText = "Maaf kijiye, main abhi theek se samajh nahi paya.";
 
       setMessages(prev => [...prev, { role: 'bot', text: aiText }]);
       
     } catch (error) {
       console.error("Voiceflow API Error:", error);
-      // 👇 Presentation ke liye professional fallback error!
-      setMessages(prev => [...prev, { role: 'bot', text: `Abhi humara system busy hai. Kripya mazeed maloomat ke liye +92 311 2462949 par WhatsApp karein.` }]);
+      setMessages(prev => [...prev, { role: 'bot', text: "Abhi system busy hai. Mazeed maloomat ke liye +92 311 2462949 par WhatsApp karein." }]);
     } finally {
       setIsTyping(false);
     }
