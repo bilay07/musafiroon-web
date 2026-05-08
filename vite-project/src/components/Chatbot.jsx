@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 Yeh aa gayi aapki professional .env wali key!
-const voiceflowApiKey = import.meta.env.VITE_VOICEFLOW_API_KEY; 
+// 👇 Vercel ke .env ka nakhra khatam. Direct aur correct API key laga di hai.
+const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZoOwLoe"; 
 const userID = "user_" + Math.floor(Math.random() * 100000);
 
 function Chatbot() {
@@ -63,12 +63,11 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      // 👇 API Request with the key mapped from .env
+      // 👇 Sirf basic request, kyunke Voiceflow ka workflow ab set ho chuka hai
       const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
         method: "POST",
         headers: {
           "Authorization": voiceflowApiKey,
-          "versionID": "production",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
