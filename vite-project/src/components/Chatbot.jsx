@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 Aapki bilkul original aur correct key (O ke sath)
-const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZoOwLoe"; 
+// 👇 Yeh aa gayi aapki professional .env wali key!
+const voiceflowApiKey = import.meta.env.VITE_VOICEFLOW_API_KEY; 
 const userID = "user_" + Math.floor(Math.random() * 100000);
 
 function Chatbot() {
@@ -63,11 +63,12 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      // 👇 Sirf aur sirf API key, koi aur header nahi jo 500 error cause kare
+      // 👇 API Request with the key mapped from .env
       const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
         method: "POST",
         headers: {
           "Authorization": voiceflowApiKey,
+          "versionID": "production",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
