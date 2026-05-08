@@ -1,9 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 Vercel ke .env ka nakhra khatam. Direct aur correct API key laga di hai.
-const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZoOwLoe"; 
-const userID = "user_" + Math.floor(Math.random() * 100000);
-
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [language, setLanguage] = useState(null); 
@@ -15,7 +11,7 @@ function Chatbot() {
   const chatEndRef = useRef(null);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, isTyping]);
 
   const handleBackSequence = () => {
@@ -63,15 +59,12 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      // 👇 Sirf basic request, kyunke Voiceflow ka workflow ab set ho chuka hai
-      const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
+      const response = await fetch(`http://localhost:5000/api/chat`, {
         method: "POST",
-        headers: {
-          "Authorization": voiceflowApiKey,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          action: { type: "text", payload: userMsg }
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          message: userMsg, 
+          language: language 
         })
       });
 
@@ -81,18 +74,11 @@ function Chatbot() {
 
       const data = await response.json();
       
-      if (!Array.isArray(data)) throw new Error("Invalid response from Voiceflow");
-
-      const textTraces = data.filter(trace => trace.type === 'text' || trace.type === 'speak');
-      let aiText = textTraces.map(t => t.payload.message).join("\n\n");
-      
-      if (!aiText) aiText = "Maaf kijiye, main abhi theek se samajh nahi paya.";
-
-      setMessages(prev => [...prev, { role: 'bot', text: aiText }]);
+      setMessages(prev => [...prev, { role: 'bot', text: data.reply || "Maaf kijiye, main abhi theek se samajh nahi paya." }]);
       
     } catch (error) {
-      console.error("Voiceflow API Error:", error);
-      setMessages(prev => [...prev, { role: 'bot', text: "Voiceflow connection error. Please try again." }]);
+      console.error("Backend API Error:", error);
+      setMessages(prev => [...prev, { role: 'bot', text: "Server connection error. Barae meharbani thori dair baad try karein." }]);
     } finally {
       setIsTyping(false);
     }
@@ -104,30 +90,62 @@ function Chatbot() {
 
   return (
     <>
-      <button onClick={() => setIsOpen(!isOpen)} className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[999999] w-14 h-14 md:w-20 md:h-20 hover:scale-110 transition-all outline-none">
-        {isOpen ? (
-          <div className="w-10 h-10 md:w-12 md:h-12 bg-[#1f0333] rounded-full flex justify-center items-center shadow-lg border-2 border-[#cca332]">
-            <i className="fa-solid fa-xmark text-white text-lg md:text-xl"></i>
+      {/* Container aligned with WhatsApp (bottom-6 md:bottom-8) */}
+      <div className="fixed bottom-6 right-4 md:bottom-8 md:right-8 z-[999999] group flex flex-col items-center justify-end">
+        
+        {!isOpen && (
+          // Main Bubble Container - aligned to right
+          <div className="absolute -top-[90px] md:-top-[110px] right-2 md:right-4 flex flex-col items-end" style={{zIndex: -1}}>
+            
+            {/* Main Cloud Bubble */}
+            <div className="bg-white py-2 px-4 md:py-2.5 md:px-5 rounded-[2rem] shadow-xl border border-purple-100 text-center min-w-[120px] md:min-w-[140px] animate-cloud-float">
+              <span className="block text-[#6d568c] font-semibold text-[11px] md:text-[13px] leading-tight" dir="rtl">
+                السلام عليكم
+              </span>
+              <span className="block text-[#5a189a] font-extrabold text-[12px] md:text-[14px] leading-tight mt-0.5" dir="rtl">
+                أنا مقصود
+              </span>
+            </div>
+            
+            {/* Trail pointing towards avatar's mouth (Right-leaning curve) */}
+            <div className="flex flex-col items-end w-full mt-1.5 pr-6 md:pr-8">
+                {/* Medium Dot */}
+                <div className="w-3.5 h-3.5 md:w-4 md:h-4 bg-white rounded-full shadow-md border border-purple-100 mr-4 md:mr-5"></div>
+                {/* Small Dot - Pushed further to the right to connect with the mouth */}
+                <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-white rounded-full shadow-sm border border-purple-100 mr-1 md:mr-2 mt-1"></div>
+            </div>
+
           </div>
-        ) : (
-          <img src="/chatbot.png" alt="Chatbot" className="w-full h-full object-contain" />
         )}
-      </button>
+
+        <button onClick={() => setIsOpen(!isOpen)} className="hover:scale-110 transition-all outline-none relative z-10 flex justify-center items-center w-20 h-20 md:w-28 md:h-28">
+          {isOpen ? (
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-[#1f0333] rounded-full flex justify-center items-center shadow-lg border-2 border-[#cca332]">
+              <i className="fa-solid fa-xmark text-white text-xl md:text-2xl"></i>
+            </div>
+          ) : (
+            // 👇 Added translate-y-2 to move the avatar down slightly
+            <img src="/chatbot.gif" alt="Maqsood" className="w-full h-full object-contain drop-shadow-lg scale-110 translate-y-2" />
+          )}
+        </button>
+      </div>
 
       {isOpen && (
-        <div className="fixed bottom-20 right-4 md:bottom-32 md:right-8 z-[999999] w-[85vw] max-w-[320px] md:max-w-[360px] h-[450px] md:h-[520px] max-h-[75vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-[#cca332]/30 animate-fade-in origin-bottom-right">
+        <div className="fixed bottom-28 right-4 md:bottom-40 md:right-8 z-[999999] w-[85vw] max-w-[320px] md:max-w-[360px] h-[450px] md:h-[520px] max-h-[75vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-[#cca332]/30 animate-fade-in origin-bottom-right">
           
-          <div className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] p-3 md:p-4 flex items-center shadow-md">
+          <div className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] p-3 md:p-4 flex items-center shadow-md flex-shrink-0">
             {language && (
               <button onClick={handleBackSequence} className="mr-2 text-white hover:text-[#cca332] w-6 h-6 md:w-8 md:h-8 flex justify-center items-center transition-all">
                 <i className="fa-solid fa-chevron-left text-base md:text-lg"></i>
               </button>
             )}
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full p-1 border-2 border-[#cca332]">
-              <img src="/chatbot.png" alt="Bot" className="w-full h-full object-contain" />
+            
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full p-1 border-2 border-[#cca332] overflow-hidden flex justify-center items-center flex-shrink-0">
+              <img src="/chatbot.gif" alt="Maqsood" className="w-full h-full object-cover scale-125" />
             </div>
+            
             <div className="text-left ml-2 md:ml-3 flex-grow">
-               <h3 className="text-white font-black uppercase text-[10px] md:text-[12px]">Mosafiroon AI</h3>
+               <h3 className="text-white font-black uppercase text-[12px] md:text-[14px] tracking-wide">Maqsood</h3>
                <p className="text-[#cca332] text-[8px] md:text-[10px] font-bold flex items-center gap-1">
                  <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse"></span> Online
                </p>
@@ -139,7 +157,7 @@ function Chatbot() {
             )}
           </div>
 
-          <div className="flex-grow bg-[#f8f9fa] p-3 md:p-4 overflow-y-auto flex flex-col gap-3 md:gap-4 pb-20">
+          <div className="flex-grow bg-[#f8f9fa] p-3 md:p-4 overflow-y-auto flex flex-col gap-3 md:gap-4 scroll-smooth">
             {!language ? (
               <div className="animate-fade-in flex flex-col gap-3">
                 <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-xs md:text-sm text-gray-700">
@@ -162,7 +180,7 @@ function Chatbot() {
               <div className="flex flex-col gap-2.5 md:gap-3 animate-fade-in">
                 <div className="bg-[#cca332] text-white p-1.5 px-3 rounded-2xl rounded-tr-none shadow-sm self-end text-[9px] md:text-[11px] font-medium opacity-80">{selectedTopic}</div>
                 {messages.map((msg, index) => (
-                  <div key={index} className={`max-w-[85%] p-2.5 md:p-3 text-[11px] md:text-xs font-medium ${msg.role === 'user' ? 'bg-[#cca332] text-white rounded-2xl rounded-tr-none self-end shadow-sm' : 'bg-white border border-gray-100 text-gray-700 rounded-2xl rounded-tl-none self-start shadow-sm'}`}>{msg.text}</div>
+                  <div key={index} className={`max-w-[85%] p-2.5 md:p-3 text-[11px] md:text-xs font-medium whitespace-pre-wrap break-words ${msg.role === 'user' ? 'bg-[#cca332] text-white rounded-2xl rounded-tr-none self-end shadow-sm' : 'bg-white border border-gray-100 text-gray-700 rounded-2xl rounded-tl-none self-start shadow-sm'}`}>{msg.text}</div>
                 ))}
                 {isTyping && (
                   <div className="bg-white border border-gray-100 text-gray-500 rounded-2xl rounded-tl-none self-start shadow-sm p-2.5 md:p-3 text-[11px] md:text-xs font-medium flex flex-row gap-1 items-center">
@@ -171,13 +189,13 @@ function Chatbot() {
                     <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-200"></span>
                   </div>
                 )}
-                <div ref={chatEndRef} />
+                <div ref={chatEndRef} className="h-2" />
               </div>
             )}
           </div>
 
           {language && selectedTopic && (
-            <div className="absolute bottom-0 left-0 w-full p-2.5 md:p-3 bg-white border-t z-20 shadow-inner">
+            <div className="w-full p-2.5 md:p-3 bg-white border-t z-20 shadow-inner flex-shrink-0">
               <form onSubmit={handleSendMessage} className="flex gap-2">
                 <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder={language === 'en' ? "Type message..." : "Sawal likhein..."} className="flex-grow bg-gray-100 rounded-full px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs outline-none focus:bg-white focus:border-[#cca332] border border-transparent transition-all shadow-inner" disabled={isTyping} />
                 <button type="submit" disabled={isTyping} className={`bg-[#3b0764] text-white w-8 h-8 md:w-10 md:h-10 rounded-full flex justify-center items-center shadow-md transition-all ${isTyping ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#cca332]'}`}><i className="fa-solid fa-paper-plane text-xs md:text-sm"></i></button>

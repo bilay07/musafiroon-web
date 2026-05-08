@@ -9,7 +9,7 @@ import Package from './models/Package.js';
 import Admin from './models/Admin.js'; 
 
 dotenv.config();
-const app = express(); // <-- Yehi wo line thi jo miss ho gayi thi!
+const app = express();
 
 // --- CORS FIX: VIP List for Frontend Domains ---
 app.use(cors({
@@ -34,7 +34,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // ==========================================
-// 1. PUBLIC ROUTES (Har koi dekh sakta hai)
+// 1. PUBLIC ROUTES
 // ==========================================
 app.get('/api/packages', async (req, res) => {
   try {
@@ -58,7 +58,7 @@ app.get('/api/economy', async (req, res) => {
 });
 
 // ==========================================
-// 2. ADMIN LOGIN & OTP ROUTES (No Token Needed)
+// 2. ADMIN LOGIN & OTP ROUTES
 // ==========================================
 app.post('/api/admin/login', async (req, res) => {
   const { identifier, password } = req.body; 
@@ -74,7 +74,6 @@ app.post('/api/admin/login', async (req, res) => {
   } catch (err) { res.status(500).json({ message: "Server Error!" }); }
 });
 
-// FORGOT PASSWORD - Send OTP
 app.post('/api/admin/forgot-password', async (req, res) => {
   const { email } = req.body;
   try {
@@ -83,7 +82,7 @@ app.post('/api/admin/forgot-password', async (req, res) => {
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     user.resetOtp = otp;
-    user.otpExpiry = Date.now() + 10 * 60 * 1000; // 10 mins valid
+    user.otpExpiry = Date.now() + 10 * 60 * 1000; 
     await user.save();
 
     const mailOptions = {
@@ -93,14 +92,13 @@ app.post('/api/admin/forgot-password', async (req, res) => {
       text: `Aapka password reset OTP hai: ${otp}. Ye 10 minute tak valid hai.`
     };
 
-    console.log(`[DEV MODE] OTP for ${email}: ${otp}`); // Testing ke liye console mein
+    console.log(`[DEV MODE] OTP for ${email}: ${otp}`); 
     try { await transporter.sendMail(mailOptions); } catch(e) { console.log("Email failed, but OTP is in console."); }
     
     res.json({ success: true, message: "OTP Sent to Email!" });
   } catch (err) { res.status(500).json({ success: false, message: "Server Error" }); }
 });
 
-// RESET PASSWORD - Verify OTP
 app.post('/api/admin/reset-password-otp', async (req, res) => {
   const { email, otp, newPassword } = req.body;
   try {
@@ -118,7 +116,7 @@ app.post('/api/admin/reset-password-otp', async (req, res) => {
 });
 
 // ==========================================
-// 3. SECURITY MIDDLEWARE (Guard)
+// 3. SECURITY MIDDLEWARE
 // ==========================================
 const verifyToken = (req, res, next) => {
   const token = req.header("Authorization");
@@ -132,9 +130,8 @@ const verifyToken = (req, res, next) => {
 };
 
 // ==========================================
-// 4. SECURE ADMIN ROUTES (Sirf Login ke baad chalenge)
+// 4. SECURE ADMIN ROUTES
 // ==========================================
-// Packages Manage Karna
 app.post('/api/packages', verifyToken, async (req, res) => {
   const newPackage = new Package(req.body);
   await newPackage.save();
@@ -146,10 +143,8 @@ app.delete('/api/packages/:id', verifyToken, async (req, res) => {
   res.json({ message: "Deleted!" });
 });
 
-// Users Manage Karna (Sirf Superadmin ke liye)
 app.get('/api/admin/users', verifyToken, async (req, res) => {
   try {
-    // Sirf 'user' role walo ko layega, superadmin khud ko nahi dekhega list mein
     const users = await Admin.find({ role: 'user' }).select('-password');
     res.json(users);
   } catch (err) { res.status(500).json({ message: "Error fetching users" }); }
@@ -172,6 +167,76 @@ app.post('/api/admin/register', verifyToken, async (req, res) => {
   } catch (err) { res.status(500).json({ success: false, message: "Username/Email already exists!" }); }
 });
 
+// ==========================================
+// 5. 🔍 DIAGNOSTIC ROUTE 
+// ==========================================
+app.get('/api/check-models', async (req, res) => {
+  try {
+    const apiKey = process.env.GEMINI_API_KEY;
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ==========================================
+// 6. GEMINI AI CHATBOT ROUTE (Bilingual & Professional)
+// ==========================================
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message, language } = req.body; // Frontend se aane wali zaban pakri
+    const apiKey = process.env.GEMINI_API_KEY;
+
+    if (!apiKey) {
+      return res.status(500).json({ reply: "API Key Missing!" });
+    }
+
+    // Zaban ke hisab se hidayat change ki
+    const langInstruction = language === 'en' 
+      ? "ALWAYS reply in highly professional English." 
+      : "ALWAYS reply in highly professional Roman Urdu (Urdu written in English alphabets).";
+
+    const defaultContactMsg = language === 'en'
+      ? "For exact pricing and more details, please contact us on WhatsApp: +92 311 2462949."
+      : "Mazeed tafseelat aur exact pricing ke liye baraye meharbani hamare WhatsApp +92 311 2462949 par rabta karein.";
+
+    const fullPrompt = `
+      You are an expert, highly professional, and polite Travel Consultant for 'Mosafiroon' (Bin Aziz Tourism & Consultants).
+      
+      EXTREMELY STRICT RULES:
+      1. ${langInstruction}
+      2. Be concise and TO THE POINT. Your answer MUST NOT exceed 2 to 3 short sentences.
+      3. Use maximum 3 short bullet points (1-2 words each) ONLY if listing items or explaining multiple things. NO LONG PARAGRAPHS.
+      4. Maintain a highly professional and respectful tone. DO NOT use robotic phrases like "Aapka sawal behtareen hai" or "Aapka khair maqdam hai".
+      5. If asked about exact prices, specific dates, or complex details, politely reply EXACTLY with this: "${defaultContactMsg}"
+
+      User Question: ${message}
+    `;
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Google API Error:", data);
+      throw new Error(data.error?.message || "Google API Error");
+    }
+
+    const responseText = data.candidates[0].content.parts[0].text;
+    res.json({ reply: responseText });
+    
+  } catch (error) {
+    console.error("Backend Error:", error);
+    res.status(500).json({ reply: "Server error. Barae meharbani thori dair baad try karein." });
+  }
+});
+
 // --- SERVER START ---
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT} 🚀`));

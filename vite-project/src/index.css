@@ -59,3 +59,13 @@ html {
     font-size: 2rem;
   }
 }
+/* Makkhan jaisa floating effect bara cloud ke liye */
+@keyframes cloudFloatSmooth {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); } /* Sirf 8px uuper jayega */
+  100% { transform: translateY(0px); }
+}
+
+.animate-cloud-float {
+  animation: cloudFloatSmooth 4s ease-in-out infinite; /* 4 second mein makkhan ki tarah chalega */
+}
