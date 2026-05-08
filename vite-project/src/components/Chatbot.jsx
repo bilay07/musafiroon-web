@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 Yahan ab direct key nahi likhi, balke .env file se aa rahi hai (100% SECURE)
-const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+// 👇 Ab key direct yahan nahi hai, balke secure .env file se aa rahi hai!
+const voiceflowApiKey = import.meta.env.VITE_VOICEFLOW_API_KEY; 
+
+// Har naye user ke liye ek session ID taake chats mix na hon
+const userID = "user_" + Math.floor(Math.random() * 100000);
 
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,65 +63,41 @@ function Chatbot() {
 
     const userMsg = inputText.trim();
     setInputText('');
-    
-    const chatHistory = messages.map(msg => ({
-      role: msg.role === 'bot' ? 'assistant' : 'user',
-      content: msg.text
-    }));
-
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setIsTyping(true);
 
-    const isGeneralChat = selectedTopic.includes("AI");
-
-    const systemPrompt = `You are a smart, polite, and logical MALE travel assistant for 'Mosafiroon' in Pakistan.
-    
-    LANGUAGE: Speak ONLY in natural, everyday Pakistani Roman Urdu (e.g., use words like "sahulat", "theek hai", "shukriya", "masla"). NO pure Hindi words at all.
-
-    BEHAVIOR & LOGIC:
-    1. Read the conversation history carefully and reply LOGICALLY to the user's exact question.
-    2. Keep your answers natural, friendly, and very short (1 to 2 lines).
-    3. DO NOT repeat greetings like "Assalam-o-Alaikum". Start answering directly.
-    4. You are currently discussing: "${selectedTopic}". 
-
-    PRICING & CONTACT LOGIC:
-    - Never guess prices. If they ask for a rate/price, say: "Prices dates aur hotels par depend karti hain. Agar aap kahen toh main apni booking team ka number de doon?"
-    - ONLY give the number (+92 311 2462949) if the user says "yes", "haan", "de do", or explicitly asks to talk to someone.
-
-    DATA TO USE:
-    - Umrah: 14 and 21 days premium packages.
-    - Visa: 24-48 hours fast processing.
-    - Transport & Ziarat available.`;
-
     try {
-      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      // Voiceflow ki Dialog API se rabta
+      const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${apiKey}`,
+          "Authorization": voiceflowApiKey,
+          "versionID": "production",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile", 
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...chatHistory,
-            { role: "user", content: userMsg }
-          ],
-          max_tokens: 300,
-          temperature: 0.4
+          action: {
+            type: "text",
+            payload: userMsg
+          }
         })
       });
 
       const data = await response.json();
       
-      if (data.error) throw new Error(data.error.message);
+      // Voiceflow ke jawab ko nikalna
+      const textTraces = data.filter(trace => trace.type === 'text' || trace.type === 'speak');
+      let aiText = textTraces.map(t => t.payload.message).join("\n\n");
+      
+      if (!aiText) {
+        aiText = "Maaf kijiye, main abhi theek se samajh nahi paya. Kya aap tafseel se bata sakte hain?";
+      }
 
-      const aiText = data.choices[0].message.content;
       setMessages(prev => [...prev, { role: 'bot', text: aiText }]);
       
     } catch (error) {
-      console.error("AI Error:", error);
-      setMessages(prev => [...prev, { role: 'bot', text: `Error: ${error.message}` }]);
+      console.error("Voiceflow API Error:", error);
+      setMessages(prev => [...prev, { role: 'bot', text: `Connection Error! Kripya dobara koshish karein.` }]);
     } finally {
       setIsTyping(false);
     }
