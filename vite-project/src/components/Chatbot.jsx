@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// 👇 Voiceflow API Key (Direct & Verified)
+// 👇 Verified API Key
 const voiceflowApiKey = "VF.DM.69fdd3f6c5c2cf9b6e5816db.o7LMkdjXDZoOwLoe"; 
 const userID = "user_" + Math.floor(Math.random() * 100000);
 
@@ -63,7 +63,7 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      // 👇 Updated with versionID to fix the 500 error
+      // 👇 Version ID updated to V1.04 as per your latest deployment
       const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
         method: "POST",
         headers: {
