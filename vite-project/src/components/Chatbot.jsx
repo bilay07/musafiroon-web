@@ -70,7 +70,7 @@ function Chatbot() {
         headers: {
           "Authorization": voiceflowApiKey,
           // 👇 Isko 'development' kar diya taake publish ka masla na aaye
-          "versionID": "development", 
+          "versionID": "production",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
