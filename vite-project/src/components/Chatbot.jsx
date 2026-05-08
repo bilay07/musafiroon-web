@@ -63,11 +63,12 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      // 👇 Sirf essential headers ke saath clean request
+      // 👇 Updated with versionID to fix the 500 error
       const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
         method: "POST",
         headers: {
           "Authorization": voiceflowApiKey,
+          "versionID": "V1.03", 
           "Content-Type": "application/json",
           "accept": "application/json"
         },
