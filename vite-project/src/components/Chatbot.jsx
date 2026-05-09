@@ -59,7 +59,8 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/chat`, {
+      // 👇 YAHAN APNE LIVE BACKEND KA LINK DALNA HAI 👇
+      const response = await fetch(`https://aapka-live-backend-link.com/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -93,7 +94,6 @@ function Chatbot() {
       <div className="fixed bottom-6 right-4 md:bottom-8 md:right-8 z-[999999] group flex flex-col items-center justify-end">
         
         {!isOpen && (
-          // 👇 Ye container update kiya hai (Halka sa uper aur thora sa left)
           <div className="absolute -top-[50px] md:-top-[60px] right-12 md:right-14 flex flex-col items-end" style={{zIndex: -1}}>
             
             {/* Main Cloud Bubble */}
