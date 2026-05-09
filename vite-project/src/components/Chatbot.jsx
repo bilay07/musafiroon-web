@@ -59,12 +59,7 @@ function Chatbot() {
     setIsTyping(true);
 
     try {
-      // 👇 Yahan auto-detect logic lagai hai (Local ya Live Backend)
-      const apiUrl = window.location.hostname === 'localhost' 
-        ? 'http://localhost:5000/api/chat' 
-        : 'https://AAPKA-LIVE-BACKEND-LINK.com/api/chat'; // <-- ISKO APNE LIVE BACKEND LINK SE REPLACE KAREIN
-
-      const response = await fetch(apiUrl, {
+      const response = await fetch(`http://localhost:5000/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -98,8 +93,10 @@ function Chatbot() {
       <div className="fixed bottom-6 right-4 md:bottom-8 md:right-8 z-[999999] group flex flex-col items-center justify-end">
         
         {!isOpen && (
+          // 👇 Ye container update kiya hai (Halka sa uper aur thora sa left)
           <div className="absolute -top-[50px] md:-top-[60px] right-12 md:right-14 flex flex-col items-end" style={{zIndex: -1}}>
             
+            {/* Main Cloud Bubble */}
             <div className="bg-white py-2 px-4 md:py-2.5 md:px-5 rounded-[2rem] shadow-xl border border-purple-100 text-center min-w-[120px] md:min-w-[140px] animate-cloud-float">
               <span className="block text-[#6d568c] font-semibold text-[11px] md:text-[13px] leading-tight" dir="rtl">
                 السلام عليكم
@@ -109,8 +106,11 @@ function Chatbot() {
               </span>
             </div>
             
+            {/* Trail pointing towards avatar's mouth */}
             <div className="flex flex-col items-end w-full mt-1.5 pr-0 md:pr-1">
+                {/* Medium Dot */}
                 <div className="w-3.5 h-3.5 md:w-4 md:h-4 bg-white rounded-full shadow-md border border-purple-100 mr-3 md:mr-4"></div>
+                {/* Small Dot */}
                 <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-white rounded-full shadow-sm border border-purple-100 mr-0 mt-1"></div>
             </div>
 
