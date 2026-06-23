@@ -34,7 +34,7 @@ function Header({ currency, setCurrency }) {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-[#1f0333] text-white py-2 text-sm">
+      <div className="bg-[#c20000] text-white py-2 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <i className="fa-solid fa-phone"></i>
@@ -48,17 +48,17 @@ function Header({ currency, setCurrency }) {
         </div>
       </div>
 
-      <header className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] text-white py-4 shadow-lg sticky top-0 z-50 border-b border-[#cca332]/20">
+      <header className="bg-gradient-to-r from-[#4a0000] via-[#810000] to-[#c20000] text-white py-4 shadow-lg sticky top-0 z-50 border-b border-[#cca332]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           
           <button onClick={toggleMenu} className="md:hidden text-2xl focus:outline-none hover:text-[#cca332] transition">
             <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
           </button>
 
-          {/* 👇 Updated Logo Section: Text color image wale pink/magenta (#bf0b5a) mein change kar diya */}
+          {/* 👇 Updated Logo Section: Text color image wale pink/magenta (#12002b) mein change kar diya */}
           <Link to="/" className="flex flex-col justify-center items-center md:items-start">
              <span className="text-xl md:text-2xl font-black tracking-[0.2em] leading-tight">MOSAFIROON</span>
-             <span className="text-xs md:text-[13px] italic text-[#bf0b5a] font-bold tracking-widest mt-[-2px] md:mt-[-4px]">Presented by Bin Aziz</span>
+             <span className="text-xs md:text-[13px] italic text-[#cca332] font-bold tracking-widest mt-[-2px] md:mt-[-4px]">Presented by Bin Aziz</span>
           </Link>
 
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
@@ -83,7 +83,7 @@ function Header({ currency, setCurrency }) {
 
         <div className={`fixed inset-0 bg-black/50 transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={toggleMenu}></div>
         
-        <div className={`fixed top-0 left-0 h-[100dvh] w-64 bg-[#1f0333] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] flex flex-col ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`fixed top-0 left-0 h-[100dvh] w-64 bg-[#c20000] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] flex flex-col ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="p-6 flex-1 flex flex-col overflow-y-auto">
             <div>
               <div className="flex justify-between items-center mb-10">

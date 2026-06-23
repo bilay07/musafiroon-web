@@ -18,7 +18,7 @@
    Headings & Typography
    ========================================= */
 .calc-title {
-  color: #3b0764; 
+  color: #810000; 
   font-size: 32px;
   font-weight: 900;
   margin-bottom: 8px;
@@ -86,7 +86,7 @@
 }
 
 .section-header {
-  background-color: #1f0333; 
+  background-color: #c20000; 
   padding: 15px 20px;
   font-size: 18px;
   font-weight: bold;
@@ -98,7 +98,7 @@
 }
 
 .section-block:hover .section-header {
-  background-color: #3b0764;
+  background-color: #810000;
   letter-spacing: 1px;
 }
 
@@ -172,7 +172,7 @@
 .summary-title {
   font-size: 22px;
   font-weight: 900;
-  color: #3b0764; 
+  color: #810000; 
   margin-bottom: 20px;
   border-bottom: 2px solid #f3f4f6;
   padding-bottom: 10px;
@@ -191,7 +191,7 @@
 .grand-total span:last-child {
   font-size: 32px;
   font-weight: 900;
-  color: #3b0764;
+  color: #810000;
   display: inline-block;
   animation: superFloatPrice 3s infinite ease-in-out;
 }

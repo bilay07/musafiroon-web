@@ -46,7 +46,6 @@ function Packages({ currency, exchangeRates }) {
   };
 
   const handleWhatsAppBooking = (pkgName, totalAmount) => {
-    // FIX: Naya number update kar diya gaya hai
     const waNumber = "923112462949"; 
     
     const monthText = selectedMonth !== 'All Months*' ? `\n*Desired Month:* ${selectedMonth}` : '';
@@ -57,30 +56,55 @@ function Packages({ currency, exchangeRates }) {
 
   return (
     <main className="flex-grow flex flex-col w-full bg-gray-50 packages-main-wrapper">
-        <div className="packages-header-bg pt-8 pb-14 w-full border-t border-white/10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-center space-x-8 md:space-x-16 mb-6 text-sm font-medium">
-                    <button 
-                        onClick={() => setActiveTab('packages')}
-                        className={`flex items-center pb-2 px-1 transition ${activeTab === 'packages' ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'}`}
-                    >
-                        <i className="fa-solid fa-box-open mr-2"></i> Packages
-                    </button>
-                    <button 
-                        onClick={() => setActiveTab('hotels')}
-                        className={`flex items-center pb-2 px-1 transition ${activeTab === 'hotels' ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'}`}
-                    >
-                        <i className="fa-solid fa-bed mr-2"></i> Hotels
-                    </button>
-                    <button 
-                        onClick={() => setActiveTab('transport')}
-                        className={`flex items-center pb-2 px-1 transition ${activeTab === 'transport' ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'}`}
-                    >
-                        <i className="fa-solid fa-car mr-2"></i> Transport
-                    </button>
+        <div className="packages-header-bg pt-8 pb-10 w-full border-t border-white/10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+                
+                {/* 🔥 VIP FLOATING TABS (Jazz Musafir Style) */}
+                <div className="flex justify-center relative z-20 translate-y-1/2">
+                    <div className="bg-white p-2 rounded-[1.25rem] shadow-xl flex gap-2 md:gap-4 border border-gray-100">
+                        
+                        <button 
+                            onClick={() => setActiveTab('packages')}
+                            className={`flex flex-col items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-xl transition-all duration-300 ${
+                                activeTab === 'packages' 
+                                ? 'bg-[#cca332] text-white shadow-lg transform scale-105' 
+                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#cca332]'
+                            }`}
+                        >
+                            <i className={`fa-solid fa-box-open text-2xl md:text-3xl mb-2 ${activeTab !== 'packages' && 'text-[#cca332]'}`}></i>
+                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider">Packages</span>
+                        </button>
+
+                        <button 
+                            onClick={() => setActiveTab('hotels')}
+                            className={`flex flex-col items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-xl transition-all duration-300 ${
+                                activeTab === 'hotels' 
+                                ? 'bg-[#cca332] text-white shadow-lg transform scale-105' 
+                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#cca332]'
+                            }`}
+                        >
+                            <i className={`fa-solid fa-bed text-2xl md:text-3xl mb-2 ${activeTab !== 'hotels' && 'text-[#cca332]'}`}></i>
+                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider">Hotels</span>
+                        </button>
+
+                        <button 
+                            onClick={() => setActiveTab('transport')}
+                            className={`flex flex-col items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-xl transition-all duration-300 ${
+                                activeTab === 'transport' 
+                                ? 'bg-[#cca332] text-white shadow-lg transform scale-105' 
+                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#cca332]'
+                            }`}
+                        >
+                            <i className={`fa-solid fa-car text-2xl md:text-3xl mb-2 ${activeTab !== 'transport' && 'text-[#cca332]'}`}></i>
+                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider">Transport</span>
+                        </button>
+
+                    </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-4 md:p-6 shadow-xl w-full">
+                {/* 🔥 MAIN SEARCH CONTAINER */}
+                <div className="bg-white rounded-[2rem] p-5 md:p-8 shadow-2xl w-full pt-16 md:pt-20 relative z-10 border border-gray-100">
+                    
                     {activeTab === 'packages' && (
                         <div className="flex flex-col md:flex-row gap-4 items-end animate-fade-in">
                             <div className="flex-1 w-full">
@@ -117,8 +141,8 @@ function Packages({ currency, exchangeRates }) {
                             <div className="flex-1 w-full">
                                 <label className="block text-theme-purple font-bold text-[13px] mb-1.5">Location</label>
                                 <div className="flex border border-gray-300 rounded-lg overflow-hidden h-[48px]">
-                                    <button onClick={() => setHotelLocation('Makkah')} className={`flex-1 font-bold transition ${hotelLocation === 'Makkah' ? 'btn-gold' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Makkah</button>
-                                    <button onClick={() => setHotelLocation('Madinah')} className={`flex-1 font-bold transition border-l border-gray-300 ${hotelLocation === 'Madinah' ? 'btn-gold' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Madinah</button>
+                                    <button onClick={() => setHotelLocation('Makkah')} className={`flex-1 font-bold transition ${hotelLocation === 'Makkah' ? 'bg-[#cca332] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Makkah</button>
+                                    <button onClick={() => setHotelLocation('Madinah')} className={`flex-1 font-bold transition border-l border-gray-300 ${hotelLocation === 'Madinah' ? 'bg-[#cca332] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Madinah</button>
                                 </div>
                             </div>
                             <div className="flex-1 w-full">
@@ -167,6 +191,7 @@ function Packages({ currency, exchangeRates }) {
             </div>
         </div>
 
+        {/* ... Baqi neechay wala code wese hi hai ... */}
         <div ref={packagesListRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full pt-16">
             {isLoading ? (
                 <div className="text-center py-20">
@@ -199,12 +224,17 @@ function Packages({ currency, exchangeRates }) {
                                         <div className="flex justify-center space-x-6 mb-8 min-h-[60px]">
                                             {pkg.inclusions && pkg.inclusions.includes("Visa") && (
                                                 <div className="flex flex-col items-center text-gray-500">
-                                                    <i className="fa-solid fa-passport text-xl mb-1 text-theme-gold"></i><span className="text-[11px]">Visa</span>
+                                                    <i className="fa-solid fa-passport text-xl mb-1 text-theme-purple-light"></i><span className="text-[11px]">Visa</span>
                                                 </div>
                                             )}
                                             {pkg.inclusions && pkg.inclusions.includes("Hotel") && (
                                                 <div className="flex flex-col items-center text-gray-500">
-                                                    <i className="fa-solid fa-hotel text-xl mb-1 text-theme-gold"></i><span className="text-[11px]">Hotel</span>
+                                                    <i className="fa-solid fa-hotel text-xl mb-1 text-theme-purple-light"></i><span className="text-[11px]">Hotel</span>
+                                                </div>
+                                            )}
+                                            {pkg.inclusions && pkg.inclusions.includes("Transport") && (
+                                                <div className="flex flex-col items-center text-gray-500">
+                                                    <i className="fa-solid fa-bus text-xl mb-1 text-theme-purple-light"></i><span className="text-[11px]">Transport</span>
                                                 </div>
                                             )}
                                         </div>
@@ -218,7 +248,7 @@ function Packages({ currency, exchangeRates }) {
                                                 <p className="text-xs text-gray-500 mb-1">{currencySymbols[currency]} {Math.round(convertedPrice).toLocaleString()} / Pilgrim</p>
                                                 <p className="text-2xl font-bold text-theme-purple">{currencySymbols[currency]} {Math.round(totalPrice).toLocaleString()}</p>
                                             </div>
-                                            <button onClick={() => setSearchParams({ pkg: pkg._id })} className="btn-gold px-5 py-2.5 rounded-md font-semibold">Book Now</button>
+                                            <button onClick={() => setSearchParams({ pkg: pkg._id })} className="btn-gold px-5 py-2.5 rounded-md font-semibold text-white">Book Now</button>
                                         </div>
                                     </div>
                                 </div>

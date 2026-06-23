@@ -2,7 +2,7 @@
 .custom-footer {
   position: relative;
   /* Left se Royal Purple aur right pe Eggplant Purple */
-  background: linear-gradient(to right, #5a189a 0%, #3b0764 50%, #1f0333 100%);
+  background: linear-gradient(to right, #4a0000 0%, #810000 50%, #c20000 100%);
   color: white;
   padding-top: 120px; /* Wave ke liye space */
   padding-bottom: 20px;

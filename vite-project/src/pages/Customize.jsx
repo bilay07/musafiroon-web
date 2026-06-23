@@ -84,7 +84,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
       {modalConfig.isOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-[10000] p-4 animate-fade-in">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all scale-100">
-            <div className="p-6 text-center bg-[#1f0333] border-b-4 border-[#cca332]">
+            <div className="p-6 text-center bg-[#c20000] border-b-4 border-[#cca332]">
                <i className={`fa-solid ${modalConfig.type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check'} text-[#cca332] text-5xl mb-3`}></i>
                <h3 className="text-xl font-black text-white uppercase tracking-widest">
                  {modalConfig.type === 'error' ? 'Attention!' : 'Success!'}
@@ -94,7 +94,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
               <p className="text-gray-700 font-medium text-sm leading-relaxed">{modalConfig.message}</p>
               <button 
                 onClick={closeModal}
-                className="w-full bg-[#cca332] text-white font-black py-4 rounded-xl hover:bg-[#1f0333] hover:shadow-lg transition-all duration-300 tracking-wider"
+                className="w-full bg-[#cca332] text-white font-black py-4 rounded-xl hover:bg-[#c20000] hover:shadow-lg transition-all duration-300 tracking-wider"
               >
                 GOT IT
               </button>
@@ -105,7 +105,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 animate-fade-in">
         
-        <div className="bg-gradient-to-r from-[#5a189a] via-[#3b0764] to-[#1f0333] py-8 px-10 text-center relative overflow-hidden">
+        <div className="bg-gradient-to-r from-[#4a0000] via-[#810000] to-[#c20000] py-8 px-10 text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-[#cca332]"></div>
           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">UMRAH INQUIRY FORM</h1>
           <p className="text-gray-300 mt-2 text-sm font-medium">Select your preferences and send us your inquiry instantly.</p>
@@ -115,7 +115,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Makkah Stay</h3>
+              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Makkah Stay</h3>
               <div className="space-y-3">
                 <div>
                   <label className="block text-xs font-bold text-gray-600 mb-1">Hotel Name</label>
@@ -140,7 +140,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Madinah Stay</h3>
+              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Madinah Stay</h3>
               <div className="space-y-3">
                 <div>
                   <label className="block text-xs font-bold text-gray-600 mb-1">Hotel Name</label>
@@ -168,7 +168,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
           <hr className="border-gray-200" />
 
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Flight Details</h3>
+            <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Flight Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-2">
                 <label className="block text-xs font-bold text-gray-600 mb-1">Choose Airline</label>
@@ -198,7 +198,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
           <hr className="border-gray-200" />
 
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-[#3b0764] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Passenger Details</h3>
+            <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Passenger Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                <div className="space-y-3">
                   <div>
@@ -245,7 +245,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
         </div>
 
         {/* --- BOTTOM SUMMARY & WHATSAPP BUTTON (Mobile Responsive Classes added) --- */}
-        <div className="bg-[#1f0333] p-6 md:p-8 flex justify-center items-center">
+        <div className="bg-[#c20000] p-6 md:p-8 flex justify-center items-center">
           <button 
             onClick={sendToWhatsApp}
             // Mobile: py-3, text-base | Desktop: py-4, text-xl

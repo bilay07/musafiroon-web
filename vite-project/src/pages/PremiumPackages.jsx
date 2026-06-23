@@ -41,16 +41,13 @@ function PremiumPackages({ currency }) {
         ) : (
           <div className="premium-grid animate-fade-in-premium">
             {premiumData.map((pkg) => {
-              // FIX: Price check
               const convertedPrice = (pkg.price || 0) * exchangeRates[currency];
               return (
-                // FIX: id changed to _id
                 <div key={pkg._id} className="premium-card">
                   <div className="card-top-bar">{pkg.title}</div>
                   
                   <div className="card-content">
                     <div className="card-route">
-                      {/* FIX: Arrays check */}
                       {pkg.route && pkg.route.map((city, cIndex) => (
                         <span key={cIndex} style={{display: 'flex', alignItems: 'center'}}>
                           {city} {cIndex < pkg.route.length - 1 && <i className="fa-solid fa-arrow-right route-arrow-icon"></i>}
@@ -84,7 +81,6 @@ function PremiumPackages({ currency }) {
                     <div className="distance-info-box">
                       <div className="dist-row">
                         <span className="dist-label">Makkah Distance:</span>
-                        {/* FIX: Object fields check */}
                         <span className="dist-val">{pkg.distances?.makkah || 'N/A'}</span>
                       </div>
                       <div className="dist-row">
@@ -100,7 +96,6 @@ function PremiumPackages({ currency }) {
                         <p className="price-text-sm">Starting from</p>
                         <p className="price-text-lg">{currencySymbols[currency] || '$'} {Math.round(convertedPrice).toLocaleString()}</p>
                       </div>
-                      {/* FIX: id changed to _id */}
                       <Link to={`/?pkg=${pkg._id}`} className="premium-book-btn">Book Now</Link>
                     </div>
                   </div>
