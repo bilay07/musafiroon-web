@@ -42,14 +42,14 @@
   
   /* New Custom Class for Visa/Hotel/Transport Icons */
   .text-theme-purple-light {
-    color: #cca332; /* VIP Light Royal Purple */
+    color: #eab953; /* VIP Light Royal Purple */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: inline-block;
   }
   
   /* Golden Texts & Icons */
   .text-theme-gold {
-    color: #cca332;
+    color: #eab953;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: inline-block;
   }
@@ -92,7 +92,7 @@
      Button Styling (3D Pop Hover)
      ========================================= */
   .btn-gold {
-    background-color: #cca332; /* Updated to VIP Light Royal Purple */
+    background-color: #eab953; /* Updated to VIP Light Royal Purple */
     color: white;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
@@ -120,7 +120,7 @@
   }
   
   .custom-input:focus {
-    border-color: #cca332 !important; /* Golden border on focus */
+    border-color: #eab953 !important; /* Golden border on focus */
     box-shadow: 0 0 0 4px rgba(204, 163, 50, 0.15);
     transform: scale(1.01);
   }

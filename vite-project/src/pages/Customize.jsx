@@ -84,8 +84,8 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
       {modalConfig.isOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-[10000] p-4 animate-fade-in">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all scale-100">
-            <div className="p-6 text-center bg-[#c20000] border-b-4 border-[#cca332]">
-               <i className={`fa-solid ${modalConfig.type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check'} text-[#cca332] text-5xl mb-3`}></i>
+            <div className="p-6 text-center bg-[#c20000] border-b-4 border-[#eab953]">
+               <i className={`fa-solid ${modalConfig.type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check'} text-[#eab953] text-5xl mb-3`}></i>
                <h3 className="text-xl font-black text-white uppercase tracking-widest">
                  {modalConfig.type === 'error' ? 'Attention!' : 'Success!'}
                </h3>
@@ -94,7 +94,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
               <p className="text-gray-700 font-medium text-sm leading-relaxed">{modalConfig.message}</p>
               <button 
                 onClick={closeModal}
-                className="w-full bg-[#cca332] text-white font-black py-4 rounded-xl hover:bg-[#c20000] hover:shadow-lg transition-all duration-300 tracking-wider"
+                className="w-full bg-[#eab953] text-white font-black py-4 rounded-xl hover:bg-[#c20000] hover:shadow-lg transition-all duration-300 tracking-wider"
               >
                 GOT IT
               </button>
@@ -106,7 +106,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 animate-fade-in">
         
         <div className="bg-gradient-to-r from-[#4a0000] via-[#810000] to-[#c20000] py-8 px-10 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-[#cca332]"></div>
+          <div className="absolute top-0 left-0 w-full h-1 bg-[#eab953]"></div>
           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">UMRAH INQUIRY FORM</h1>
           <p className="text-gray-300 mt-2 text-sm font-medium">Select your preferences and send us your inquiry instantly.</p>
         </div>
@@ -115,11 +115,11 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Makkah Stay</h3>
+              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#eab953] pl-3 uppercase tracking-wider">Makkah Stay</h3>
               <div className="space-y-3">
                 <div>
                   <label className="block text-xs font-bold text-gray-600 mb-1">Hotel Name</label>
-                  <select name="makkahHotel" value={form.makkahHotel} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] focus:border-[#cca332] outline-none transition-all">
+                  <select name="makkahHotel" value={form.makkahHotel} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] focus:border-[#eab953] outline-none transition-all">
                     <option value="">Select Hotel</option>
                     {makkahHotels.map((hotel, idx) => <option key={idx} value={hotel}>{hotel}</option>)}
                   </select>
@@ -127,24 +127,24 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-gray-600 mb-1">Room Type</label>
-                    <select name="makkahRoom" value={form.makkahRoom} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all">
+                    <select name="makkahRoom" value={form.makkahRoom} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all">
                       <option value="Sharing">Sharing</option><option value="Quint">Quint</option><option value="Quad">Quad</option><option value="Triple">Triple</option><option value="Double">Double</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-600 mb-1">Nights</label>
-                    <input type="number" name="makkahNights" min="0" value={form.makkahNights} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
+                    <input type="number" name="makkahNights" min="0" value={form.makkahNights} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all" />
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Madinah Stay</h3>
+              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#eab953] pl-3 uppercase tracking-wider">Madinah Stay</h3>
               <div className="space-y-3">
                 <div>
                   <label className="block text-xs font-bold text-gray-600 mb-1">Hotel Name</label>
-                  <select name="madinaHotel" value={form.madinaHotel} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all">
+                  <select name="madinaHotel" value={form.madinaHotel} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all">
                     <option value="">Select Hotel</option>
                     {madinaHotels.map((hotel, idx) => <option key={idx} value={hotel}>{hotel}</option>)}
                   </select>
@@ -152,13 +152,13 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-gray-600 mb-1">Room Type</label>
-                    <select name="madinaRoom" value={form.madinaRoom} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all">
+                    <select name="madinaRoom" value={form.madinaRoom} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all">
                       <option value="Sharing">Sharing</option><option value="Quint">Quint</option><option value="Quad">Quad</option><option value="Triple">Triple</option><option value="Double">Double</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-600 mb-1">Nights</label>
-                    <input type="number" name="madinaNights" min="0" value={form.madinaNights} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
+                    <input type="number" name="madinaNights" min="0" value={form.madinaNights} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all" />
                   </div>
                 </div>
               </div>
@@ -168,27 +168,27 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
           <hr className="border-gray-200" />
 
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Flight Details</h3>
+            <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#eab953] pl-3 uppercase tracking-wider">Flight Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-2">
                 <label className="block text-xs font-bold text-gray-600 mb-1">Choose Airline</label>
-                <select name="airline" value={form.airline} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all">
+                <select name="airline" value={form.airline} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all">
                   <option value="-">NONE</option>
                   {airlinesList.map(a => <option key={a} value={a}>{a}</option>)}
                 </select>
                 {form.airline === 'CUSTOM' && (
-                  <input type="text" name="customAirline" placeholder="Enter Custom Airline Name" value={form.customAirline} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm mt-2 focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
+                  <input type="text" name="customAirline" placeholder="Enter Custom Airline Name" value={form.customAirline} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm mt-2 focus:ring-2 focus:ring-[#eab953] outline-none transition-all" />
                 )}
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1">Ticket Type 1</label>
-                <select name="ticketType1" value={form.ticketType1} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all">
+                <select name="ticketType1" value={form.ticketType1} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all">
                   <option value="Direct">Direct</option><option value="Indirect">Indirect</option>
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-600 mb-1">Ticket Type 2</label>
-                <select name="ticketType2" value={form.ticketType2} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all">
+                <select name="ticketType2" value={form.ticketType2} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all">
                   <option value="System Ticket">System Ticket</option><option value="Group Ticket">Group Ticket</option>
                 </select>
               </div>
@@ -198,16 +198,16 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
           <hr className="border-gray-200" />
 
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#cca332] pl-3 uppercase tracking-wider">Passenger Details</h3>
+            <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#eab953] pl-3 uppercase tracking-wider">Passenger Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                <div className="space-y-3">
                   <div>
                     <label className="block text-xs font-bold text-gray-600 mb-1">Family Head Name</label>
-                    <input type="text" name="clientName" placeholder="Head Name" value={form.clientName} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
+                    <input type="text" name="clientName" placeholder="Head Name" value={form.clientName} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all" />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-600 mb-1">Contact No</label>
-                    <input type="text" name="phone" placeholder="03xx-xxxxxxx" value={form.phone} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
+                    <input type="text" name="phone" placeholder="03xx-xxxxxxx" value={form.phone} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all" />
                   </div>
                </div>
 
@@ -215,20 +215,20 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
                   <div className="grid grid-cols-3 gap-3">
                     <div>
                       <label className="block text-xs font-bold text-gray-600 mb-1">Adults</label>
-                      <input type="number" name="adults" min="1" value={form.adults} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
+                      <input type="number" name="adults" min="1" value={form.adults} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all" />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-600 mb-1">Children</label>
-                      <input type="number" name="children" min="0" value={form.children} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
+                      <input type="number" name="children" min="0" value={form.children} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all" />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-600 mb-1">Infants</label>
-                      <input type="number" name="infants" min="0" value={form.infants} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all" />
+                      <input type="number" name="infants" min="0" value={form.infants} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-600 mb-1">Passport Status</label>
-                    <select name="passportStatus" value={form.passportStatus} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all">
+                    <select name="passportStatus" value={form.passportStatus} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all">
                       <option value="Ready">Ready</option>
                       <option value="Not Ready">Not Ready</option>
                     </select>
@@ -239,7 +239,7 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
           <div className="space-y-2">
             <label className="block text-xs font-bold text-gray-600 mb-1">Additional Notes</label>
-            <textarea name="notes" rows="2" placeholder="Any specific requirements..." value={form.notes} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#cca332] outline-none transition-all"></textarea>
+            <textarea name="notes" rows="2" placeholder="Any specific requirements..." value={form.notes} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#eab953] outline-none transition-all"></textarea>
           </div>
 
         </div>

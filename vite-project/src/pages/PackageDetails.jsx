@@ -48,7 +48,7 @@ function PackageDetails({
           {/* FIX 3: WhatsApp button mein bhi basePrice ki jagah packagePrice (totalPrice) */}
           <button 
             onClick={() => handleWhatsAppBooking(selectedPackage?.title, totalPrice)} 
-            className="w-full bg-[#cca332] text-white py-3 rounded-lg font-bold text-lg hover:bg-yellow-600 transition flex items-center justify-center"
+            className="w-full bg-[#eab953] text-white py-3 rounded-lg font-bold text-lg hover:bg-yellow-600 transition flex items-center justify-center"
           >
             <i className="fa-brands fa-whatsapp text-2xl mr-2"></i> Inquire on WhatsApp
           </button>

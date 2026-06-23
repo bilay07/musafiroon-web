@@ -6,7 +6,7 @@
 /* Fonts and Basic Reset */
 :root {
   --theme-purple: #810000;
-  --theme-gold: #cca332;
+  --theme-gold: #eab953;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -43,7 +43,7 @@ html {
 
 /* Custom Buttons and Utility Classes */
 .btn-gold {
-  background-color: #cca332;
+  background-color: #eab953;
   color: white;
   transition: all 0.3s ease;
 }

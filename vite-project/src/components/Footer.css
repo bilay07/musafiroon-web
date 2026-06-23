@@ -52,7 +52,7 @@
 
 /* Social Icons */
 .social-icon-btn {
-  background-color: #cca332; /* Golden color (Purple ke sath best lagta hai) */
+  background-color: #eab953; /* Golden color (Purple ke sath best lagta hai) */
   color: white;
   width: 32px;
   height: 32px;
@@ -67,7 +67,7 @@
 
 .social-icon-btn:hover {
   background-color: white;
-  color: #cca332; /* Hover pe text golden hoga */
+  color: #eab953; /* Hover pe text golden hoga */
   transform: translateY(-2px);
 }
 
@@ -85,7 +85,7 @@
 }
 
 .footer-links-list a:hover {
-  color: #cca332; /* Hover pe links golden honge */
+  color: #eab953; /* Hover pe links golden honge */
 }
 
 /* Contact List */

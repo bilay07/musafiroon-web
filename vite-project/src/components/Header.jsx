@@ -20,12 +20,12 @@ function Header({ currency, setCurrency }) {
 
   const getNavLinkClass = (path) => {
     const isActive = location.pathname === path;
-    const baseClass = "relative py-1 transition-colors duration-300 hover:text-[#cca332] " +
-                      "after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-[#cca332] " +
+    const baseClass = "relative py-1 transition-colors duration-300 hover:text-[#eab953] " +
+                      "after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-[#eab953] " +
                       "after:origin-left after:transition-transform after:duration-300 ";
     
     if (isActive) {
-      return baseClass + "text-[#cca332] after:scale-x-100";
+      return baseClass + "text-[#eab953] after:scale-x-100";
     } else {
       return baseClass + "after:scale-x-0 hover:after:scale-x-100";
     }
@@ -41,24 +41,24 @@ function Header({ currency, setCurrency }) {
             <span className="font-semibold tracking-wider">+92 3112462949</span>
           </div>
           <div className="flex items-center space-x-5">
-            <a href="https://wa.me/923112462949" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-whatsapp text-lg"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=100088573880681" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-facebook text-lg"></i></a>
-            <a href="https://www.instagram.com/mosafiroon1/" target="_blank" rel="noreferrer" className="hover:text-[#cca332] transition"><i className="fa-brands fa-instagram text-lg"></i></a>
+            <a href="https://wa.me/923112462949" target="_blank" rel="noreferrer" className="hover:text-[#eab953] transition"><i className="fa-brands fa-whatsapp text-lg"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100088573880681" target="_blank" rel="noreferrer" className="hover:text-[#eab953] transition"><i className="fa-brands fa-facebook text-lg"></i></a>
+            <a href="https://www.instagram.com/mosafiroon1/" target="_blank" rel="noreferrer" className="hover:text-[#eab953] transition"><i className="fa-brands fa-instagram text-lg"></i></a>
           </div>
         </div>
       </div>
 
-      <header className="bg-gradient-to-r from-[#4a0000] via-[#810000] to-[#c20000] text-white py-4 shadow-lg sticky top-0 z-50 border-b border-[#cca332]/20">
+      <header className="bg-gradient-to-r from-[#4a0000] via-[#810000] to-[#c20000] text-white py-4 shadow-lg sticky top-0 z-50 border-b border-[#eab953]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           
-          <button onClick={toggleMenu} className="md:hidden text-2xl focus:outline-none hover:text-[#cca332] transition">
+          <button onClick={toggleMenu} className="md:hidden text-2xl focus:outline-none hover:text-[#eab953] transition">
             <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
           </button>
 
           {/* 👇 Updated Logo Section: Text color image wale pink/magenta (#12002b) mein change kar diya */}
           <Link to="/" className="flex flex-col justify-center items-center md:items-start">
              <span className="text-xl md:text-2xl font-black tracking-[0.2em] leading-tight">MOSAFIROON</span>
-             <span className="text-xs md:text-[13px] italic text-[#cca332] font-bold tracking-widest mt-[-2px] md:mt-[-4px]">Presented by Bin Aziz</span>
+             <span className="text-xs md:text-[13px] italic text-[#eab953] font-bold tracking-widest mt-[-2px] md:mt-[-4px]">Presented by Bin Aziz</span>
           </Link>
 
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">
@@ -72,7 +72,7 @@ function Header({ currency, setCurrency }) {
             <select 
               value={currency} 
               onChange={(e) => setCurrency(e.target.value)}
-              className="bg-transparent text-white border border-[#cca332] rounded px-2 py-1 text-xs md:text-sm focus:outline-none focus:border-[#cca332] transition cursor-pointer"
+              className="bg-transparent text-white border border-[#eab953] rounded px-2 py-1 text-xs md:text-sm focus:outline-none focus:border-[#eab953] transition cursor-pointer"
             >
               <option value="USD" className="text-gray-900">USD</option>
               <option value="PKR" className="text-gray-900">PKR</option>
@@ -87,29 +87,29 @@ function Header({ currency, setCurrency }) {
           <div className="p-6 flex-1 flex flex-col overflow-y-auto">
             <div>
               <div className="flex justify-between items-center mb-10">
-                <span className="font-black text-lg tracking-widest text-[#cca332]">MENU</span>
+                <span className="font-black text-lg tracking-widest text-[#eab953]">MENU</span>
                 <button onClick={toggleMenu} className="text-2xl"><i className="fa-solid fa-xmark"></i></button>
               </div>
               
               <nav className="flex flex-col space-y-6 text-lg font-semibold">
-                <Link to="/" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
-                  <i className="fa-solid fa-house text-sm text-[#cca332]"></i> Home
+                <Link to="/" onClick={toggleMenu} className="hover:text-[#eab953] flex items-center gap-3">
+                  <i className="fa-solid fa-house text-sm text-[#eab953]"></i> Home
                 </Link>
-                <Link to="/premium-packages" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
-                  <i className="fa-solid fa-star text-sm text-[#cca332]"></i> Star Packages
+                <Link to="/premium-packages" onClick={toggleMenu} className="hover:text-[#eab953] flex items-center gap-3">
+                  <i className="fa-solid fa-star text-sm text-[#eab953]"></i> Star Packages
                 </Link>
-                <Link to="/economy-packages" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
-                  <i className="fa-solid fa-wallet text-sm text-[#cca332]"></i> Economy Packages
+                <Link to="/economy-packages" onClick={toggleMenu} className="hover:text-[#eab953] flex items-center gap-3">
+                  <i className="fa-solid fa-wallet text-sm text-[#eab953]"></i> Economy Packages
                 </Link>
-                <Link to="/customize" onClick={toggleMenu} className="hover:text-[#cca332] flex items-center gap-3">
-                  <i className="fa-solid fa-sliders text-sm text-[#cca332]"></i> Customize
+                <Link to="/customize" onClick={toggleMenu} className="hover:text-[#eab953] flex items-center gap-3">
+                  <i className="fa-solid fa-sliders text-sm text-[#eab953]"></i> Customize
                 </Link>
               </nav>
             </div>
 
             <div className="mt-auto pt-8 border-t border-white/10 pb-20">
               <p className="text-xs text-gray-400 mb-4 uppercase tracking-widest">Contact Info</p>
-              <div className="flex flex-col gap-4 text-[#cca332]">
+              <div className="flex flex-col gap-4 text-[#eab953]">
                 <div className="flex items-center gap-3">
                   <i className="fa-solid fa-phone"></i>
                   <span className="text-white font-bold">+92 3112462949</span>

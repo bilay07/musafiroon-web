@@ -64,13 +64,13 @@ function Footer() {
               className="block bg-white/5 hover:bg-white/10 transition duration-300 p-4 rounded-xl mb-6 border border-white/10 group cursor-pointer shadow-sm"
             >
               <div className="flex items-start gap-3">
-                <i className="fa-solid fa-map-location-dot text-[#cca332] text-2xl mt-1 group-hover:scale-110 transition-transform"></i>
+                <i className="fa-solid fa-map-location-dot text-[#eab953] text-2xl mt-1 group-hover:scale-110 transition-transform"></i>
                 <div>
                   <p className="text-sm text-white font-bold mb-1">Mosafiroon</p>
                   <p className="text-xs text-gray-300 leading-relaxed">
                     Office No. M1 - M3, 1st Floor, Abbas Trade Center, Main PIA Main Blvd, near Javaid Nehari, Lahore
                   </p>
-                  <span className="text-[#cca332] text-xs font-semibold mt-2 inline-flex items-center gap-1 group-hover:underline">
+                  <span className="text-[#eab953] text-xs font-semibold mt-2 inline-flex items-center gap-1 group-hover:underline">
                     View on Google Maps <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </span>
                 </div>
@@ -79,11 +79,11 @@ function Footer() {
 
             <ul className="contact-list">
               <li>
-                <i className="fa-solid fa-phone text-[#cca332]"></i>
+                <i className="fa-solid fa-phone text-[#eab953]"></i>
                 <span>+92 311 2462949</span>
               </li>
               <li>
-                <i className="fa-solid fa-envelope text-[#cca332]"></i>
+                <i className="fa-solid fa-envelope text-[#eab953]"></i>
                 <span>mosafiroon.info@gmail.com</span>
               </li>
             </ul>
@@ -95,7 +95,7 @@ function Footer() {
         <div className="border-t border-white/20 pt-6 pb-6 text-sm text-gray-300 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           <p>Copyright © 2026 Mosafiroon Tourism. All rights reserved.</p>
           <p className="text-xs text-gray-400">
-            Powered by <span className="text-[#cca332] font-bold tracking-wide">Bin Aziz Group</span> | Designed & Created By <a href="https://leadspktechnologies.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#cca332] transition-colors duration-300 font-medium">leadspktechnologies.com</a>
+            Powered by <span className="text-[#eab953] font-bold tracking-wide">Bin Aziz Group</span> | Designed & Created By <a href="https://leadspktechnologies.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#eab953] transition-colors duration-300 font-medium">leadspktechnologies.com</a>
           </p>
         </div>
 

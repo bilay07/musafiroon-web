@@ -67,11 +67,11 @@ function Packages({ currency, exchangeRates }) {
                             onClick={() => setActiveTab('packages')}
                             className={`flex flex-col items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-xl transition-all duration-300 ${
                                 activeTab === 'packages' 
-                                ? 'bg-[#cca332] text-white shadow-lg transform scale-105' 
-                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#cca332]'
+                                ? 'bg-[#eab953] text-white shadow-lg transform scale-105' 
+                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#eab953]'
                             }`}
                         >
-                            <i className={`fa-solid fa-box-open text-2xl md:text-3xl mb-2 ${activeTab !== 'packages' && 'text-[#cca332]'}`}></i>
+                            <i className={`fa-solid fa-box-open text-2xl md:text-3xl mb-2 ${activeTab !== 'packages' && 'text-[#eab953]'}`}></i>
                             <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider">Packages</span>
                         </button>
 
@@ -79,11 +79,11 @@ function Packages({ currency, exchangeRates }) {
                             onClick={() => setActiveTab('hotels')}
                             className={`flex flex-col items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-xl transition-all duration-300 ${
                                 activeTab === 'hotels' 
-                                ? 'bg-[#cca332] text-white shadow-lg transform scale-105' 
-                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#cca332]'
+                                ? 'bg-[#eab953] text-white shadow-lg transform scale-105' 
+                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#eab953]'
                             }`}
                         >
-                            <i className={`fa-solid fa-bed text-2xl md:text-3xl mb-2 ${activeTab !== 'hotels' && 'text-[#cca332]'}`}></i>
+                            <i className={`fa-solid fa-bed text-2xl md:text-3xl mb-2 ${activeTab !== 'hotels' && 'text-[#eab953]'}`}></i>
                             <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider">Hotels</span>
                         </button>
 
@@ -91,11 +91,11 @@ function Packages({ currency, exchangeRates }) {
                             onClick={() => setActiveTab('transport')}
                             className={`flex flex-col items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-xl transition-all duration-300 ${
                                 activeTab === 'transport' 
-                                ? 'bg-[#cca332] text-white shadow-lg transform scale-105' 
-                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#cca332]'
+                                ? 'bg-[#eab953] text-white shadow-lg transform scale-105' 
+                                : 'bg-white text-gray-500 hover:bg-purple-50 hover:text-[#eab953]'
                             }`}
                         >
-                            <i className={`fa-solid fa-car text-2xl md:text-3xl mb-2 ${activeTab !== 'transport' && 'text-[#cca332]'}`}></i>
+                            <i className={`fa-solid fa-car text-2xl md:text-3xl mb-2 ${activeTab !== 'transport' && 'text-[#eab953]'}`}></i>
                             <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider">Transport</span>
                         </button>
 
@@ -141,13 +141,13 @@ function Packages({ currency, exchangeRates }) {
                             <div className="flex-1 w-full">
                                 <label className="block text-theme-purple font-bold text-[13px] mb-1.5">Location</label>
                                 <div className="flex border border-gray-300 rounded-lg overflow-hidden h-[48px]">
-                                    <button onClick={() => setHotelLocation('Makkah')} className={`flex-1 font-bold transition ${hotelLocation === 'Makkah' ? 'bg-[#cca332] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Makkah</button>
-                                    <button onClick={() => setHotelLocation('Madinah')} className={`flex-1 font-bold transition border-l border-gray-300 ${hotelLocation === 'Madinah' ? 'bg-[#cca332] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Madinah</button>
+                                    <button onClick={() => setHotelLocation('Makkah')} className={`flex-1 font-bold transition ${hotelLocation === 'Makkah' ? 'bg-[#eab953] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Makkah</button>
+                                    <button onClick={() => setHotelLocation('Madinah')} className={`flex-1 font-bold transition border-l border-gray-300 ${hotelLocation === 'Madinah' ? 'bg-[#eab953] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Madinah</button>
                                 </div>
                             </div>
                             <div className="flex-1 w-full">
                                 <label className="block text-theme-purple font-bold text-[13px] mb-1.5">Check-in - Check-out</label>
-                                <div className="flex items-center border border-gray-300 rounded-lg h-[48px] px-2 bg-white focus-within:border-[#cca332] transition-colors">
+                                <div className="flex items-center border border-gray-300 rounded-lg h-[48px] px-2 bg-white focus-within:border-[#eab953] transition-colors">
                                     <input type="date" className="w-full text-gray-700 outline-none text-xs bg-transparent cursor-pointer" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
                                     <span className="mx-1 text-gray-400">|</span>
                                     <input type="date" className="w-full text-gray-700 outline-none text-xs bg-transparent cursor-pointer" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} />

@@ -133,7 +133,7 @@
 }
 
 .calc-select:focus, .calc-input:focus {
-  border-color: #cca332;
+  border-color: #eab953;
   background-color: #ffffff;
   box-shadow: 0 0 0 4px rgba(204, 163, 50, 0.15);
   transform: scale(1.01);
@@ -155,7 +155,7 @@
 }
 
 .checkbox-group:hover {
-  border-color: #cca332;
+  border-color: #eab953;
   background-color: #ffffff;
   transform: translateX(6px);
 }
@@ -232,7 +232,7 @@
   margin-top: 25px;
   padding: 20px;
   background-color: #f9fafb;
-  border: 1px dashed #cca332;
+  border: 1px dashed #eab953;
   border-radius: 8px;
   animation: revealBankDetails 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -241,7 +241,7 @@
   background: #ffffff;
   padding: 15px;
   border-radius: 6px;
-  border-left: 4px solid #cca332;
+  border-left: 4px solid #eab953;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
