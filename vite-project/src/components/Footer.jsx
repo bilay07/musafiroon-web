@@ -1,12 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './Footer.css'; 
+import { Link, useLocation } from 'react-router-dom';
+import './Footer.css';
 
 function Footer() {
+  const location = useLocation();
+  const isDarkPage = location.pathname === '/transport-rates';
+
   return (
     <footer className="custom-footer">
+      <div className="footer-pattern-overlay"></div>
+
       {/* Wave SVG (Top Border) */}
-      <div className="wave-divider">
+      <div className={`wave-divider ${isDarkPage ? 'wave-divider-dark' : ''}`}>
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
         </svg>
@@ -14,9 +19,9 @@ function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Mosafiroon Text Moved Outside and Made Smaller */}
+        {/* Mosafiroon Logo */}
         <div className="mb-8">
-            <h2 className="text-2xl font-extrabold text-white tracking-widest uppercase">Mosafiroon</h2>
+            <img src="/mosafiroon-logo-header.png" alt="Mosafiroon" className="h-12 w-auto object-contain" />
         </div>
         
         {/* Grid layout updated to 3 columns */}
@@ -64,13 +69,13 @@ function Footer() {
               className="block bg-white/5 hover:bg-white/10 transition duration-300 p-4 rounded-xl mb-6 border border-white/10 group cursor-pointer shadow-sm"
             >
               <div className="flex items-start gap-3">
-                <i className="fa-solid fa-map-location-dot text-[#eab953] text-2xl mt-1 group-hover:scale-110 transition-transform"></i>
+                <i className="fa-solid fa-map-location-dot text-[#f0ca00] text-2xl mt-1 group-hover:scale-110 transition-transform"></i>
                 <div>
                   <p className="text-sm text-white font-bold mb-1">Mosafiroon</p>
                   <p className="text-xs text-gray-300 leading-relaxed">
                     Office No. M1 - M3, 1st Floor, Abbas Trade Center, Main PIA Main Blvd, near Javaid Nehari, Lahore
                   </p>
-                  <span className="text-[#eab953] text-xs font-semibold mt-2 inline-flex items-center gap-1 group-hover:underline">
+                  <span className="text-[#f0ca00] text-xs font-semibold mt-2 inline-flex items-center gap-1 group-hover:underline">
                     View on Google Maps <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </span>
                 </div>
@@ -79,11 +84,11 @@ function Footer() {
 
             <ul className="contact-list">
               <li>
-                <i className="fa-solid fa-phone text-[#eab953]"></i>
+                <i className="fa-solid fa-phone text-[#f0ca00]"></i>
                 <span>+92 311 2462949</span>
               </li>
               <li>
-                <i className="fa-solid fa-envelope text-[#eab953]"></i>
+                <i className="fa-solid fa-envelope text-[#f0ca00]"></i>
                 <span>mosafiroon.info@gmail.com</span>
               </li>
             </ul>
@@ -95,7 +100,7 @@ function Footer() {
         <div className="border-t border-white/20 pt-6 pb-6 text-sm text-gray-300 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           <p>Copyright © 2026 Mosafiroon Tourism. All rights reserved.</p>
           <p className="text-xs text-gray-400">
-            Powered by <span className="text-[#eab953] font-bold tracking-wide">Bin Aziz Group</span> | Designed & Created By <a href="https://leadspktechnologies.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#eab953] transition-colors duration-300 font-medium">leadspktechnologies.com</a>
+            Powered by <span className="text-[#f0ca00] font-bold tracking-wide">Bin Aziz Group</span> | Designed & Created By <a href="https://leadspktechnologies.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#f0ca00] transition-colors duration-300 font-medium">leadspktechnologies.com</a>
           </p>
         </div>
 

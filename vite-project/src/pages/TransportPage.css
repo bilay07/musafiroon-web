@@ -1,0 +1,222 @@
+/* =========================================
+   Base Layout & Animations
+   ========================================= */
+.transport-page-wrapper {
+  flex-grow: 1;
+  /* Vertical (not diagonal) so the bottom edge is always a flat #1a0000 —
+     must stay pixel-identical to Footer's .wave-divider-dark fill color.
+     The wave itself is an opaque flat shape, so as long as this matches,
+     the seam is invisible with no extra tricks needed. */
+  background: linear-gradient(180deg, #1a0000 0%, #2b0000 40%, #4a0000 65%, #1a0000 100%);
+  padding: 4rem 0;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.transport-page-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(240, 202, 0, 0.07) 0px, rgba(240, 202, 0, 0.07) 1px, transparent 1px, transparent 26px),
+    repeating-linear-gradient(-45deg, rgba(240, 202, 0, 0.07) 0px, rgba(240, 202, 0, 0.07) 1px, transparent 1px, transparent 26px);
+  /* Fade the pattern out right before the Footer's wave so the two
+     meet on a plain flat color instead of a hard-edged pattern cutoff. */
+  mask-image: linear-gradient(to bottom, black, black calc(100% - 130px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black, black calc(100% - 130px), transparent 100%);
+}
+
+/* Safe "premium life" touch: a soft glow near the top only — kept well
+   away from the wave boundary so it never disturbs that flat match. */
+.transport-page-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 15%, rgba(240, 202, 0, 0.14), transparent 55%);
+  animation: transportGlowPulse 8s ease-in-out infinite;
+}
+
+@keyframes transportGlowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.transport-page-container {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   Header Text
+   ========================================= */
+.transport-header-box {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.transport-eyebrow {
+  display: inline-block;
+  color: #f0ca00;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.75rem;
+}
+
+.transport-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .transport-title {
+    font-size: 3rem;
+  }
+}
+
+.transport-subtitle {
+  color: #d1d5db;
+  font-size: 1.125rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+/* =========================================
+   Route & Vehicle Finder
+   ========================================= */
+.transport-route-card {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-align: left;
+  padding: 0.9rem 1rem;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.transport-route-card i {
+  color: #f0ca00;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.transport-route-card:hover {
+  background: rgba(240, 202, 0, 0.1);
+  border-color: rgba(240, 202, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.transport-route-card-active {
+  background: rgba(240, 202, 0, 0.18);
+  border-color: #f0ca00;
+  color: white;
+  box-shadow: 0 8px 20px -6px rgba(240, 202, 0, 0.4);
+}
+
+.transport-vehicle-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0.75rem;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.transport-vehicle-card:hover {
+  background: rgba(240, 202, 0, 0.1);
+  border-color: rgba(240, 202, 0, 0.4);
+  transform: translateY(-3px);
+}
+
+.transport-vehicle-card-active {
+  background: rgba(240, 202, 0, 0.18);
+  border-color: #f0ca00;
+  color: white;
+  transform: scale(1.04);
+  box-shadow: 0 10px 24px -8px rgba(240, 202, 0, 0.45);
+}
+
+.transport-vehicle-card-active i {
+  color: #f0ca00;
+}
+
+.transport-result-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(240, 202, 0, 0.35);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  backdrop-filter: blur(6px);
+}
+
+.transport-currency-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #d1d5db;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.transport-currency-pill-active {
+  background: linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%);
+  background-size: 200% 200%;
+  animation: goldShine 3s ease-in-out infinite;
+  border-color: #f0ca00;
+  color: #4a0000;
+}
+
+@keyframes goldShine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* =========================================
+   Terms & Conditions Accordion
+   ========================================= */
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.faq-panel > ul {
+  overflow: hidden;
+}
+
+.faq-panel-open {
+  grid-template-rows: 1fr;
+}

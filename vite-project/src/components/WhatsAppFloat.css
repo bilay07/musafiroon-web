@@ -1,0 +1,120 @@
+/* =========================================
+   Luxury 3D Floating WhatsApp Button
+   ========================================= */
+.wa-float {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 99999;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  animation: waFloatBob 3.4s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .wa-float {
+    bottom: 2rem;
+    left: 2rem;
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@keyframes waFloatBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Soft pulsing halo behind everything */
+.wa-float-halo {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37, 211, 102, 0.45), transparent 70%);
+  animation: waHaloPulse 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes waHaloPulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+
+/* The glossy 3D sphere itself */
+.wa-float-orb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 32% 26%, #6dffa8 0%, #25D366 42%, #128c42 78%, #0a6b30 100%);
+  box-shadow:
+    0 14px 26px -8px rgba(6, 78, 39, 0.55),
+    0 4px 10px rgba(0, 0, 0, 0.25),
+    inset 0 3px 5px rgba(255, 255, 255, 0.55),
+    inset 0 -6px 10px rgba(0, 40, 15, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
+  overflow: hidden;
+}
+
+/* Glassy highlight sweep across the top */
+.wa-float-orb::before {
+  content: '';
+  position: absolute;
+  top: 6%;
+  left: 12%;
+  width: 55%;
+  height: 38%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+/* Slow diagonal shine sweep for extra polish */
+.wa-float-orb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.4) 48%, transparent 62%);
+  background-size: 220% 220%;
+  animation: waShineSweep 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes waShineSweep {
+  0% { background-position: 140% -20%; }
+  55%, 100% { background-position: -40% 120%; }
+}
+
+.wa-float-orb i {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  font-size: 1.7rem;
+  filter: drop-shadow(0 2px 3px rgba(0, 45, 20, 0.5));
+}
+
+@media (min-width: 768px) {
+  .wa-float-orb i {
+    font-size: 2rem;
+  }
+}
+
+.wa-float:hover .wa-float-orb {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow:
+    0 20px 34px -8px rgba(6, 78, 39, 0.6),
+    0 6px 14px rgba(0, 0, 0, 0.3),
+    inset 0 3px 5px rgba(255, 255, 255, 0.65),
+    inset 0 -6px 10px rgba(0, 40, 15, 0.45);
+}
+

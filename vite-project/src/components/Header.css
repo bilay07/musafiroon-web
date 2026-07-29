@@ -1,433 +1,115 @@
 /* =========================================
-   Base Layout & Animations
+   Site Header Gradient (Premium)
    ========================================= */
-.packages-main-wrapper {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9fafb;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.site-header-gradient {
+  background: linear-gradient(120deg, #4a0000 0%, #810000 45%, #c20000 70%, #810000 100%);
+  background-size: 220% 220%;
+  animation: gradientBreatheHeader 16s ease-in-out infinite;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  width: 100%;
+@keyframes gradientBreatheHeader {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* =========================================
-   Header Section (Purple Gradient)
+   Premium Gold Currency Selector
    ========================================= */
-.packages-header {
-  background: linear-gradient(to right, #4a0000 0%, #810000 50%, #c20000 100%);
-  padding: 2rem 0 3.5rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  width: 100%;
-}
-
-.tabs-container {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.tab-btn {
-  display: flex;
-  align-items: center;
-  padding-bottom: 0.5rem;
-  color: #9ca3af;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.tab-btn i {
-  margin-right: 0.5rem;
-}
-
-.tab-btn:hover {
-  color: white;
-}
-
-.tab-btn.active {
-  color: white;
-  border-bottom-color: white;
-}
-
-/* =========================================
-   Search Form Section
-   ========================================= */
-.search-container {
-  background-color: white;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.search-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: flex-end;
-}
-
-@media (min-width: 768px) {
-  .search-form {
-    flex-direction: row;
-  }
-}
-
-.form-group {
-  flex: 1;
-  width: 100%;
-}
-
-.form-label {
-  display: block;
-  color: #810000;
-  font-weight: bold;
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-
-.form-input {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  padding: 0 1rem;
-  color: #374151;
-  outline: none;
-  height: 48px;
-  background: transparent;
-  transition: border-color 0.3s ease;
-  font-family: inherit;
-}
-
-.form-input:focus {
-  border-color: #eab953;
-}
-
-/* Date Range Picker Styling */
-.date-range-wrapper {
-  display: flex;
-  align-items: center;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  height: 48px;
-  padding: 0 0.5rem;
-  background-color: white;
-  transition: border-color 0.3s ease;
-}
-
-.date-range-wrapper:focus-within {
-  border-color: #eab953;
-}
-
-.date-input {
-  width: 100%;
-  color: #374151;
-  outline: none;
-  font-size: 12px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.date-separator {
-  margin: 0 0.25rem;
-  color: #9ca3af;
-}
-
-/* Location Toggle Buttons */
-.location-toggle {
-  display: flex;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  height: 48px;
-}
-
-.location-btn {
-  flex: 1;
-  font-weight: bold;
-  background: white;
-  color: #4b5563;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.location-btn:not(:first-child) {
-  border-left: 1px solid #d1d5db;
-}
-
-.location-btn:hover {
-  background: #f9fafb;
-}
-
-.location-btn.active {
-  background: #eab953;
-  color: white;
-}
-
-.btn-search {
-  width: 100%;
-  background-color: #eab953;
-  color: white;
-  font-weight: bold;
-  padding: 0 1.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
-  height: 48px;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-@media (min-width: 768px) {
-  .btn-search {
-    width: 9rem; /* 36 * 0.25rem = 9rem */
-  }
-}
-
-.btn-search:hover {
-  background-color: #b08d2b;
-}
-
-/* =========================================
-   Packages Grid & Cards
-   ========================================= */
-.packages-section {
-  padding: 3rem 0;
-  width: 100%;
-}
-
-.loader-container {
-  text-align: center;
-  padding: 5rem 0;
-}
-
-.loader-icon {
-  font-size: 2.25rem;
-  color: #810000;
-  animation: spin 1s linear infinite;
-}
-
-.loader-text {
-  margin-top: 1rem;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.section-title {
-  font-size: 1.875rem;
+.currency-select-gold {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234a0000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 200% 200%, 10px 6px;
+  background-repeat: no-repeat, no-repeat;
+  background-position: 0% 50%, right 0.7rem center;
+  animation: goldShineSelect 3s ease-in-out infinite;
+  color: #4a0000;
   font-weight: 800;
-  color: #810000;
-  margin-bottom: 0.75rem;
-}
-
-@media (min-width: 768px) {
-  .section-title {
-    font-size: 2.25rem;
-  }
-}
-
-.section-subtitle {
-  color: #6b7280;
-  font-size: 1.125rem;
-}
-
-.packages-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  align-items: stretch;
-}
-
-@media (min-width: 768px) {
-  .packages-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .packages-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.package-card {
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  border: 1px solid #f3f4f6;
-  transition: box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.package-card:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-  background-color: #c20000;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 1rem;
-  text-align: center;
-}
-
-.card-body {
-  padding: 1.25rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.route-info {
-  font-size: 0.75rem;
-  color: #6b7280;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.route-arrow {
-  font-size: 10px;
-  margin: 0 0.25rem;
-  color: #9ca3af;
-}
-
-.inclusions-title {
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 0.75rem;
-  text-align: center;
-}
-
-.inclusions-list {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  min-height: 60px;
-}
-
-.inclusion-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #6b7280;
-}
-
-.inclusion-icon {
-  font-size: 1.25rem;
-  margin-bottom: 0.25rem;
-  color: #eab953;
-}
-
-.inclusion-text {
-  font-size: 11px;
-}
-
-.distances-box {
-  background-color: #f8f9fa;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #f3f4f6;
-  margin-top: auto;
-}
-
-.distance-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-}
-
-.distance-row:last-child {
-  margin-bottom: 0;
-}
-
-.distance-label {
-  color: #6b7280;
-}
-
-.distance-val {
-  font-weight: bold;
-  color: #111827;
-}
-
-.card-divider {
-  border-top: 1px solid #e5e7eb;
-  margin: 1rem 0;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: auto;
-}
-
-.price-per-person {
-  font-size: 0.75rem;
-  color: #6b7280;
-  margin-bottom: 0.25rem;
-}
-
-.total-price {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #810000;
-}
-
-.btn-book {
-  background-color: #eab953;
-  color: white;
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.375rem;
-  font-weight: 600;
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 9999px;
+  padding: 0.4rem 1.8rem 0.4rem 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.btn-book:hover {
-  background-color: #b08d2b;
+.currency-select-gold:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.currency-select-gold:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(240, 202, 0, 0.4);
 }
 
+@keyframes goldShineSelect {
+  0%, 100% { background-position: 0% 50%, right 0.7rem center; }
+  50% { background-position: 100% 50%, right 0.7rem center; }
+}
+
+.currency-dropdown-list {
+  position: fixed;
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem;
+  background: linear-gradient(160deg, #4a0000, #2b0000);
+  border: 1px solid rgba(240, 202, 0, 0.45);
+  border-radius: 0.75rem;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(240, 202, 0, 0.1);
+  overflow: hidden;
+  z-index: 9999;
+  animation: currencyDropIn 0.18s ease-out;
+}
+
+@keyframes currencyDropIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.currency-option {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 1.25rem;
+  margin: 2px 0;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: #f0ca00;
+  background: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.currency-option:hover,
+.currency-option.active {
+  background-image: linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%);
+  background-size: 200% 200%;
+  animation: goldShineOption 3s ease-in-out infinite;
+  color: #000000;
+  transform: scale(1.03);
+}
+
+@keyframes goldShineOption {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* =========================================
+   Premium Geometric Pattern Overlay
+   ========================================= */
+.header-pattern-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(240, 202, 0, 0.07) 0px, rgba(240, 202, 0, 0.07) 1px, transparent 1px, transparent 26px),
+    repeating-linear-gradient(-45deg, rgba(240, 202, 0, 0.07) 0px, rgba(240, 202, 0, 0.07) 1px, transparent 1px, transparent 26px);
+}

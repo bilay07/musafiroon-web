@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import nodemailer from 'nodemailer';
 import Package from './models/Package.js';
 import Admin from './models/Admin.js'; 
 
@@ -23,12 +22,6 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected! 🎉"))
   .catch(err => console.log("Conn Error:", err));
-
-// --- EMAIL TRANSPORTER ---
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: { user: 'mosafiroon.info@gmail.com', pass: process.env.EMAIL_PASS || 'dummy_password' }
-});
 
 // --- PUBLIC ROUTES ---
 app.get('/api/packages', async (req, res) => {

@@ -1,0 +1,35 @@
+/* Shared premium "luxury white" treatment — a faint maroon diagonal
+   lattice + a soft gold glow, matching the look used on the Customize page.
+   Apply to any relative-positioned white/light surface: add this pair of
+   divs as its first children, then give real content `relative z-10`. */
+.luxury-pattern-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(129, 0, 0, 0.035) 0px, rgba(129, 0, 0, 0.035) 1px, transparent 1px, transparent 26px),
+    repeating-linear-gradient(-45deg, rgba(129, 0, 0, 0.035) 0px, rgba(129, 0, 0, 0.035) 1px, transparent 1px, transparent 26px);
+}
+
+.luxury-glow-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 0%, rgba(240, 202, 0, 0.16), transparent 55%);
+  animation: luxuryGlowPulse 8s ease-in-out infinite;
+}
+
+@keyframes luxuryGlowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Same faint lattice, but as a plain background-image (no extra DOM nodes
+   or z-index needed) — for repeated elements like card bodies. */
+.luxury-card-pattern {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(129, 0, 0, 0.035) 0px, rgba(129, 0, 0, 0.035) 1px, transparent 1px, transparent 26px),
+    repeating-linear-gradient(-45deg, rgba(129, 0, 0, 0.035) 0px, rgba(129, 0, 0, 0.035) 1px, transparent 1px, transparent 26px);
+}

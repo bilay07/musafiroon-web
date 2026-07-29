@@ -1,13 +1,29 @@
 /* Footer Main Wrapper */
 .custom-footer {
   position: relative;
-  /* Left se Royal Purple aur right pe Eggplant Purple */
-  background: linear-gradient(to right, #4a0000 0%, #810000 50%, #c20000 100%);
+  background: linear-gradient(120deg, #4a0000 0%, #810000 45%, #c20000 70%, #810000 100%);
+  background-size: 220% 220%;
+  animation: gradientBreatheFooter 16s ease-in-out infinite;
   color: white;
   padding-top: 120px; /* Wave ke liye space */
   padding-bottom: 20px;
   overflow: hidden;
   font-family: sans-serif;
+}
+
+@keyframes gradientBreatheFooter {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.footer-pattern-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(240, 202, 0, 0.07) 0px, rgba(240, 202, 0, 0.07) 1px, transparent 1px, transparent 26px),
+    repeating-linear-gradient(-45deg, rgba(240, 202, 0, 0.07) 0px, rgba(240, 202, 0, 0.07) 1px, transparent 1px, transparent 26px);
 }
 
 /* Top Wave Divider */
@@ -39,6 +55,10 @@
   fill: #f9fafb; /* App.jsx ke bg-gray-50 se match karne ke liye */
 }
 
+.custom-footer .wave-divider-dark .shape-fill {
+  fill: #1a0000; /* Transport page ke dark background se match karne ke liye */
+}
+
 /* Glassmorphism Card (Left Column) */
 .footer-info-card {
   background: rgba(255, 255, 255, 0.08); /* Halka transparent */
@@ -52,8 +72,10 @@
 
 /* Social Icons */
 .social-icon-btn {
-  background-color: #eab953; /* Golden color (Purple ke sath best lagta hai) */
-  color: white;
+  background: linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%);
+  background-size: 200% 200%;
+  animation: goldShine 3s ease-in-out infinite;
+  color: #000000;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -66,9 +88,14 @@
 }
 
 .social-icon-btn:hover {
-  background-color: white;
-  color: #eab953; /* Hover pe text golden hoga */
+  background: white;
+  color: #f0ca00; /* Hover pe text golden hoga */
   transform: translateY(-2px);
+}
+
+@keyframes goldShine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* Links Styling */
@@ -85,7 +112,7 @@
 }
 
 .footer-links-list a:hover {
-  color: #eab953; /* Hover pe links golden honge */
+  color: #f0ca00; /* Hover pe links golden honge */
 }
 
 /* Contact List */

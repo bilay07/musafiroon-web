@@ -14,8 +14,9 @@
     overflow: hidden;
     font-family: 'Poppins', sans-serif;
     background-color: #f9fafb; 
-    /* Fade smoothly bina kisi white flash ke */
-    animation: finalScreenFade 1s ease forwards 5s; 
+    /* Fade smoothly bina kisi white flash ke — plane top se gayab (~4.4s)
+       aur curtains open (~4.5s) hote hi khatam ho jaye */
+    animation: finalScreenFade 0.7s ease forwards 3.8s;
   }
   
   .loader-panel {
@@ -23,10 +24,22 @@
     top: 0;
     width: 50%;
     height: 100%;
-    background-color: #c20000; 
+    /* Site's signature maroon-to-gold curtain, instead of flat red */
+    background: linear-gradient(160deg, #4a0000 0%, #810000 55%, #c20000 100%);
     transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 5;
+    overflow: hidden;
     will-change: transform, opacity;
+  }
+
+  .loader-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(240, 202, 0, 0.07) 0px, rgba(240, 202, 0, 0.07) 1px, transparent 1px, transparent 26px),
+      repeating-linear-gradient(-45deg, rgba(240, 202, 0, 0.07) 0px, rgba(240, 202, 0, 0.07) 1px, transparent 1px, transparent 26px);
   }
   
   .loader-panel.left-panel { 
@@ -45,15 +58,26 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 3px; 
-    /* 🔥 YAHAN LINE KA COLOR WHITE KAR DIYA HAI (#ffffff) */
-    background-image: linear-gradient(#ffffff 50%, rgba(255,255,255,0) 0%);
+    width: 3px;
+    /* Gold, matching the site's premium accent, with a soft glow */
+    background-image: linear-gradient(#f0ca00 50%, rgba(240,202,0,0) 0%);
     background-position: center;
-    background-size: 3px 25px; 
+    background-size: 3px 25px;
     background-repeat: repeat-y;
-    z-index: 8; 
-    opacity: 0; 
-    animation: growZipWithPlane 4.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s; 
+    box-shadow: 0 0 10px rgba(240, 202, 0, 0.6);
+    z-index: 8;
+    opacity: 0;
+    animation: growZipWithPlane 4.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
+  }
+
+  /* A bright highlight sliding along the line, on top of the dash pattern */
+  .dynamic-zip-dashed-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to bottom, transparent, #fff3c4 45%, transparent 60%, transparent);
+    background-size: 100% 260%;
+    animation: zipShimmerSlide 1.3s linear infinite;
   }
   
   /* =========================================
@@ -69,26 +93,37 @@
   }
   
   .a380-plane-icon {
-    font-size: 80px; 
-    color: #eab953; 
+    font-size: 80px;
     display: block;
-    margin-bottom: -15px; 
+    margin-bottom: -15px;
+    background: linear-gradient(120deg, #a97800 0%, #f0ca00 35%, #fff3c4 50%, #f0ca00 65%, #a97800 100%);
+    background-size: 220% 220%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 14px rgba(240, 202, 0, 0.75));
+    animation: goldShineLoader 2.4s ease-in-out infinite;
   }
   
   /* =========================================
      MUSAFIROON Text Reveal
      ========================================= */
   .loader-musafiroon-text {
-    color: #810000; 
+    background: linear-gradient(120deg, #a97800 0%, #f0ca00 35%, #fff3c4 50%, #f0ca00 65%, #a97800 100%);
+    background-size: 220% 220%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 10px rgba(240, 202, 0, 0.45));
     font-weight: 900;
-    font-size: 42px; 
+    font-size: 42px;
     letter-spacing: 15px;
-    padding-left: 15px; 
+    padding-left: 15px;
     text-align: center;
     width: 100%;
-    z-index: 6; 
+    z-index: 6;
     opacity: 0;
-    animation: fadeInMusafiroon 1s ease forwards 1.8s; 
+    animation: fadeInMusafiroon 1s ease forwards 1.8s, goldShineLoader 2.4s ease-in-out infinite 1.8s;
     position: absolute;
   }
   
@@ -128,6 +163,16 @@
   @keyframes fadeInMusafiroonMobile {
     from { opacity: 0; letter-spacing: 15px; transform: translateY(10px); }
     to { opacity: 1; letter-spacing: 8px; transform: translateY(0); }
+  }
+
+  @keyframes goldShineLoader {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes zipShimmerSlide {
+    from { background-position-y: -160%; }
+    to { background-position-y: 160%; }
   }
   
   @keyframes openLeftPanel {

@@ -1,0 +1,12 @@
+/* Shared premium "shiny gold" background, used wherever the site's
+   gold accent (#f0ca00) is a solid fill (badges, buttons, pills). */
+.gold-shine-bg {
+  background: linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%);
+  background-size: 200% 200%;
+  animation: goldShineGlobal 3s ease-in-out infinite;
+}
+
+@keyframes goldShineGlobal {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}

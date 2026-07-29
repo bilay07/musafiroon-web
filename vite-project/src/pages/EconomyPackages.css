@@ -85,7 +85,10 @@
   }
   
   .eco-card {
-    background: white;
+    background-color: white;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(129, 0, 0, 0.035) 0px, rgba(129, 0, 0, 0.035) 1px, transparent 1px, transparent 26px),
+      repeating-linear-gradient(-45deg, rgba(129, 0, 0, 0.035) 0px, rgba(129, 0, 0, 0.035) 1px, transparent 1px, transparent 26px);
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -105,31 +108,139 @@
     box-shadow: 0 30px 60px -15px rgba(59, 7, 100, 0.25);
   }
   
-  .eco-card-topbar {
-    background-color: #c20000;
-    /* Dark Purple top bar like premium */
-    color: white;
-    font-size: 14px;
+  /* =========================================
+     Card Image (Booking.com style)
+     ========================================= */
+  .eco-image-wrap {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #4a0000 0%, #810000 50%, #c20000 100%);
+    overflow: hidden;
+  }
+
+  .eco-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .eco-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .eco-fav-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .eco-fav-btn:hover {
+    transform: scale(1.15);
+  }
+
+  .eco-fav-btn.is-active {
+    color: #e11d48;
+  }
+
+  .eco-fav-btn.is-active i {
+    animation: ecoFavPop 0.3s ease;
+  }
+
+  @keyframes ecoFavPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  .eco-month-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%);
+    background-size: 200% 200%;
+    animation: goldShine 3s ease-in-out infinite;
+    color: #000000;
+    font-size: 10px;
     font-weight: 700;
-    padding: 1rem;
-    text-align: center;
-    letter-spacing: 0.025em;
     text-transform: uppercase;
-    transition: all 0.4s ease;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 9999px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   }
-  
-  .eco-card:hover .eco-card-topbar {
-    background-color: #810000;
-    letter-spacing: 2px;
+
+  .eco-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.15rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.7rem;
   }
-  
+
+  .eco-star-filled {
+    color: #f0ca00;
+  }
+
+  .eco-star-empty {
+    color: #e5e7eb;
+  }
+
+  .eco-card-title {
+    font-weight: 700;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .eco-roomtype-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .eco-roomtype-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 9999px;
+  }
+
+  .eco-roomtype-pill i {
+    color: #f0ca00;
+  }
+
   .eco-card-content {
     padding: 1.5rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
   }
-  
+
   .eco-route-info {
     font-size: 0.75rem;
     color: #6b7280;
@@ -224,8 +335,10 @@
   }
   
   .eco-btn-view {
-    background-color: #eab953; /* 🔥 UPDATED TO VIP PURPLE */
-    color: white;
+    background: linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%);
+    background-size: 200% 200%;
+    animation: goldShine 3s ease-in-out infinite;
+    color: #000000;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
     font-weight: 700;
@@ -244,6 +357,11 @@
   /* =========================================
      Keyframe Animations
      ========================================= */
+  @keyframes goldShine {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
   @keyframes spin {
     from {
       transform: rotate(0deg);

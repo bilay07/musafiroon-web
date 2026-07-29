@@ -27,16 +27,21 @@ function Admin() {
 
   // --- UPDATED: Pura Package Data Form ---
   const [formData, setFormData] = useState({
-    title: '', 
-    price: '', 
+    title: '',
+    price: '',
     category: 'popular',
     route: 'JEDDAH, MAKKAH, MADINAH', // Default route
     inclusions: 'Visa, Hotel, Transport', // Default inclusions
-    makkah: '', 
+    makkah: '',
     madinah: '',
-    makkahHotel: '', 
+    makkahHotel: '',
     madinahHotel: '',
-    description: '' 
+    description: '',
+    month: 'All Months*',
+    roomType: 'Double',
+    image: '',
+    rating: 5,
+    reviewCount: 50
   });
 
   useEffect(() => {
@@ -203,7 +208,12 @@ function Admin() {
       inclusions: formData.inclusions.split(',').map(s=>s.trim()), 
       distances: { makkah: formData.makkah, madinah: formData.madinah },
       hotels: { makkah: formData.makkahHotel, madinah: formData.madinahHotel },
-      description: formData.description 
+      description: formData.description,
+      month: formData.month,
+      roomType: formData.roomType,
+      image: formData.image,
+      rating: Number(formData.rating),
+      reviewCount: Number(formData.reviewCount)
     };
     try {
       const response = await fetch('https://musafiroon-web.onrender.com/api/packages', {
@@ -211,8 +221,8 @@ function Admin() {
       });
       if(response.ok) { 
         alert("Package Added Successfully!");
-        fetchPackages(); 
-        setFormData({title:'', price:'', category:'popular', route:'JEDDAH, MAKKAH, MADINAH', inclusions:'Visa, Hotel, Transport', makkah:'', madinah:'', makkahHotel:'', madinahHotel:'', description:''}); 
+        fetchPackages();
+        setFormData({title:'', price:'', category:'popular', route:'JEDDAH, MAKKAH, MADINAH', inclusions:'Visa, Hotel, Transport', makkah:'', madinah:'', makkahHotel:'', madinahHotel:'', description:'', month:'All Months*', roomType:'Double', image:'', rating: 5, reviewCount: 50});
       } else {
         const errorData = await response.json();
         alert("Error adding package: " + (errorData.message || "Please check backend schema."));
@@ -233,20 +243,20 @@ function Admin() {
   if (!isAuthenticated) {
     return (
       <div className="fixed inset-0 z-[9999] bg-[#1a1a1a] flex items-center justify-center p-4">
-        <div className="bg-white p-10 rounded-lg shadow-2xl w-full max-w-sm border-b-8 border-[#eab953]">
+        <div className="bg-white p-10 rounded-lg shadow-2xl w-full max-w-sm border-b-8 border-[#f0ca00]">
           
           {forgotStep === 0 && (
             <div className="flex mb-8 border-b-2 border-gray-100">
               <button 
                 type="button"
-                className={`flex-1 pb-3 font-black text-sm uppercase tracking-wider transition-all ${loginTab === 'admin' ? 'text-[#eab953] border-b-2 border-[#eab953] translate-y-[2px]' : 'text-gray-400 hover:text-gray-600'}`}
+                className={`flex-1 pb-3 font-black text-sm uppercase tracking-wider transition-all ${loginTab === 'admin' ? 'text-[#f0ca00] border-b-2 border-[#f0ca00] translate-y-[2px]' : 'text-gray-400 hover:text-gray-600'}`}
                 onClick={() => setLoginTab('admin')}
               >
                 Admin
               </button>
               <button 
                 type="button"
-                className={`flex-1 pb-3 font-black text-sm uppercase tracking-wider transition-all ${loginTab === 'user' ? 'text-[#eab953] border-b-2 border-[#eab953] translate-y-[2px]' : 'text-gray-400 hover:text-gray-600'}`}
+                className={`flex-1 pb-3 font-black text-sm uppercase tracking-wider transition-all ${loginTab === 'user' ? 'text-[#f0ca00] border-b-2 border-[#f0ca00] translate-y-[2px]' : 'text-gray-400 hover:text-gray-600'}`}
                 onClick={() => setLoginTab('user')}
               >
                 User
@@ -263,7 +273,7 @@ function Admin() {
               <input 
                 type="text" 
                 placeholder={loginTab === 'admin' ? "Admin Email / Username" : "User Email / Username"} 
-                className="w-full bg-gray-50 border p-4 rounded outline-none focus:border-[#eab953] transition-colors" 
+                className="w-full bg-gray-50 border p-4 rounded outline-none focus:border-[#f0ca00] transition-colors" 
                 value={identifier} 
                 onChange={e => setIdentifier(e.target.value)} 
                 autoComplete="username"
@@ -272,7 +282,7 @@ function Admin() {
               <input 
                 type="password" 
                 placeholder="Password" 
-                className="w-full bg-gray-50 border p-4 rounded outline-none focus:border-[#eab953] transition-colors" 
+                className="w-full bg-gray-50 border p-4 rounded outline-none focus:border-[#f0ca00] transition-colors" 
                 value={password} 
                 onChange={e => setPassword(e.target.value)} 
                 autoComplete="new-password" 
@@ -283,7 +293,7 @@ function Admin() {
                 <label className="flex items-center gap-2 cursor-pointer hover:text-black">
                   <input 
                     type="checkbox" 
-                    className="accent-[#eab953] w-4 h-4 cursor-pointer" 
+                    className="accent-[#f0ca00] w-4 h-4 cursor-pointer" 
                     checked={rememberMe} 
                     onChange={e => setRememberMe(e.target.checked)} 
                   />
@@ -294,24 +304,24 @@ function Admin() {
                 </span>
               </div>
 
-              <button type="submit" className="w-full bg-[#eab953] text-white font-bold py-4 rounded hover:bg-black transition-all">LOGIN</button>
+              <button type="submit" className="w-full bg-[#f0ca00] text-black font-bold py-4 rounded hover:bg-black hover:text-white transition-all">LOGIN</button>
             </form>
           )}
 
           {forgotStep === 1 && (
             <form onSubmit={handleRequestOTP} className="space-y-6 animate-fade-in">
               <p className="text-xs text-center text-gray-500">Enter email to receive OTP</p>
-              <input type="email" placeholder="Your Account Email" className="w-full bg-gray-50 border p-4 rounded outline-none focus:border-[#eab953]" value={resetEmail} onChange={e => setResetEmail(e.target.value)} required />
-              <button type="submit" className="w-full bg-black text-white font-bold py-4 rounded hover:bg-[#eab953] transition-all">SEND OTP</button>
+              <input type="email" placeholder="Your Account Email" className="w-full bg-gray-50 border p-4 rounded outline-none focus:border-[#f0ca00]" value={resetEmail} onChange={e => setResetEmail(e.target.value)} required />
+              <button type="submit" className="w-full bg-black text-white font-bold py-4 rounded hover:bg-[#f0ca00] hover:text-black transition-all">SEND OTP</button>
               <p className="text-center text-xs cursor-pointer text-gray-500 hover:text-black" onClick={() => setForgotStep(0)}>Back to Login</p>
             </form>
           )}
 
           {forgotStep === 2 && (
             <form onSubmit={handleVerifyOTPAndReset} className="space-y-6 animate-fade-in">
-              <input type="text" placeholder="Enter 6-Digit OTP" className="w-full bg-gray-50 border p-4 rounded outline-none tracking-widest text-center font-bold focus:border-[#eab953]" value={otp} onChange={e => setOtp(e.target.value)} required />
-              <input type="password" placeholder="Set New Password" className="w-full bg-gray-50 border p-4 rounded outline-none focus:border-[#eab953]" value={newPassword} onChange={e => setNewPassword(e.target.value)} required />
-              <button type="submit" className="w-full bg-[#eab953] text-white font-bold py-4 rounded hover:bg-black transition-all">RESET & LOGIN</button>
+              <input type="text" placeholder="Enter 6-Digit OTP" className="w-full bg-gray-50 border p-4 rounded outline-none tracking-widest text-center font-bold focus:border-[#f0ca00]" value={otp} onChange={e => setOtp(e.target.value)} required />
+              <input type="password" placeholder="Set New Password" className="w-full bg-gray-50 border p-4 rounded outline-none focus:border-[#f0ca00]" value={newPassword} onChange={e => setNewPassword(e.target.value)} required />
+              <button type="submit" className="w-full bg-[#f0ca00] text-black font-bold py-4 rounded hover:bg-black hover:text-white transition-all">RESET & LOGIN</button>
             </form>
           )}
         </div>
@@ -355,6 +365,45 @@ function Admin() {
 
                 <div className="grid grid-cols-2 gap-2">
                   <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Month</label>
+                    <select className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.month} onChange={e => setFormData({...formData, month: e.target.value})}>
+                      <option value="All Months*">All Months*</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Room Type</label>
+                    <select className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.roomType} onChange={e => setFormData({...formData, roomType: e.target.value})}>
+                      <option value="Single">Single</option>
+                      <option value="Double">Double</option>
+                      <option value="Triple">Triple</option>
+                      <option value="Quad">Quad</option>
+                      <option value="Quint">Quint</option>
+                      <option value="Hexa">Hexa</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2">
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Rating (1-5)</label>
+                    <input type="number" step="0.1" min="1" max="5" placeholder="4.8" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.rating} onChange={e => setFormData({...formData, rating: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Review Count</label>
+                    <input type="number" min="0" placeholder="128" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.reviewCount} onChange={e => setFormData({...formData, reviewCount: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Image URL</label>
+                    <input type="text" placeholder="https://..." className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.image} onChange={e => setFormData({...formData, image: e.target.value})} />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
                     <label className="text-[10px] uppercase font-bold text-gray-500 ml-1">Makkah Distance</label>
                     <input type="text" placeholder="e.g. 800 m" className="w-full border p-3 rounded text-sm bg-gray-50" value={formData.makkah} onChange={e => setFormData({...formData, makkah: e.target.value})} required />
                   </div>
@@ -389,7 +438,7 @@ function Admin() {
                    <textarea placeholder="Experience a spiritually enriching journey..." className="w-full border p-3 rounded text-sm bg-gray-50 h-20" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
                 </div>
 
-                <button type="submit" className="w-full bg-[#eab953] text-white py-4 font-bold rounded">ADD PACKAGE</button>
+                <button type="submit" className="w-full bg-[#f0ca00] text-black py-4 font-bold rounded">ADD PACKAGE</button>
               </form>
             </div>
 
@@ -473,7 +522,7 @@ function Admin() {
       {selectedPackage && (
         <div className="fixed inset-0 z-[10000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="bg-white w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
-                <div className="bg-[#eab953] p-6 text-white flex justify-between items-center">
+                <div className="bg-[#f0ca00] p-6 text-black flex justify-between items-center">
                     <div>
                         <h2 className="text-xl font-black uppercase leading-tight">{selectedPackage.title}</h2>
                         <span className="text-[10px] bg-white/20 px-2 py-1 rounded font-bold">Category: {selectedPackage.category}</span>
@@ -488,12 +537,12 @@ function Admin() {
                         <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
                             <p className="text-[10px] font-black text-gray-400 uppercase mb-1">Makkah Stay</p>
                             <p className="text-xs font-bold">{selectedPackage.hotels?.makkah || 'N/A'}</p>
-                            <p className="text-[10px] text-[#eab953] font-bold">Dist: {selectedPackage.distances?.makkah || "N/A"}</p>
+                            <p className="text-[10px] text-[#f0ca00] font-bold">Dist: {selectedPackage.distances?.makkah || "N/A"}</p>
                         </div>
                         <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
                             <p className="text-[10px] font-black text-gray-400 uppercase mb-1">Madinah Stay</p>
                             <p className="text-xs font-bold">{selectedPackage.hotels?.madinah || 'N/A'}</p>
-                            <p className="text-[10px] text-[#eab953] font-bold">Dist: {selectedPackage.distances?.madinah || "N/A"}</p>
+                            <p className="text-[10px] text-[#f0ca00] font-bold">Dist: {selectedPackage.distances?.madinah || "N/A"}</p>
                         </div>
                     </div>
 
@@ -518,7 +567,7 @@ function Admin() {
                     <div className="pt-4 border-t flex justify-between items-center">
                         <div className="text-right ml-auto">
                             <p className="text-[10px] font-black text-gray-400 uppercase">Final Price</p>
-                            <p className="text-3xl font-black text-[#eab953]">${selectedPackage.price}</p>
+                            <p className="text-3xl font-black text-[#f0ca00]">${selectedPackage.price}</p>
                         </div>
                     </div>
                 </div>

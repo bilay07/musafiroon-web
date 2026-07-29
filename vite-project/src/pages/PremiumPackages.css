@@ -102,11 +102,14 @@
   }
   
   .premium-card {
-    background: white;
+    background-color: white;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(129, 0, 0, 0.035) 0px, rgba(129, 0, 0, 0.035) 1px, transparent 1px, transparent 26px),
+      repeating-linear-gradient(-45deg, rgba(129, 0, 0, 0.035) 0px, rgba(129, 0, 0, 0.035) 1px, transparent 1px, transparent 26px);
     border-radius: 0.75rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(240, 202, 0, 0.18);
     overflow: hidden;
-    border: 1px solid #f3f4f6;
+    border: 1.5px solid rgba(240, 202, 0, 0.5);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -114,27 +117,178 @@
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
     will-change: transform;
   }
-  
+
   .premium-card:hover {
-    transform: translateY(-12px) scale(1.02); 
-    box-shadow: 0 30px 60px -15px rgba(59, 7, 100, 0.3); 
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 30px 60px -15px rgba(240, 202, 0, 0.45);
   }
-  
-  .premium-card:hover .card-top-bar {
-    letter-spacing: 2px; 
-    background-color: #810000; 
-  }
-  
-  .card-top-bar {
-    background-color: #c20000; /* Dark Purple top bar */
-    color: white;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 1rem;
+
+  /* =========================================
+     Premium Ribbon Bar
+     ========================================= */
+  .premium-ribbon-bar {
+    background: linear-gradient(90deg, #f0ca00, #fff4c2, #f0ca00);
+    background-size: 200% 100%;
+    color: #4a0000;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     text-align: center;
-    transition: all 0.4s ease; 
+    padding: 7px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    animation: shimmerBar 3s linear infinite;
+  }
+
+  @keyframes shimmerBar {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
   
+  /* =========================================
+     Card Image (Booking.com style)
+     ========================================= */
+  .card-image-wrap {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #4a0000 0%, #810000 50%, #c20000 100%);
+    overflow: hidden;
+  }
+
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .card-fav-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .card-fav-btn:hover {
+    transform: scale(1.15);
+  }
+
+  .card-fav-btn.is-active {
+    color: #e11d48;
+  }
+
+  .card-fav-btn.is-active i {
+    animation: favPop 0.3s ease;
+  }
+
+  @keyframes favPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  .package-cover-hotel-label {
+    position: absolute;
+    bottom: 0.6rem;
+    right: 0.6rem;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.55);
+    color: #f0ca00;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(2px);
+  }
+
+  .card-month-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%);
+    background-size: 200% 200%;
+    animation: goldShine 3s ease-in-out infinite;
+    color: #000000;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 9999px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.15rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .card-star-filled {
+    color: #f0ca00;
+  }
+
+  .card-star-empty {
+    color: #e5e7eb;
+  }
+
+  .card-title {
+    font-weight: 700;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .card-roomtype-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .card-roomtype-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 9999px;
+  }
+
+  .card-roomtype-pill i {
+    color: #f0ca00;
+  }
+
   .card-content {
     padding: 1.25rem;
     flex-grow: 1;
@@ -194,7 +348,7 @@
   .inclusion-ico {
     font-size: 1.25rem;
     margin-bottom: 0.25rem;
-    color: #eab953; /* 🔥 UPDATED TO VIP PURPLE */
+    color: #f0ca00; /* 🔥 UPDATED TO VIP PURPLE */
   }
   
   .inclusion-lbl {
@@ -262,8 +416,10 @@
   }
   
   .premium-book-btn {
-    background-color: #eab953; /* 🔥 UPDATED TO VIP PURPLE */
-    color: white;
+    background: linear-gradient(135deg, #c9a300 0%, #f0ca00 25%, #fff6c8 50%, #f0ca00 75%, #c9a300 100%);
+    background-size: 200% 200%;
+    animation: goldShine 3s ease-in-out infinite;
+    color: #000000;
     padding: 0.625rem 1.25rem;
     border-radius: 0.375rem;
     font-weight: 600;
@@ -294,7 +450,12 @@
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
-  
+
+  @keyframes goldShine {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
   @keyframes slideUpFade {
     from { opacity: 0; transform: translateY(40px); }
     to { opacity: 1; transform: translateY(0); }
