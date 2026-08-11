@@ -133,6 +133,7 @@ ${priceRange ? `${symbol} ${priceRange[0].toLocaleString()} - ${symbol} ${priceR
             <div className="absolute top-0 left-0 w-full h-1 bg-[#f0ca00]"></div>
             <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">UMRAH INQUIRY FORM</h1>
             <p className="text-gray-300 mt-2 text-sm font-medium">Select your preferences and send us your inquiry instantly.</p>
+            <p className="text-[#f0ca00] mt-1 text-sm font-bold tracking-wide">Bin Aziz Group</p>
           </div>
 
           <div className="p-8 md:p-10 space-y-8">
