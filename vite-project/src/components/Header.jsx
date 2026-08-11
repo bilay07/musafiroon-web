@@ -64,7 +64,7 @@ function Header({ currency, setCurrency }) {
     <>
       {/* Top Bar */}
       <div className="bg-[#c20000] text-white py-2 text-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <i className="fa-solid fa-phone"></i>
             <span className="font-semibold tracking-wider">+92 3112462949</span>
@@ -79,7 +79,7 @@ function Header({ currency, setCurrency }) {
 
       <header className="site-header-gradient relative text-white py-4 shadow-lg sticky top-0 z-50 border-b border-[#f0ca00]/20 overflow-hidden">
         <div className="header-pattern-overlay"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex justify-between items-center">
           
           <button onClick={toggleMenu} className="md:hidden text-2xl focus:outline-none hover:text-[#f0ca00] transition">
             <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
@@ -87,6 +87,7 @@ function Header({ currency, setCurrency }) {
 
           <Link to="/" className="flex flex-col justify-center items-center md:items-start">
              <img src="/mosafiroon-logo-header.png" alt="Mosafiroon" className="h-10 md:h-14 w-auto object-contain" />
+             <span className="text-[9px] md:text-[10px] italic font-bold text-[#f0ca00] tracking-widest -mt-0.5">By Bin Aziz Group</span>
           </Link>
 
           <nav className="hidden md:flex space-x-8 items-center text-sm font-medium">

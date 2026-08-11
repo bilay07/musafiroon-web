@@ -81,7 +81,11 @@
 .price-slider-wrap {
   position: relative;
   height: 6px;
-  margin: 3.5rem 0 2.5rem;
+  /* !important because Tailwind's `space-y-*` utility on the parent also
+     sets margin-top on this element and otherwise wins the cascade,
+     collapsing the gap above/below the slider to almost nothing. */
+  margin-top: 3.5rem !important;
+  margin-bottom: 3rem !important;
 }
 
 .price-slider-bubble {
