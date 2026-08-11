@@ -1,78 +1,42 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
 import './Customize.css';
 
 const CURRENCY_SYMBOLS = { USD: '$', PKR: 'Rs', SAR: 'SR' };
 
 function Customize({ currency, exchangeRates }) {
-  const makkahHotels = [
-    "ARAFAT GOLDEN (old Fakhir Kudai)", "FAKHIR AL AZIZIA", "QILA AJYAD",
-    "AL KISWAH TOWERS", "TAJ FIDDI HOTEL", "MIAAD AL MAJD", "MELLA 1",
-    "MELLA 2", "SAIF AL MAJD", "AREEJ AL ZAHBI", "SHAMS AL ZAHBI",
-    "DHAIF HOTEL (Beside Shohada Hotel Ajyad)", "BADAR AL MASSA",
-    "NAWARA SHAMS 3", "VOCO HOTEL", "THAT HOTEL", "DIWAN AL BAIT"
-  ];
-
-  const madinaHotels = [
-    "REHAB AL MADAIN", "HALA TAIBAH", "MANAZIL MARJAN",
-    "DIYAR AL SAFA (old Safa Center)", "WAHAT AL SHARK", "NUZUL AL FALAH",
-    "HAMOUDA AL MASI", "BURJ MUKHTARA", "BIR AL EIMAN / WARDA SAFA",
-    "TAIF NEBRAS", "MARJAN GOLDEN", "RAMA AL MADINAH"
-  ];
-
-  const airlinesList = [
-    "SAUDI AIRLINE", "FLYNAS", "AIR BLUE", "AIR SIAL", "PIA",
-    "FLY ADEAL", "FLY JINNAH", "AIR ARABIA", "EMIRATES", "EITHAD", "QATAR", "BRITISH AIRWAYS", "CUSTOM"
-  ];
+  const packageTypes = ["Star", "Economy", "Group", "Standard"];
 
   const [form, setForm] = useState({
-    makkahHotel: '', makkahRoom: 'Quad', makkahNights: 0,
-    madinaHotel: '', madinaRoom: 'Quad', madinaNights: 0,
-    airline: '-', customAirline: '', ticketType1: 'Direct', ticketType2: 'System Ticket',
-    clientName: '', phone: '', passportStatus: 'Ready',
-    adults: 1, children: 0, infants: 0, notes: ''
+    packageType: '', makkahNights: 0, madinaNights: 0, totalNights: 0,
+    clientName: '', phone: '', departureCity: '', passportStatus: 'Ready',
+    adults: 1, children: 0, infants: 0
   });
 
   const [modalConfig, setModalConfig] = useState({ isOpen: false, message: '', type: 'error' });
 
-  // --- Package price filter (left sidebar) ---
-  const [packageData, setPackageData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // --- Budget filter (moved into the form, replacing Flight/Notes) ---
+  // Fixed Rs 250,000 – Rs 700,000 budget range, quoted in PKR (pegged to the
+  // same 278 rate used site-wide) and converted for whichever currency is selected.
+  const BUDGET_MIN_PKR = 250000;
+  const BUDGET_MAX_PKR = 700000;
+  const PKR_PEG_RATE = 278;
   const [priceRange, setPriceRange] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch('https://musafiroon-web.onrender.com/api/packages')
-      .then((res) => res.json())
-      .then((data) => {
-        setPackageData(Array.isArray(data) ? data : []);
-        setIsLoading(false);
-      })
-      .catch(() => setIsLoading(false));
   }, []);
 
   const rate = exchangeRates?.[currency] || 1;
   const symbol = CURRENCY_SYMBOLS[currency] || '$';
 
-  const bounds = useMemo(() => {
-    if (packageData.length === 0) return { min: 0, max: 1000 };
-    const prices = packageData.map((p) => Math.round((p.price || 0) * rate));
-    return { min: Math.min(...prices), max: Math.max(...prices) };
-  }, [packageData, rate]);
+  const bounds = useMemo(() => ({
+    min: Math.round((BUDGET_MIN_PKR / PKR_PEG_RATE) * rate),
+    max: Math.round((BUDGET_MAX_PKR / PKR_PEG_RATE) * rate),
+  }), [rate]);
 
   useEffect(() => {
     setPriceRange([bounds.min, bounds.max]);
   }, [bounds.min, bounds.max]);
-
-  const filteredPackages = useMemo(() => {
-    if (!priceRange) return [];
-    return packageData
-      .filter((p) => {
-        const price = Math.round((p.price || 0) * rate);
-        return price >= priceRange[0] && price <= priceRange[1];
-      })
-      .sort((a, b) => (a.price || 0) - (b.price || 0));
-  }, [packageData, priceRange, rate]);
 
   const showAlert = (message, type = 'error') => {
     setModalConfig({ isOpen: true, message, type });
@@ -101,30 +65,23 @@ function Customize({ currency, exchangeRates }) {
       return;
     }
 
-    const finalAirline = form.airline === 'CUSTOM' ? form.customAirline : form.airline;
-
     const message = `*🌟 MOSAFIROON UMRAH INQUIRY 🌟*
 
 *👤 Client Details*
 Name: ${form.clientName}
 Contact: ${form.phone || "N/A"}
+Departure City: ${form.departureCity || "N/A"}
 Total Pax: ${form.adults} Adults, ${form.children} Children, ${form.infants} Infants
 Passport Status: ${form.passportStatus}
+Total Nights: ${form.totalNights || 0}
 
-*🕋 Makkah Stay*
-Hotel: ${form.makkahHotel || "Not Selected"}
-Room: ${form.makkahRoom}
-Nights: ${form.makkahNights || 0}
+*🏨 Hotel Details*
+Package Type: ${form.packageType || "Not Selected"}
+Makkah Nights: ${form.makkahNights || 0}
+Madinah Nights: ${form.madinaNights || 0}
 
-*🕌 Madinah Stay*
-Hotel: ${form.madinaHotel || "Not Selected"}
-Room: ${form.madinaRoom}
-Nights: ${form.madinaNights || 0}
-
-*✈️ Flight Details*
-Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
-
-*📝 Notes:* ${form.notes || "None"}`;
+*💰 Budget Range*
+${priceRange ? `${symbol} ${priceRange[0].toLocaleString()} - ${symbol} ${priceRange[1].toLocaleString()}` : "N/A"}`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/923112462949?text=${encodedMessage}`, '_blank');
@@ -168,59 +125,8 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 items-start relative z-10">
+      <div className="max-w-4xl mx-auto flex justify-center relative z-10">
 
-        {/* --- LEFT: Price filter + compact package list --- */}
-        <aside className="finder-sidebar animate-fade-in">
-          <h3 className="finder-sidebar-title">
-            <i className="fa-solid fa-sliders"></i> Filter by Budget
-          </h3>
-
-          {priceRange && (
-            <>
-              <div className="price-range-values">
-                <span>{symbol} {priceRange[0].toLocaleString()}</span>
-                <span>{symbol} {priceRange[1].toLocaleString()}</span>
-              </div>
-
-              <div className="price-slider-wrap">
-                <div className="price-slider-track"></div>
-                <div
-                  className="price-slider-range"
-                  style={{ left: `${minPercent}%`, right: `${100 - maxPercent}%` }}
-                ></div>
-                <input type="range" min={bounds.min} max={bounds.max} value={priceRange[0]} onChange={handleMinSlider} className="price-slider-input" />
-                <input type="range" min={bounds.min} max={bounds.max} value={priceRange[1]} onChange={handleMaxSlider} className="price-slider-input" />
-              </div>
-            </>
-          )}
-
-          <div className="finder-match-count">
-            <i className="fa-solid fa-circle-check"></i>
-            {isLoading ? 'Loading…' : `${filteredPackages.length} package${filteredPackages.length === 1 ? '' : 's'} match`}
-          </div>
-
-          <div className="package-list">
-            {isLoading ? (
-              <div className="package-list-empty"><i className="fa-solid fa-spinner fa-spin"></i></div>
-            ) : filteredPackages.length === 0 ? (
-              <div className="package-list-empty">No packages in this range.</div>
-            ) : (
-              filteredPackages.map((pkg) => (
-                <Link key={pkg._id} to={`/?pkg=${pkg._id}`} className="package-list-item">
-                  <span className="package-list-item-title">{pkg.title}</span>
-                  <span className="package-list-item-price">{symbol} {Math.round((pkg.price || 0) * rate).toLocaleString()}</span>
-                </Link>
-              ))
-            )}
-          </div>
-
-          <button type="button" className="finder-reset-btn" onClick={() => setPriceRange([bounds.min, bounds.max])}>
-            Reset Range
-          </button>
-        </aside>
-
-        {/* --- RIGHT: Original inquiry form box, premium polish --- */}
         <div className="max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 animate-fade-in customize-form-box">
 
           <div className="bg-gradient-to-r from-[#4a0000] via-[#810000] to-[#c20000] py-8 px-10 text-center relative overflow-hidden">
@@ -243,6 +149,16 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
                     <div>
                       <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-phone text-[#f0ca00]"></i>Contact No</label>
                       <input type="text" name="phone" placeholder="03xx-xxxxxxx" value={form.phone} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-plane-departure text-[#f0ca00]"></i>Departure City</label>
+                        <input type="text" name="departureCity" placeholder="e.g. Lahore" value={form.departureCity} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all" />
+                      </div>
+                      <div>
+                        <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-moon text-[#f0ca00]"></i>Total Nights</label>
+                        <input type="number" name="totalNights" min="0" value={form.totalNights} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all" />
+                      </div>
                     </div>
                  </div>
 
@@ -274,54 +190,23 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
 
             <hr className="border-gray-200" />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 form-section-reveal" style={{ animationDelay: '80ms' }}>
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#f0ca00] pl-3 uppercase tracking-wider flex items-center gap-2.5"><i className="fa-solid fa-kaaba text-[#f0ca00] text-base"></i>Makkah Stay</h3>
-                <div className="space-y-3">
-                  <div>
-                    <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-hotel text-[#f0ca00]"></i>Hotel Name</label>
-                    <select name="makkahHotel" value={form.makkahHotel} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] focus:border-[#f0ca00] outline-none transition-all">
-                      <option value="">Select Hotel</option>
-                      {makkahHotels.map((hotel, idx) => <option key={idx} value={hotel}>{hotel}</option>)}
-                    </select>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-bed text-[#f0ca00]"></i>Room Type</label>
-                      <select name="makkahRoom" value={form.makkahRoom} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all">
-                        <option value="Sharing">Sharing</option><option value="Quint">Quint</option><option value="Quad">Quad</option><option value="Triple">Triple</option><option value="Double">Double</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-moon text-[#f0ca00]"></i>Nights</label>
-                      <input type="number" name="makkahNights" min="0" value={form.makkahNights} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all" />
-                    </div>
-                  </div>
-                </div>
+            <div className="space-y-4 form-section-reveal" style={{ animationDelay: '80ms' }}>
+              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#f0ca00] pl-3 uppercase tracking-wider flex items-center gap-2.5"><i className="fa-solid fa-hotel text-[#f0ca00] text-base"></i>Hotel Details</h3>
+              <div>
+                <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-ranking-star text-[#f0ca00]"></i>Package Type</label>
+                <select name="packageType" value={form.packageType} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] focus:border-[#f0ca00] outline-none transition-all">
+                  <option value="">Select Package Type</option>
+                  {packageTypes.map((type) => <option key={type} value={type}>{type}</option>)}
+                </select>
               </div>
-
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#f0ca00] pl-3 uppercase tracking-wider flex items-center gap-2.5"><i className="fa-solid fa-mosque text-[#f0ca00] text-base"></i>Madinah Stay</h3>
-                <div className="space-y-3">
-                  <div>
-                    <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-hotel text-[#f0ca00]"></i>Hotel Name</label>
-                    <select name="madinaHotel" value={form.madinaHotel} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all">
-                      <option value="">Select Hotel</option>
-                      {madinaHotels.map((hotel, idx) => <option key={idx} value={hotel}>{hotel}</option>)}
-                    </select>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-bed text-[#f0ca00]"></i>Room Type</label>
-                      <select name="madinaRoom" value={form.madinaRoom} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all">
-                        <option value="Sharing">Sharing</option><option value="Quint">Quint</option><option value="Quad">Quad</option><option value="Triple">Triple</option><option value="Double">Double</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-moon text-[#f0ca00]"></i>Nights</label>
-                      <input type="number" name="madinaNights" min="0" value={form.madinaNights} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all" />
-                    </div>
-                  </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-kaaba text-[#f0ca00]"></i>Makkah Nights</label>
+                  <input type="number" name="makkahNights" min="0" value={form.makkahNights} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all" />
+                </div>
+                <div>
+                  <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-mosque text-[#f0ca00]"></i>Madinah Nights</label>
+                  <input type="number" name="madinaNights" min="0" value={form.madinaNights} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all" />
                 </div>
               </div>
             </div>
@@ -329,36 +214,21 @@ Airline: ${finalAirline} (${form.ticketType1} | ${form.ticketType2})
             <hr className="border-gray-200" />
 
             <div className="space-y-4 form-section-reveal" style={{ animationDelay: '160ms' }}>
-              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#f0ca00] pl-3 uppercase tracking-wider flex items-center gap-2.5"><i className="fa-solid fa-plane text-[#f0ca00] text-base"></i>Flight Details</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="md:col-span-2">
-                  <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-plane-departure text-[#f0ca00]"></i>Choose Airline</label>
-                  <select name="airline" value={form.airline} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all">
-                    <option value="-">NONE</option>
-                    {airlinesList.map(a => <option key={a} value={a}>{a}</option>)}
-                  </select>
-                  {form.airline === 'CUSTOM' && (
-                    <input type="text" name="customAirline" placeholder="Enter Custom Airline Name" value={form.customAirline} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white mt-2 focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all" />
-                  )}
-                </div>
-                <div>
-                  <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-ticket text-[#f0ca00]"></i>Ticket Type 1</label>
-                  <select name="ticketType1" value={form.ticketType1} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all">
-                    <option value="Direct">Direct</option><option value="Indirect">Indirect</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-ticket text-[#f0ca00]"></i>Ticket Type 2</label>
-                  <select name="ticketType2" value={form.ticketType2} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all">
-                    <option value="System Ticket">System Ticket</option><option value="Group Ticket">Group Ticket</option>
-                  </select>
-                </div>
-              </div>
-            </div>
+              <h3 className="text-lg font-bold text-[#810000] border-l-4 border-[#f0ca00] pl-3 uppercase tracking-wider flex items-center gap-2.5"><i className="fa-solid fa-sliders text-[#f0ca00] text-base"></i>Filter by Budget</h3>
 
-            <div className="space-y-2 form-section-reveal" style={{ animationDelay: '220ms' }}>
-              <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1"><i className="fa-solid fa-pen-to-square text-[#f0ca00]"></i>Additional Notes</label>
-              <textarea name="notes" rows="2" placeholder="Any specific requirements..." value={form.notes} onChange={handleChange} className="w-full border border-gray-200 bg-gray-50/60 rounded-xl p-3 text-sm shadow-sm hover:border-[#f0ca00]/60 focus:bg-white focus:ring-2 focus:ring-[#f0ca00] outline-none transition-all"></textarea>
+              {priceRange && (
+                <div className="price-slider-wrap">
+                  <span className="price-slider-bubble" style={{ left: `${minPercent}%` }}>{symbol} {priceRange[0].toLocaleString()}</span>
+                  <span className="price-slider-bubble" style={{ left: `${maxPercent}%` }}>{symbol} {priceRange[1].toLocaleString()}</span>
+                  <div className="price-slider-track"></div>
+                  <div
+                    className="price-slider-range"
+                    style={{ left: `${minPercent}%`, right: `${100 - maxPercent}%` }}
+                  ></div>
+                  <input type="range" min={bounds.min} max={bounds.max} value={priceRange[0]} onChange={handleMinSlider} className="price-slider-input" />
+                  <input type="range" min={bounds.min} max={bounds.max} value={priceRange[1]} onChange={handleMaxSlider} className="price-slider-input" />
+                </div>
+              )}
             </div>
 
           </div>
